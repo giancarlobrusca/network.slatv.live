@@ -7,16 +7,18 @@ const PAL = {               // per-vertical star colors
   producto: '#ffc800',      // MTS --mts-yellow (mts.now)
   diseno:   '#ff6b6b',      // MTS coral #ff6b6b (mts.now bundle)
   hogar:    '#b07ae0',      // approximation: lightened Pitch Night --purple #7534ab
-  null:     '#eafff3'       // SLA --foreground
+  null:     '#eafff3',      // SLA --foreground
+  hub:      '#39f688'       // SLA hub star
 };
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = id => document.getElementById(id);
 const C = $('sky');
 const hex = h => [1,3,5].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
+const XCOL = hex('#8fe9ff'); // X streams: cool cyan-white (approximation, not a brand color)
 const h32 = s => { let x = 2166136261; for (const c of s) x = Math.imul(x ^ c.charCodeAt(0), 16777619); return (x >>> 0) / 4294967296; };
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-let W = 0, H = 0, DPR = 1, data, stars = [], links = [], dust = [], hover = null, sel = null, filter = null;
+let W = 0, H = 0, DPR = 1, data, stars = [], links = [], xlinks = [], showX = true, dust = [], hover = null, sel = null, filter = null;
 const cam = { yaw: 1.25, pitch: -0.42, vy: 0, vp: 0, zoom: 1 };
 
 // ---------- data ----------
@@ -38,12 +40,21 @@ function build() {
       size: 1.15 + p.episodes.length * 0.3 + (views ? Math.log10(views) * 0.12 : 0),
       ph: h32(p.id + 't') * 6.28, sx: 0, sy: 0, sz: 1, k: 1, hl: 0 };
   });
+  if (data.hub) stars.push({ p: { ...data.hub, companies: [], episodes: [], investors: [] }, hub: true, v: 'hub', comp, ep, col: hex(PAL.hub), css: PAL.hub,
+    pos: [0, 0, 0], size: 2.1, ph: 0, sx: 0, sy: 0, sz: 1, k: 1, hl: 0 });
   // relax: push stars apart so names never pile up (deterministic)
-  for (let it = 0; it < 120; it++) for (const a of stars) for (const b of stars) { if (a === b) continue;
+  for (let it = 0; it < 120; it++) for (const a of stars) for (const b of stars) { if (a === b || a.hub) continue;
     const d = [0,1,2].map(i => a.pos[i] - b.pos[i]), l = Math.hypot(...d) || 1e-3; if (l < .8) for (let i = 0; i < 3; i++) a.pos[i] += d[i] / l * (.8 - l) * .25; }
   const groups = k => { const m = {}; stars.forEach(s => (s.p[k] || []).forEach(id => (m[id] ??= []).push(s))); return m; };
   for (const [k, kind] of [['companies','empresa'], ['episodes','episodio'], ['investors','inversor']])
     for (const g of Object.values(groups(k))) for (let i = 1; i < g.length; i++) links.push({ a: g[i - 1], b: g[i], kind });
+  // X interactions -> directed streams, aggregated per (source,target)
+  const byId = Object.fromEntries(stars.map(s => [s.p.id, s])), xa = {};
+  for (const r of data.interactions || []) { const a = byId[r.source], b = byId[r.target]; if (!a || !b) continue;
+    const k = r.source + '>' + r.target; const o = xa[k] ??= { a, b, count: 0, types: {}, examples: [], lastAt: '' };
+    o.count += r.count; o.types[r.type] = (o.types[r.type] || 0) + r.count; o.examples.push(...r.examples.map(u => ({ u, at: r.lastAt, type: r.type })));
+    if (r.lastAt > o.lastAt) o.lastAt = r.lastAt; }
+  xlinks = Object.values(xa); xlinks.forEach(l => { l.mutual = !!xa[l.b.p.id + '>' + l.a.p.id]; l.ph = h32(l.a.p.id + l.b.p.id) * 10; });
   // faint "thread" lines through consecutive episodes give the sky its shape (chronological spine)
   const order = data.episodes.slice().sort((a, b) => a.date.localeCompare(b.date)).map(e => e.id);
   const first = order.map(id => stars.find(s => s.p.episodes.includes(id))).filter(Boolean);
@@ -55,11 +66,12 @@ function build() {
   // UI: legend, stats, labels
   const count = id => stars.filter(s => s.v === id).length;
   const items = [...data.verticals.map(v => ({ id: v.id, name: v.name })), ...(count(null) ? [{ id: null, name: 'Sin vertical' }] : [])];
-  $('legend').innerHTML = items.map(v => `<button data-v="${v.id}" style="color:${PAL[v.id] || PAL.null}"><b></b><span style="color:rgba(234,255,243,.82)">${esc(v.name)}</span><small>${count(v.id)}</small></button>`).join('');
-  $('legend').onclick = e => { const b = e.target.closest('button'); if (!b) return; const v = b.dataset.v === 'null' ? null : b.dataset.v;
+  $('legend').innerHTML = (xlinks.length ? `<button data-x class="xt on" aria-pressed="true" style="color:#8fe9ff"><b class="xs"></b><span style="color:rgba(234,255,243,.82)">Conexiones en X</span><small>${xlinks.length}</small></button><hr>` : '') + items.map(v => `<button data-v="${v.id}" style="color:${PAL[v.id] || PAL.null}"><b></b><span style="color:rgba(234,255,243,.82)">${esc(v.name)}</span><small>${count(v.id)}</small></button>`).join('');
+  $('legend').onclick = e => { const b = e.target.closest('button'); if (!b) return;
+    if (b.hasAttribute('data-x')) { showX = !showX; b.classList.toggle('on', showX); b.setAttribute('aria-pressed', showX); return; } const v = b.dataset.v === 'null' ? null : b.dataset.v;
     filterOn = !(filterOn && filter === v); filter = v; $('legend').classList.toggle('filtering', filterOn);
-    [...$('legend').children].forEach(x => x.classList.toggle('on', filterOn && x === b)); if (sel && !visible(sel)) hide(); };
-  $('stats').innerHTML = [['ESTRELLAS', stars.length], ['EPISODIOS', data.episodes.length], ['LAZOS', links.filter(l => l.kind !== 'hilo').length]]
+    [...$('legend').querySelectorAll('button:not([data-x])')].forEach(x => x.classList.toggle('on', filterOn && x === b)); if (sel && !visible(sel)) hide(); };
+  $('stats').innerHTML = [['ESTRELLAS', stars.length], ['EPISODIOS', data.episodes.length], ['LAZOS', links.filter(l => l.kind !== 'hilo').length], ['EN X', xlinks.length]]
     .map(([k, v]) => `<div><dt>${k}</dt><dd>${String(v).padStart(2, '0')}</dd></div>`).join('');
   const L = $('labels');
   stars.forEach(s => { const el = document.createElement('div'); el.className = 'lbl';
@@ -67,7 +79,7 @@ function build() {
     el.innerHTML = `${esc(s.p.name)}${c && c !== s.p.name ? `<span>${esc(c)}</span>` : ''}`; L.appendChild(el); s.el = el; });
 }
 let filterOn = false;
-const visible = s => !filterOn || s.v === filter;
+const visible = s => !filterOn || s.v === filter || s.hub;
 
 // ---------- projection ----------
 function project(p, t) {
@@ -154,7 +166,7 @@ function loop(now) {
   // labels: greedy placement (below, above, right, left) by depth so names never overlap
   const boxes = [];
   for (const s of stars.slice().sort((a, b) => (b === focus) - (a === focus) || a.z - b.z)) {
-    const on = s === focus || (focus && links.some(l => l.kind !== 'hilo' && ((l.a === focus && l.b === s) || (l.b === focus && l.a === s))));
+    const on = s === focus || (focus && [...links.filter(l => l.kind !== 'hilo'), ...(showX ? xlinks : [])].some(l => (l.a === focus && l.b === s) || (l.b === focus && l.a === s)));
     const w = s.el.offsetWidth || 80, h = s.el.offsetHeight || 28, g = 10 + s.size * 5 * s.k;
     const cands = [[s.sx - w / 2, s.sy + g], [s.sx - w / 2, s.sy - g - h], [s.sx + g, s.sy - h / 2], [s.sx - g - w, s.sy - h / 2]];
     let pos = cands[0]; for (const c of cands) { if (!boxes.some(b => c[0] < b[2] && c[0] + w > b[0] && c[1] < b[3] && c[1] + h > b[1])) { pos = c; break; } }
@@ -175,8 +187,23 @@ function lineQuads(t) {
     const P = (x, y, ux, uy) => v.push(x, y, ux, uy, ...a.col, ...b.col, al);
     const A1 = [a.sx + nx * w, a.sy + ny * w], A2 = [a.sx - nx * w, a.sy - ny * w], B1 = [b.sx + nx * w, b.sy + ny * w], B2 = [b.sx - nx * w, b.sy - ny * w];
     P(...A1, 0, 1); P(...A2, 0, -1); P(...B1, 1, 1); P(...B1, 1, 1); P(...A2, 0, -1); P(...B2, 1, -1); }
+  if (showX) for (const l of xlinks) { const a = l.a, b = l.b; if (!visible(a) || !visible(b)) continue;
+    const hot = focus && (a === focus || b === focus); const o = l.mutual ? 2.5 : 0;
+    const dx = b.sx - a.sx, dy = b.sy - a.sy, len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len, w = (2 + Math.min(4, l.count * .5)) * (a.k + b.k) / 2;
+    const al = (hot ? .6 : focus ? .06 : .26); const P = (x, y, ux, uy) => v.push(x + nx * o, y + ny * o, ux, uy, ...XCOL, ...XCOL, al);
+    P(a.sx + nx * w, a.sy + ny * w, 0, 1); P(a.sx - nx * w, a.sy - ny * w, 0, -1); P(b.sx + nx * w, b.sy + ny * w, 1, 1);
+    P(b.sx + nx * w, b.sy + ny * w, 1, 1); P(a.sx - nx * w, a.sy - ny * w, 0, -1); P(b.sx - nx * w, b.sy - ny * w, 1, -1); }
   return new Float32Array(v);
 }
+// particle stream for X links: count -> density + size, direction source -> target
+function xParticles(t, pv) { if (!showX) return; const focus = sel || hover;
+  for (const l of xlinks) { const a = l.a, b = l.b; if (!visible(a) || !visible(b)) continue;
+    const hot = focus && (a === focus || b === focus), dim = focus && !hot ? .15 : 1;
+    const n = Math.min(14, 3 + l.count * 2), speed = .08 + Math.min(.22, l.count * .025);
+    const dx = b.sx - a.sx, dy = b.sy - a.sy, len = Math.hypot(dx, dy) || 1, nx = -dy / len * (l.mutual ? 2.5 : 0), ny = dx / len * (l.mutual ? 2.5 : 0);
+    for (let i = 0; i < n; i++) { const u = ((reduce ? 0 : t * speed) + i / n + l.ph) % 1, e = Math.sin(u * Math.PI);
+      const k = Math.max(.85, a.k + (b.k - a.k) * u);
+      pv.push(a.sx + dx * u + nx, a.sy + dy * u + ny, (9 + Math.min(8, l.count)) * k * (hot ? 1.5 : 1), ...(u > .85 ? b.col : XCOL), Math.min(1, .75 + l.count * .05) * Math.pow(e, .6) * dim); } } }
 function drawGL(t) {
   gl.disable(gl.BLEND); const B = prog.bg; gl.useProgram(B.p); gl.bindBuffer(gl.ARRAY_BUFFER, prog.tri);
   gl.enableVertexAttribArray(B.a.p); gl.vertexAttribPointer(B.a.p, 2, gl.FLOAT, false, 0, 0);
@@ -191,6 +218,7 @@ function drawGL(t) {
     pv.push(x, y, (3 + d.b * 5) * k, .8, .95, .88, (.18 + .4 * d.b) * tw * Math.min(1, k * 1.2)); }
   for (const s of stars) { const tw = .9 + .1 * Math.sin(t * 1.6 + s.ph); const vis = visible(s) ? 1 : .18; const dim = (sel || hover) && s.hl < .05 ? .55 : 1;
     pv.push(s.sx, s.sy, (70 + 40 * s.hl) * s.size * s.k * tw, ...s.col, vis * dim * (1 + .3 * s.hl)); }
+  xParticles(t, pv);
   const P = prog.pt; gl.useProgram(P.p); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pv), gl.DYNAMIC_DRAW);
   attribs(P, [['a', 2], ['s', 1], ['c', 4]], 7); gl.uniform2f(P.u.r, W, H); gl.uniform1f(P.u.d, DPR); gl.drawArrays(gl.POINTS, 0, pv.length / 7); off(P);
 }
@@ -203,6 +231,7 @@ function draw2D(t) {
     X.strokeStyle = gr; X.globalAlpha = l.kind === 'hilo' ? .15 : .6; X.lineWidth = 1; X.beginPath(); X.moveTo(l.a.sx, l.a.sy); X.lineTo(l.b.sx, l.b.sy); X.stroke(); }
   for (const s of stars) { const r = 10 * s.size * s.k * (1 + .4 * s.hl), gg = X.createRadialGradient(s.sx, s.sy, 0, s.sx, s.sy, r * 2.5);
     gg.addColorStop(0, '#fff'); gg.addColorStop(.12, s.css); gg.addColorStop(1, 'transparent'); X.globalAlpha = visible(s) ? 1 : .2; X.fillStyle = gg; X.beginPath(); X.arc(s.sx, s.sy, r * 2.5, 0, 7); X.fill(); }
+  if (showX) { const pv = []; xParticles(t, pv); for (let i = 0; i < pv.length; i += 7) { X.globalAlpha = pv[i + 6]; X.fillStyle = '#8fe9ff'; X.beginPath(); X.arc(pv[i], pv[i + 1], pv[i + 2] / 6, 0, 7); X.fill(); } }
   X.globalAlpha = 1; X.globalCompositeOperation = 'source-over';
 }
 
@@ -222,7 +251,7 @@ function bindInput() {
 }
 
 // ---------- card ----------
-const vname = id => data.verticals.find(v => v.id === id)?.name || 'Sin vertical';
+const vname = id => id === 'hub' ? 'Hub · SLA TV' : data.verticals.find(v => v.id === id)?.name || 'Sin vertical';
 function show(s) {
   sel = s; const p = s.p, cs = p.companies.map(c => s.comp[c]?.name).filter(Boolean);
   const peers = links.filter(l => l.kind !== 'hilo' && (l.a === s || l.b === s)).map(l => ({ o: l.a === s ? l.b : l.a, kind: l.kind }));
@@ -231,11 +260,21 @@ function show(s) {
     <h2>${esc(p.name)}</h2><div class="sub">${esc([p.role, cs.join(', ')].filter(Boolean).join(' · ') || '—')}</div>
     ${p.x ? `<a class="xl" href="${esc(p.x)}" target="_blank" rel="noopener">${esc(p.x.replace(/^https?:\/\/(www\.)?/, ''))} ↗</a>` : ''}
     ${peers.length ? `<div class="links">CONECTA CON ${peers.map(q => `<b>${esc(q.o.p.name)}</b> <span>(${q.kind})</span>`).join(', ')}</div>` : ''}
+    ${xSection(s)}
     <div class="eps">${p.episodes.map(e => s.ep[e]).filter(Boolean).map(e => `<a class="ep" href="${esc(e.youtube)}" target="_blank" rel="noopener">
       <div class="meta"><span>${e.number ? 'EP. ' + String(e.number).padStart(2, '0') : 'ESPECIAL'}</span><span>${esc(e.date)}</span></div>
       <div class="t">${esc(e.title)}</div><span class="go">Ver en YouTube →</span></a>`).join('')}</div>`;
   card.hidden = false; card.style.animation = 'none'; card.offsetHeight; card.style.animation = ''; blip();
 }
+const TY = { mention: 'mención', reply: 'respuesta', quote: 'cita', follow: 'sigue' };
+function xSection(s) { const rel = xlinks.filter(l => l.a === s || l.b === s); if (!rel.length) return '';
+  const per = {}; for (const l of rel) { const o = l.a === s ? l.b : l.a, r = per[o.p.id] ??= { o, out: 0, inn: 0, ex: [] };
+    l.a === s ? r.out += l.count : r.inn += l.count; r.ex.push(...l.examples.map(e => ({ ...e, mine: l.a === s }))); }
+  const rows = Object.values(per).sort((x, y) => (y.out + y.inn) - (x.out + x.inn));
+  const ex = rel.flatMap(l => l.examples.map(e => ({ ...e, from: l.a, to: l.b }))).sort((x, y) => y.at.localeCompare(x.at)).filter((e, i, a) => a.findIndex(z => z.u === e.u) === i).slice(0, 3);
+  return `<div class="xsec"><div class="xh"><span>EN X</span><span>${rel.reduce((n, l) => n + l.count, 0)} interacciones</span></div>
+    ${rows.map(r => `<div class="xr"><b style="color:${r.o.css}">●</b><span>${esc(r.o.p.name)}</span><small>${r.out ? '→ ' + r.out : ''}${r.out && r.inn ? ' · ' : ''}${r.inn ? '← ' + r.inn : ''}</small></div>`).join('')}
+    <div class="xex">${ex.map(e => `<a href="${esc(e.u)}" target="_blank" rel="noopener">@${esc(e.from.p.social?.x || '')} → @${esc(e.to.p.social?.x || '')} · ${TY[e.type] || e.type} · ${esc(e.at.slice(0, 10))} ↗</a>`).join('')}</div></div>`; }
 function hide() { sel = null; $('card').hidden = true; }
 
 // ---------- ambient sound (WebAudio, no assets) ----------

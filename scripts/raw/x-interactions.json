@@ -1,0 +1,220 @@
+[
+ {
+  "source": "DutikKaren",
+  "target": "goncy",
+  "type": "mention",
+  "count": 2,
+  "examples": [
+   "https://x.com/DutikKaren/status/2103942678261993758",
+   "https://x.com/DutikKaren/status/2103910173752398226"
+  ],
+  "lastAt": "2026-09-26T20:19:58.000Z"
+ },
+ {
+  "source": "DutikKaren",
+  "target": "goncy",
+  "type": "reply",
+  "count": 1,
+  "examples": [
+   "https://x.com/DutikKaren/status/2108381371970552267"
+  ],
+  "lastAt": "2026-10-09T02:17:45.000Z"
+ },
+ {
+  "source": "DutikKaren",
+  "target": "slatv_",
+  "type": "mention",
+  "count": 6,
+  "examples": [
+   "https://x.com/DutikKaren/status/2107253974759800882",
+   "https://x.com/DutikKaren/status/2106841325467582478",
+   "https://x.com/DutikKaren/status/2105495862939914743"
+  ],
+  "lastAt": "2026-10-05T23:37:53.000Z"
+ },
+ {
+  "source": "Tomasdascola",
+  "target": "ragojose",
+  "type": "reply",
+  "count": 1,
+  "examples": [
+   "https://x.com/Tomasdascola/status/2100960904175108574"
+  ],
+  "lastAt": "2026-09-18T14:51:28.000Z"
+ },
+ {
+  "source": "Tomasdascola",
+  "target": "slatv_",
+  "type": "mention",
+  "count": 1,
+  "examples": [
+   "https://x.com/Tomasdascola/status/2099891677557092666"
+  ],
+  "lastAt": "2026-09-15T16:02:44.000Z"
+ },
+ {
+  "source": "Tomasdascola",
+  "target": "slatv_",
+  "type": "reply",
+  "count": 1,
+  "examples": [
+   "https://x.com/Tomasdascola/status/2107836341689995337"
+  ],
+  "lastAt": "2026-10-07T14:12:00.000Z"
+ },
+ {
+  "source": "falanfantana",
+  "target": "ragojose",
+  "type": "mention",
+  "count": 2,
+  "examples": [
+   "https://x.com/falanfantana/status/2100598105628459466",
+   "https://x.com/falanfantana/status/2100235814840012962"
+  ],
+  "lastAt": "2026-09-17T14:49:50.000Z"
+ },
+ {
+  "source": "falanfantana",
+  "target": "slatv_",
+  "type": "mention",
+  "count": 1,
+  "examples": [
+   "https://x.com/falanfantana/status/2101073757301535047"
+  ],
+  "lastAt": "2026-09-18T22:19:54.000Z"
+ },
+ {
+  "source": "falanfantana",
+  "target": "slatv_",
+  "type": "reply",
+  "count": 1,
+  "examples": [
+   "https://x.com/falanfantana/status/2100235814840012962"
+  ],
+  "lastAt": "2026-09-16T14:50:13.000Z"
+ },
+ {
+  "source": "ragojose",
+  "target": "Tomasdascola",
+  "type": "reply",
+  "count": 1,
+  "examples": [
+   "https://x.com/ragojose/status/2100975906051313746"
+  ],
+  "lastAt": "2026-09-18T15:51:04.000Z"
+ },
+ {
+  "source": "ragojose",
+  "target": "falanfantana",
+  "type": "mention",
+  "count": 3,
+  "examples": [
+   "https://x.com/ragojose/status/2107285524759314701",
+   "https://x.com/ragojose/status/2100635405179642022",
+   "https://x.com/ragojose/status/2100235569733251264"
+  ],
+  "lastAt": "2026-10-06T01:43:15.000Z"
+ },
+ {
+  "source": "ragojose",
+  "target": "slatv_",
+  "type": "mention",
+  "count": 2,
+  "examples": [
+   "https://x.com/ragojose/status/2107215239033069897",
+   "https://x.com/ragojose/status/2099986785124159839"
+  ],
+  "lastAt": "2026-10-05T21:03:57.000Z"
+ },
+ {
+  "source": "ragojose",
+  "target": "slatv_",
+  "type": "reply",
+  "count": 2,
+  "examples": [
+   "https://x.com/ragojose/status/2100635405179642022",
+   "https://x.com/ragojose/status/2100235569733251264"
+  ],
+  "lastAt": "2026-09-17T17:18:03.000Z"
+ },
+ {
+  "source": "slatv_",
+  "target": "DutikKaren",
+  "type": "mention",
+  "count": 3,
+  "examples": [
+   "https://x.com/slatv_/status/2105661055565205555",
+   "https://x.com/slatv_/status/2105312545837850762",
+   "https://x.com/slatv_/status/2104302541945159998"
+  ],
+  "lastAt": "2026-10-01T14:08:11.000Z"
+ },
+ {
+  "source": "slatv_",
+  "target": "Tomasdascola",
+  "type": "mention",
+  "count": 3,
+  "examples": [
+   "https://x.com/slatv_/status/2108360135034937776",
+   "https://x.com/slatv_/status/2108195207124557885",
+   "https://x.com/slatv_/status/2107834581541880146"
+  ],
+  "lastAt": "2026-10-09T00:53:22.000Z"
+ },
+ {
+  "source": "slatv_",
+  "target": "Tomasdascola",
+  "type": "reply",
+  "count": 1,
+  "examples": [
+   "https://x.com/slatv_/status/2099893437289943272"
+  ],
+  "lastAt": "2026-09-15T16:09:44.000Z"
+ },
+ {
+  "source": "slatv_",
+  "target": "euneniant",
+  "type": "mention",
+  "count": 5,
+  "examples": [
+   "https://x.com/slatv_/status/2108195207124557885",
+   "https://x.com/slatv_/status/2107470498909073886",
+   "https://x.com/slatv_/status/2105763708614086710"
+  ],
+  "lastAt": "2026-10-08T13:58:00.000Z"
+ },
+ {
+  "source": "slatv_",
+  "target": "euneniant",
+  "type": "reply",
+  "count": 1,
+  "examples": [
+   "https://x.com/slatv_/status/2105771495259869262"
+  ],
+  "lastAt": "2026-10-01T21:27:02.000Z"
+ },
+ {
+  "source": "slatv_",
+  "target": "falanfantana",
+  "type": "mention",
+  "count": 4,
+  "examples": [
+   "https://x.com/slatv_/status/2102877788718121380",
+   "https://x.com/slatv_/status/2102519066984599876",
+   "https://x.com/slatv_/status/2100585061104210422"
+  ],
+  "lastAt": "2026-09-23T21:48:29.000Z"
+ },
+ {
+  "source": "slatv_",
+  "target": "ragojose",
+  "type": "mention",
+  "count": 4,
+  "examples": [
+   "https://x.com/slatv_/status/2102877788718121380",
+   "https://x.com/slatv_/status/2102519066984599876",
+   "https://x.com/slatv_/status/2100585061104210422"
+  ],
+  "lastAt": "2026-09-23T21:48:29.000Z"
+ }
+]

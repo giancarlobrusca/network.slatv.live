@@ -1,35 +1,487 @@
 {
-  "meta": {"title": "Constelación de Founders — SLA", "source": "Vault: Proyectos/SLA/Programas/SLA (programa).md", "updated": "2026-10-14"},
-  "verticals": [
-    {"id": "producto", "name": "Producto & Software"},
-    {"id": "diseno", "name": "Diseño"},
-    {"id": "dev", "name": "Dev & Web"},
-    {"id": "hogar", "name": "Hogar & Servicios"}
-  ],
-  "companies": [
-    {"id": "invgate", "name": "InvGate", "vertical": "producto", "url": null},
-    {"id": "clickie", "name": "Clickie", "vertical": "hogar", "url": null, "note": "infraestructura del hogar (resumen ep. 18 en X)"},
-    {"id": "yafu", "name": "Yafu", "vertical": null, "url": null},
-    {"id": "fof-ba", "name": "Friends of Figma Buenos Aires", "vertical": "diseno", "url": null},
-    {"id": "basement", "name": "basement", "vertical": "diseno", "url": null},
-    {"id": "vercel", "name": "Vercel", "vertical": "dev", "url": null}
-  ],
-  "episodes": [
-    {"id": "ep18", "number": 18, "date": "2026-10-07", "title": "Clickie, CounterStrike, Outputs para Agents, Poteto y GrokBot, Product con Eugenia de InvGate", "youtube": "https://www.youtube.com/watch?v=jobfnkQyhDA", "views": null},
-    {"id": "ep17", "number": 17, "date": "2026-09-30", "title": "Super Inteligencia, Foros, Videcodear juegos para web, Dot/Bot/6.1/5.5, Karen de Yafu", "youtube": "https://www.youtube.com/watch?v=7E_Xfl8pBuc", "views": null},
-    {"id": "ep16", "number": 16, "date": "2026-09-23", "title": "El diseño más vivo que nunca, JEV, Top 9, Horowitz Andreessen Academy, Friends of Figma", "youtube": "https://www.youtube.com/watch?v=j_Qb9qy7l1A", "views": null},
-    {"id": "ep15", "number": null, "date": "2026-09-16", "title": "SLA x Basement: crear un estudio de diseño global desde Argentina", "youtube": "https://www.youtube.com/watch?v=d9DLHBJbHZQ", "views": null, "note": "sin número en el título; sería el 15 (a confirmar)"},
-    {"id": "ep14", "number": 14, "date": "2026-09-09", "title": "Maxi Firtman, los nabos, Ponzis, Elizabeth Holmes, ¿Nos bata la ia?, MormonTV, Mark Lou", "youtube": "https://www.youtube.com/watch?v=fg0VjFN-unE", "views": null},
-    {"id": "ep13", "number": 13, "date": "2026-09-02", "title": "Goncy Forward Deployed Engineer en VERCEL, Omarchy y Linux, H3 Max, Fable 5.1, Tim Cook", "youtube": "https://www.youtube.com/watch?v=7kiHCad7IdM", "views": null}
-  ],
-  "people": [
-    {"id": "eugenia-dearamburu", "name": "Eugenia Dearamburu", "role": "Product", "companies": ["invgate"], "episodes": ["ep18"], "x": "https://x.com/euneniant", "investors": []},
-    {"id": "tomas-dascola", "name": "Tomás Dascola", "role": null, "companies": ["clickie"], "episodes": ["ep18"], "x": "https://x.com/Tomasdascola", "investors": []},
-    {"id": "karen-dutik", "name": "Karen Dutik", "role": null, "companies": ["yafu"], "episodes": ["ep17"], "x": null, "investors": []},
-    {"id": "friends-of-figma-ba", "name": "Friends of Figma Buenos Aires", "role": "comunidad", "companies": ["fof-ba"], "episodes": ["ep16"], "x": null, "investors": []},
-    {"id": "jose-rago", "name": "José Rago", "role": null, "companies": ["basement"], "episodes": ["ep15"], "x": null, "investors": []},
-    {"id": "facu-santana", "name": "Facu Santana", "role": null, "companies": ["basement"], "episodes": ["ep15"], "x": null, "investors": []},
-    {"id": "maxi-firtman", "name": "Maxi Firtman", "role": null, "companies": [], "episodes": ["ep14"], "x": null, "investors": []},
-    {"id": "goncy", "name": "Goncy (Gonzalo Pozzo)", "role": "Forward Deployed Engineer", "companies": ["vercel"], "episodes": ["ep13"], "x": null, "investors": []}
-  ]
+ "meta": {
+  "title": "Constelación de Founders — SLA",
+  "source": "Vault: Proyectos/SLA/Programas/SLA (programa).md",
+  "updated": "2026-10-14",
+  "x": {
+   "fetchedAt": "2026-10-15T02:58:00Z",
+   "method": "X API full-archive search (from:A @B, -is:retweet), see scripts/fetch-x.py",
+   "coverage": "Up to 25 most recent matching posts per account (next page came back empty); retweets excluded. No posts were returned for @goncy or @firt.",
+   "follows": "not determined: no followers/following endpoint available"
+  }
+ },
+ "verticals": [
+  {
+   "id": "producto",
+   "name": "Producto & Software"
+  },
+  {
+   "id": "diseno",
+   "name": "Diseño"
+  },
+  {
+   "id": "dev",
+   "name": "Dev & Web"
+  },
+  {
+   "id": "hogar",
+   "name": "Hogar & Servicios"
+  }
+ ],
+ "companies": [
+  {
+   "id": "invgate",
+   "name": "InvGate",
+   "vertical": "producto",
+   "url": null
+  },
+  {
+   "id": "clickie",
+   "name": "Clickie",
+   "vertical": "hogar",
+   "url": null,
+   "note": "infraestructura del hogar (resumen ep. 18 en X)"
+  },
+  {
+   "id": "yafu",
+   "name": "Yafu",
+   "vertical": null,
+   "url": null
+  },
+  {
+   "id": "fof-ba",
+   "name": "Friends of Figma Buenos Aires",
+   "vertical": "diseno",
+   "url": null
+  },
+  {
+   "id": "basement",
+   "name": "basement",
+   "vertical": "diseno",
+   "url": null
+  },
+  {
+   "id": "vercel",
+   "name": "Vercel",
+   "vertical": "dev",
+   "url": null
+  }
+ ],
+ "episodes": [
+  {
+   "id": "ep18",
+   "number": 18,
+   "date": "2026-10-07",
+   "title": "Clickie, CounterStrike, Outputs para Agents, Poteto y GrokBot, Product con Eugenia de InvGate",
+   "youtube": "https://www.youtube.com/watch?v=jobfnkQyhDA",
+   "views": null
+  },
+  {
+   "id": "ep17",
+   "number": 17,
+   "date": "2026-09-30",
+   "title": "Super Inteligencia, Foros, Videcodear juegos para web, Dot/Bot/6.1/5.5, Karen de Yafu",
+   "youtube": "https://www.youtube.com/watch?v=7E_Xfl8pBuc",
+   "views": null
+  },
+  {
+   "id": "ep16",
+   "number": 16,
+   "date": "2026-09-23",
+   "title": "El diseño más vivo que nunca, JEV, Top 9, Horowitz Andreessen Academy, Friends of Figma",
+   "youtube": "https://www.youtube.com/watch?v=j_Qb9qy7l1A",
+   "views": null
+  },
+  {
+   "id": "ep15",
+   "number": null,
+   "date": "2026-09-16",
+   "title": "SLA x Basement: crear un estudio de diseño global desde Argentina",
+   "youtube": "https://www.youtube.com/watch?v=d9DLHBJbHZQ",
+   "views": null,
+   "note": "sin número en el título; sería el 15 (a confirmar)"
+  },
+  {
+   "id": "ep14",
+   "number": 14,
+   "date": "2026-09-09",
+   "title": "Maxi Firtman, los nabos, Ponzis, Elizabeth Holmes, ¿Nos bata la ia?, MormonTV, Mark Lou",
+   "youtube": "https://www.youtube.com/watch?v=fg0VjFN-unE",
+   "views": null
+  },
+  {
+   "id": "ep13",
+   "number": 13,
+   "date": "2026-09-02",
+   "title": "Goncy Forward Deployed Engineer en VERCEL, Omarchy y Linux, H3 Max, Fable 5.1, Tim Cook",
+   "youtube": "https://www.youtube.com/watch?v=7kiHCad7IdM",
+   "views": null
+  }
+ ],
+ "people": [
+  {
+   "id": "eugenia-dearamburu",
+   "name": "Eugenia Dearamburu",
+   "role": "Product",
+   "companies": [
+    "invgate"
+   ],
+   "episodes": [
+    "ep18"
+   ],
+   "x": "https://x.com/euneniant",
+   "investors": [],
+   "social": {
+    "x": "euneniant",
+    "xId": "67799475"
+   }
+  },
+  {
+   "id": "tomas-dascola",
+   "name": "Tomás Dascola",
+   "role": null,
+   "companies": [
+    "clickie"
+   ],
+   "episodes": [
+    "ep18"
+   ],
+   "x": "https://x.com/Tomasdascola",
+   "investors": [],
+   "social": {
+    "x": "Tomasdascola",
+    "xId": "226196142"
+   }
+  },
+  {
+   "id": "karen-dutik",
+   "name": "Karen Dutik",
+   "role": null,
+   "companies": [
+    "yafu"
+   ],
+   "episodes": [
+    "ep17"
+   ],
+   "x": "https://x.com/DutikKaren",
+   "investors": [],
+   "social": {
+    "x": "DutikKaren",
+    "xId": "1317292579642314752"
+   }
+  },
+  {
+   "id": "friends-of-figma-ba",
+   "name": "Friends of Figma Buenos Aires",
+   "role": "comunidad",
+   "companies": [
+    "fof-ba"
+   ],
+   "episodes": [
+    "ep16"
+   ],
+   "x": null,
+   "investors": [],
+   "social": {
+    "x": null,
+    "xId": null
+   }
+  },
+  {
+   "id": "jose-rago",
+   "name": "José Rago",
+   "role": null,
+   "companies": [
+    "basement"
+   ],
+   "episodes": [
+    "ep15"
+   ],
+   "x": "https://x.com/ragojose",
+   "investors": [],
+   "social": {
+    "x": "ragojose",
+    "xId": "132603414"
+   }
+  },
+  {
+   "id": "facu-santana",
+   "name": "Facu Santana",
+   "role": null,
+   "companies": [
+    "basement"
+   ],
+   "episodes": [
+    "ep15"
+   ],
+   "x": "https://x.com/falanfantana",
+   "investors": [],
+   "social": {
+    "x": "falanfantana",
+    "xId": "1032230805727334400"
+   }
+  },
+  {
+   "id": "maxi-firtman",
+   "name": "Maxi Firtman",
+   "role": null,
+   "companies": [],
+   "episodes": [
+    "ep14"
+   ],
+   "x": "https://x.com/firt",
+   "investors": [],
+   "social": {
+    "x": "firt",
+    "xId": "17509972"
+   }
+  },
+  {
+   "id": "goncy",
+   "name": "Goncy (Gonzalo Pozzo)",
+   "role": "Forward Deployed Engineer",
+   "companies": [
+    "vercel"
+   ],
+   "episodes": [
+    "ep13"
+   ],
+   "x": "https://x.com/goncy",
+   "investors": [],
+   "social": {
+    "x": "goncy",
+    "xId": "42536884"
+   }
+  }
+ ],
+ "hub": {
+  "id": "slatv",
+  "name": "SLA",
+  "role": "El Tech New Media de LATAM",
+  "social": {
+   "x": "slatv_",
+   "xId": "2054902856235315200"
+  },
+  "url": "https://slatv.live"
+ },
+ "interactions": [
+  {
+   "source": "facu-santana",
+   "target": "jose-rago",
+   "type": "mention",
+   "count": 2,
+   "examples": [
+    "https://x.com/falanfantana/status/2100598105628459466",
+    "https://x.com/falanfantana/status/2100235814840012962"
+   ],
+   "lastAt": "2026-09-17T14:49:50.000Z"
+  },
+  {
+   "source": "facu-santana",
+   "target": "slatv",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/falanfantana/status/2101073757301535047"
+   ],
+   "lastAt": "2026-09-18T22:19:54.000Z"
+  },
+  {
+   "source": "facu-santana",
+   "target": "slatv",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/falanfantana/status/2100235814840012962"
+   ],
+   "lastAt": "2026-09-16T14:50:13.000Z"
+  },
+  {
+   "source": "jose-rago",
+   "target": "facu-santana",
+   "type": "mention",
+   "count": 3,
+   "examples": [
+    "https://x.com/ragojose/status/2107285524759314701",
+    "https://x.com/ragojose/status/2100635405179642022",
+    "https://x.com/ragojose/status/2100235569733251264"
+   ],
+   "lastAt": "2026-10-06T01:43:15.000Z"
+  },
+  {
+   "source": "jose-rago",
+   "target": "slatv",
+   "type": "mention",
+   "count": 2,
+   "examples": [
+    "https://x.com/ragojose/status/2107215239033069897",
+    "https://x.com/ragojose/status/2099986785124159839"
+   ],
+   "lastAt": "2026-10-05T21:03:57.000Z"
+  },
+  {
+   "source": "jose-rago",
+   "target": "slatv",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/ragojose/status/2100635405179642022",
+    "https://x.com/ragojose/status/2100235569733251264"
+   ],
+   "lastAt": "2026-09-17T17:18:03.000Z"
+  },
+  {
+   "source": "jose-rago",
+   "target": "tomas-dascola",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/ragojose/status/2100975906051313746"
+   ],
+   "lastAt": "2026-09-18T15:51:04.000Z"
+  },
+  {
+   "source": "karen-dutik",
+   "target": "goncy",
+   "type": "mention",
+   "count": 2,
+   "examples": [
+    "https://x.com/DutikKaren/status/2103942678261993758",
+    "https://x.com/DutikKaren/status/2103910173752398226"
+   ],
+   "lastAt": "2026-09-26T20:19:58.000Z"
+  },
+  {
+   "source": "karen-dutik",
+   "target": "goncy",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/DutikKaren/status/2108381371970552267"
+   ],
+   "lastAt": "2026-10-09T02:17:45.000Z"
+  },
+  {
+   "source": "karen-dutik",
+   "target": "slatv",
+   "type": "mention",
+   "count": 6,
+   "examples": [
+    "https://x.com/DutikKaren/status/2107253974759800882",
+    "https://x.com/DutikKaren/status/2106841325467582478",
+    "https://x.com/DutikKaren/status/2105495862939914743"
+   ],
+   "lastAt": "2026-10-05T23:37:53.000Z"
+  },
+  {
+   "source": "slatv",
+   "target": "eugenia-dearamburu",
+   "type": "mention",
+   "count": 5,
+   "examples": [
+    "https://x.com/slatv_/status/2108195207124557885",
+    "https://x.com/slatv_/status/2107470498909073886",
+    "https://x.com/slatv_/status/2105763708614086710"
+   ],
+   "lastAt": "2026-10-08T13:58:00.000Z"
+  },
+  {
+   "source": "slatv",
+   "target": "eugenia-dearamburu",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/slatv_/status/2105771495259869262"
+   ],
+   "lastAt": "2026-10-01T21:27:02.000Z"
+  },
+  {
+   "source": "slatv",
+   "target": "facu-santana",
+   "type": "mention",
+   "count": 4,
+   "examples": [
+    "https://x.com/slatv_/status/2102877788718121380",
+    "https://x.com/slatv_/status/2102519066984599876",
+    "https://x.com/slatv_/status/2100585061104210422"
+   ],
+   "lastAt": "2026-09-23T21:48:29.000Z"
+  },
+  {
+   "source": "slatv",
+   "target": "jose-rago",
+   "type": "mention",
+   "count": 4,
+   "examples": [
+    "https://x.com/slatv_/status/2102877788718121380",
+    "https://x.com/slatv_/status/2102519066984599876",
+    "https://x.com/slatv_/status/2100585061104210422"
+   ],
+   "lastAt": "2026-09-23T21:48:29.000Z"
+  },
+  {
+   "source": "slatv",
+   "target": "karen-dutik",
+   "type": "mention",
+   "count": 3,
+   "examples": [
+    "https://x.com/slatv_/status/2105661055565205555",
+    "https://x.com/slatv_/status/2105312545837850762",
+    "https://x.com/slatv_/status/2104302541945159998"
+   ],
+   "lastAt": "2026-10-01T14:08:11.000Z"
+  },
+  {
+   "source": "slatv",
+   "target": "tomas-dascola",
+   "type": "mention",
+   "count": 3,
+   "examples": [
+    "https://x.com/slatv_/status/2108360135034937776",
+    "https://x.com/slatv_/status/2108195207124557885",
+    "https://x.com/slatv_/status/2107834581541880146"
+   ],
+   "lastAt": "2026-10-09T00:53:22.000Z"
+  },
+  {
+   "source": "slatv",
+   "target": "tomas-dascola",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/slatv_/status/2099893437289943272"
+   ],
+   "lastAt": "2026-09-15T16:09:44.000Z"
+  },
+  {
+   "source": "tomas-dascola",
+   "target": "jose-rago",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/Tomasdascola/status/2100960904175108574"
+   ],
+   "lastAt": "2026-09-18T14:51:28.000Z"
+  },
+  {
+   "source": "tomas-dascola",
+   "target": "slatv",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/Tomasdascola/status/2099891677557092666"
+   ],
+   "lastAt": "2026-09-15T16:02:44.000Z"
+  },
+  {
+   "source": "tomas-dascola",
+   "target": "slatv",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/Tomasdascola/status/2107836341689995337"
+   ],
+   "lastAt": "2026-10-07T14:12:00.000Z"
+  }
+ ]
 }

@@ -91,3 +91,13 @@ h1{margin:0;font-weight:600;font-size:clamp(34px,4.6vw,64px);line-height:.95;let
   .card{left:12px;right:12px;width:auto;top:auto;bottom:12px;max-height:62vh;overflow:auto}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.legend hr{border:0;border-top:1px solid var(--line);margin:4px 6px}
+.legend .xs{width:14px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,currentColor,transparent);box-shadow:0 0 8px currentColor}
+.legend .xt:not(.on){opacity:.45}.legend.filtering .xt{opacity:1}.legend.filtering .xt:not(.on){opacity:.45}
+.xsec{margin-top:16px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:rgba(143,233,255,.03)}
+.xh{display:flex;justify-content:space-between;font:10px "Geist Mono",monospace;letter-spacing:.1em;color:#8fe9ff;margin-bottom:6px}
+.xh span+span{color:rgba(234,255,243,.4);letter-spacing:.04em}
+.xr{display:flex;align-items:center;gap:8px;font-size:13px;padding:3px 0;color:rgba(234,255,243,.85)}
+.xr b{font-size:8px}.xr small{margin-left:auto;font:11px "Geist Mono",monospace;color:rgba(234,255,243,.45)}
+.xex{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+.xex a{font:11px "Geist Mono",monospace;color:rgba(143,233,255,.75);text-decoration:none}.xex a:hover{color:#8fe9ff}
