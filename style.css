@@ -101,3 +101,4 @@ h1{margin:0;font-weight:600;font-size:clamp(34px,4.6vw,64px);line-height:.95;let
 .xr b{font-size:8px}.xr small{margin-left:auto;font:11px "Geist Mono",monospace;color:rgba(234,255,243,.45)}
 .xex{margin-top:8px;display:flex;flex-direction:column;gap:4px}
 .xex a{font:11px "Geist Mono",monospace;color:rgba(143,233,255,.75);text-decoration:none}.xex a:hover{color:#8fe9ff}
+h1 .h1-logo{height:.78em;width:auto;vertical-align:baseline;margin-left:.08em;filter:drop-shadow(0 0 18px rgba(57,246,136,.35))}
