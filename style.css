@@ -124,3 +124,62 @@ h1 .h1-logo{height:.78em;width:auto;vertical-align:baseline;margin-left:.08em;fi
 .lbl.on .lav{width:26px;height:26px;margin-top:6px;opacity:1;box-shadow:0 0 0 1px rgba(234,255,243,.25)}
 @media (max-width:720px){.card{max-height:68vh;-webkit-overflow-scrolling:touch}.av{width:60px;height:60px}.pmeta h2{font-size:20px}}
 .lbl.hide{opacity:0!important}
+/* ---------- list sheet (all sizes) ---------- */
+.btn.icon{display:inline-flex;align-items:center;gap:6px}
+.mob,.mtitle,.grab{display:none}
+.list{position:fixed;z-index:9;right:24px;top:72px;width:min(400px,calc(100vw - 32px));max-height:calc(100vh - 96px);display:flex;flex-direction:column;
+  border:1px solid var(--line-2);border-radius:16px;background:linear-gradient(160deg,rgba(18,30,24,.9),rgba(4,10,8,.9));backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 30px 80px -20px #000;animation:in .35s cubic-bezier(.2,.8,.2,1)}
+.list[hidden]{display:none}
+.lhead{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 8px}
+.lhead h2{margin:0;font-size:17px;font-weight:600;letter-spacing:-.02em}.lhead .x{position:static}
+#q{margin:4px 16px 10px;padding:11px 12px;border-radius:10px;border:1px solid var(--line-2);background:rgba(234,255,243,.05);color:var(--fg);font:15px Geist,sans-serif;outline:none}
+#q:focus{border-color:rgba(57,246,136,.5)}
+.people{list-style:none;margin:0;padding:0 8px 12px;overflow:auto;overscroll-behavior:contain}
+.people li[hidden]{display:none}
+.people button{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:12px;width:100%;padding:8px;border-radius:10px;cursor:pointer}
+.people button:hover,.people button:focus-visible{background:rgba(234,255,243,.06);outline:none}
+.lav2{flex:none;width:40px;height:40px;border-radius:50%;padding:1.5px;background:var(--c);box-shadow:0 0 14px -4px var(--c)}
+.lav2 img,.lav2 i{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;object-fit:cover;background:#07120d;font:600 14px Geist,sans-serif;font-style:normal;color:var(--c)}
+.ln{min-width:0;display:flex;flex-direction:column}.ln b{font-weight:500;font-size:15px}
+.ln small{font-size:12px;color:rgba(234,255,243,.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lv{margin-left:auto;font-size:11px;color:rgba(234,255,243,.4)}
+
+/* ---------- mobile v2 ---------- */
+@media (max-width:768px){
+  .bar{height:52px;padding:0 10px 0 14px;gap:10px}
+  .crumb,.sep,.btn.ghost,.pill,#sound .mono+span{display:none}
+  .mtitle{display:block;font-weight:600;font-size:15px;letter-spacing:-.02em;white-space:nowrap}
+  .mob{display:inline-flex;justify-content:center;font:600 14px "Geist Mono",monospace;width:36px}
+  .actions{gap:6px}.btn{padding:0 10px;height:36px;border-radius:10px}.btn .lt{display:none}#listBtn{width:36px;justify-content:center;padding:0}
+  #sound{width:36px;padding:0;justify-content:center}
+  .grid{opacity:.25}
+  /* intro: hidden; "i" reveals it as a sheet over the sky */
+  .hero{display:none;position:fixed;left:10px;right:10px;top:60px;max-width:none;pointer-events:auto;padding:18px;border:1px solid var(--line-2);border-radius:16px;
+    background:rgba(4,12,9,.86);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);z-index:7;animation:in .3s}
+  body.intro .hero{display:block}
+  .hero h1{font-size:34px}.lede{font-size:14px;max-width:none}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);width:100%}.stats div{padding:8px 10px}.stats dd{font-size:16px}
+  /* legend: horizontal chip bar */
+  .legend{left:0;right:0;bottom:0;flex-direction:row;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;gap:6px;border:0;border-radius:0;
+    padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(transparent,rgba(2,12,8,.92) 40%);backdrop-filter:none;-webkit-backdrop-filter:none;scrollbar-width:none;transition:transform .3s,opacity .3s}
+  .legend::-webkit-scrollbar{display:none}
+  .legend button{flex:none;padding:8px 12px;font-size:13px;border:1px solid var(--line-2);border-radius:999px;background:rgba(6,14,11,.75)}
+  .legend button.on{border-color:currentColor}
+  .legend hr{display:none}.legend small{display:none}
+  body.sel .legend{transform:translateY(100%);opacity:0;pointer-events:none}
+  .hint{display:none}
+  .lbl{font-size:11px}.lbl span{font-size:9px}
+  /* profile card -> bottom sheet with peek + full */
+  .card{left:0;right:0;bottom:0;top:auto;width:auto;height:88vh;height:88dvh;max-height:none;border-radius:20px 20px 0 0;border-bottom:0;padding:8px 18px calc(18px + env(safe-area-inset-bottom));
+    overflow:hidden;animation:none;transform:translateY(calc(88dvh - var(--peek,200px) + var(--dy,0px)));transition:transform .38s cubic-bezier(.2,.8,.2,1);touch-action:none}
+  .card.full{overflow:auto;transform:translateY(max(0px,var(--dy,0px)));touch-action:pan-y}
+  .card::before{left:40px;right:40px}
+  .grab{display:block;height:26px;margin:0 -18px 4px;cursor:grab;touch-action:none}
+  .grab i{display:block;width:40px;height:5px;margin:8px auto 0;border-radius:3px;background:rgba(234,255,243,.28)}
+  .card .x{top:12px;right:12px}
+  .av{width:56px;height:56px}.pmeta h2{font-size:20px;margin-top:6px}.prof{gap:14px}
+  .eps{margin:18px -18px 0}
+  .list{left:0;right:0;top:auto;bottom:0;width:auto;height:86dvh;max-height:none;border-radius:20px 20px 0 0;border-bottom:0;padding-bottom:env(safe-area-inset-bottom)}
+}
+.btn.mob{display:none}
+@media (max-width:768px){.btn.mob{display:inline-flex}}

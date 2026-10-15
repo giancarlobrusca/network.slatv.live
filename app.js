@@ -22,7 +22,10 @@ const h32 = s => { let x = 2166136261; for (const c of s) x = Math.imul(x ^ c.ch
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 let W = 0, H = 0, DPR = 1, data, stars = [], links = [], xlinks = [], showX = true, dust = [], hover = null, sel = null, filter = null;
-const cam = { yaw: 1.25, pitch: -0.42, vy: 0, vp: 0, zoom: 1 };
+const cam = { yaw: 1.25, pitch: -0.42, vy: 0, vp: 0, zoom: 1, zoomT: 1, px: 0, py: 0, pxT: 0, pyT: 0 };
+const MQ = matchMedia('(max-width: 768px)'); let mobile = MQ.matches; MQ.addEventListener?.('change', e => { mobile = e.matches; resetCam(); });
+function resetCam() { cam.zoomT = 1; cam.pxT = 0; cam.pyT = 0; }
+let topSet = new Set();
 
 // ---------- data ----------
 fetch('data/constellation.json').then(r => r.json()).then(d => { data = d; build(); init(); requestAnimationFrame(loop); })
@@ -79,6 +82,8 @@ function build() {
     [...$('legend').querySelectorAll('button:not([data-x])')].forEach(x => x.classList.toggle('on', filterOn && x === b)); if (sel && !visible(sel)) hide(); };
   $('stats').innerHTML = [['ESTRELLAS', stars.length], ['EPISODIOS', data.episodes.length], ['LAZOS', links.filter(l => l.kind !== 'hilo').length], ['EN X', xlinks.length]]
     .map(([k, v]) => `<div><dt>${k}</dt><dd>${String(v).padStart(2, '0')}</dd></div>`).join('');
+  topSet = new Set(stars.filter(s => !s.hub).sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 7).concat(stars.filter(s => s.hub)));
+  buildList();
   const L = $('labels');
   stars.forEach(s => { const el = document.createElement('div'); el.className = 'lbl';
     const c = s.p.companies.map(c => s.comp[c]?.name).filter(Boolean)[0];
@@ -93,8 +98,8 @@ function project(p, t) {
   let x = p[0] * cy - p[2] * sy, z = p[0] * sy + p[2] * cy, y = p[1];
   const y2 = y * cp - z * sp; z = y * sp + z * cp; y = y2;
   const d = 3.1 / cam.zoom, k = 1 / (d + z);
-  const f = W > 900 ? Math.min(W, H) * 1.25 : Math.min(W, H) * 1.2;
-  const cx = W > 900 ? W * 0.6 : W * 0.5, cyy = W > 900 ? H * 0.52 : H * 0.6;
+  const f = W > 900 ? Math.min(W, H) * 1.25 : mobile ? Math.min(W, H * .62) * 1.12 : Math.min(W, H) * 1.2;
+  const cx = (W > 900 ? W * 0.6 : W * 0.5) + cam.px, cyy = (W > 900 ? H * 0.52 : mobile ? H * 0.47 : H * 0.6) + cam.py;
   return [cx + x * f * k, cyy + y * f * k, k * d, z];
 }
 
@@ -163,7 +168,9 @@ function off(o) { for (const k in o.a) gl.disableVertexAttribArray(o.a[k]); }
 let t0 = performance.now(), last = t0, mouse = [0, 0];
 function loop(now) {
   const t = reduce ? 12 : (now - t0) / 1000, dt = Math.min(.05, (now - last) / 1000); last = now;
-  if (!dragging) { cam.yaw += cam.vy; cam.pitch += cam.vp; cam.vy *= .94; cam.vp *= .94; if (!reduce) cam.yaw += dt * 0.035; }
+  if (!dragging) { cam.yaw += cam.vy; cam.pitch += cam.vp; cam.vy *= .94; cam.vp *= .94; if (!reduce && !(mobile && sel)) cam.yaw += dt * 0.035; }
+  if (mobile && sel && !pinch) { const ty = H * ($('card').classList.contains('full') ? .14 : .3); cam.pxT = cam.px + (W / 2 - sel.sx); cam.pyT = cam.py + (ty - sel.sy); }
+  const ease = reduce ? 1 : .12; cam.zoom += (cam.zoomT - cam.zoom) * ease; cam.px += (cam.pxT - cam.px) * ease; cam.py += (cam.pyT - cam.py) * ease;
   cam.pitch = Math.max(-1.1, Math.min(1.1, cam.pitch));
   const focus = sel || hover;
   for (const s of stars) { const [x, y, k, z] = project(s.pos, t); s.sx = x; s.sy = y; s.k = k; s.z = z;
@@ -173,6 +180,7 @@ function loop(now) {
   const boxes = [];
   for (const s of stars.slice().sort((a, b) => (b === focus) - (a === focus) || !!b.hub - !!a.hub || b.size * b.k - a.size * a.k)) {
     const on = s === focus || (focus && [...links.filter(l => l.kind !== 'hilo'), ...(showX ? xlinks : [])].some(l => (l.a === focus && l.b === s) || (l.b === focus && l.a === s)));
+    if (mobile && !on && !(topSet.has(s) && !focus) && !(cam.zoom > 1.7 && s.k > .9 && !focus)) { s.el.classList.add('hide'); s.el.dataset.sx = s.sx | 0; s.el.dataset.sy = s.sy | 0; continue; }
     const w = s.el.offsetWidth || 80, h = s.el.offsetHeight || 28, g = 10 + s.size * 5 * s.k;
     const cands = [[s.sx - w / 2, s.sy + g], [s.sx - w / 2, s.sy - g - h], [s.sx + g, s.sy - h / 2], [s.sx - g - w, s.sy - h / 2]];
     let pos = null; for (const c of cands) { if (!boxes.some(b => c[0] < b[2] && c[0] + w > b[0] && c[1] < b[3] && c[1] + h > b[1])) { pos = c; break; } }
@@ -189,15 +197,15 @@ function lineQuads(t) {
   const v = []; const focus = sel || hover;
   for (const l of links) { const a = l.a, b = l.b; if (!visible(a) && !visible(b)) continue;
     const dx = b.sx - a.sx, dy = b.sy - a.sy, len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len;
-    const hot = focus && (a === focus || b === focus); const w = (l.kind === 'hilo' ? 3 : 7) * (hot ? 1.5 : 1) * (a.k + b.k) / 2;
-    let al = l.kind === 'hilo' ? .16 : l.kind === 'episodio' ? .7 : .85; if (hot) al = 1.4; else if (focus) al *= .35;
+    const hot = focus && (a === focus || b === focus); const w = (l.kind === 'hilo' ? 3 : 7) * (hot ? 1.5 : 1) * (mobile && !hot ? .6 : 1) * (a.k + b.k) / 2;
+    let al = l.kind === 'hilo' ? .16 : l.kind === 'episodio' ? .7 : .85; if (hot) al = 1.4; else if (focus) al *= mobile ? .12 : .35; else if (mobile) al *= l.kind === 'hilo' ? 0 : .4;
     const P = (x, y, ux, uy) => v.push(x, y, ux, uy, ...a.col, ...b.col, al);
     const A1 = [a.sx + nx * w, a.sy + ny * w], A2 = [a.sx - nx * w, a.sy - ny * w], B1 = [b.sx + nx * w, b.sy + ny * w], B2 = [b.sx - nx * w, b.sy - ny * w];
     P(...A1, 0, 1); P(...A2, 0, -1); P(...B1, 1, 1); P(...B1, 1, 1); P(...A2, 0, -1); P(...B2, 1, -1); }
   if (showX) for (const l of xlinks) { const a = l.a, b = l.b; if (!visible(a) || !visible(b)) continue;
     const hot = focus && (a === focus || b === focus); const o = l.mutual ? 2.5 : 0;
     const dx = b.sx - a.sx, dy = b.sy - a.sy, len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len, w = (2 + Math.min(4, l.count * .5)) * (a.k + b.k) / 2;
-    const al = (hot ? .6 : focus ? .06 : .34) * Math.max(1, 1.6 - (a.k + b.k) / 2); const P = (x, y, ux, uy) => v.push(x + nx * o, y + ny * o, ux, uy, ...XCOL, ...XCOL, al);
+    const al = (hot ? .6 : focus ? (mobile ? .02 : .06) : mobile ? .12 : .34) * Math.max(1, 1.6 - (a.k + b.k) / 2); const P = (x, y, ux, uy) => v.push(x + nx * o, y + ny * o, ux, uy, ...XCOL, ...XCOL, al);
     P(a.sx + nx * w, a.sy + ny * w, 0, 1); P(a.sx - nx * w, a.sy - ny * w, 0, -1); P(b.sx + nx * w, b.sy + ny * w, 1, 1);
     P(b.sx + nx * w, b.sy + ny * w, 1, 1); P(a.sx - nx * w, a.sy - ny * w, 0, -1); P(b.sx - nx * w, b.sy - ny * w, 1, -1); }
   return new Float32Array(v);
@@ -205,8 +213,8 @@ function lineQuads(t) {
 // particle stream for X links: count -> density + size, direction source -> target
 function xParticles(t, pv) { if (!showX) return; const focus = sel || hover;
   for (const l of xlinks) { const a = l.a, b = l.b; if (!visible(a) || !visible(b)) continue;
-    const hot = focus && (a === focus || b === focus), dim = focus && !hot ? .15 : 1;
-    const n = Math.min(14, 3 + l.count * 2), speed = .08 + Math.min(.22, l.count * .025);
+    const hot = focus && (a === focus || b === focus), dim = focus && !hot ? (mobile ? .03 : .15) : mobile && !focus ? .18 : 1;
+    const n = mobile && !hot ? Math.min(6, 2 + l.count) : Math.min(14, 3 + l.count * 2), speed = .08 + Math.min(.22, l.count * .025);
     const dx = b.sx - a.sx, dy = b.sy - a.sy, len = Math.hypot(dx, dy) || 1, nx = -dy / len * (l.mutual ? 2.5 : 0), ny = dx / len * (l.mutual ? 2.5 : 0);
     for (let i = 0; i < n; i++) { const u = ((reduce ? 0 : t * speed) + i / n + l.ph) % 1, e = Math.sin(u * Math.PI);
       const k = Math.max(1, a.k + (b.k - a.k) * u);
@@ -223,7 +231,7 @@ function drawGL(t) {
   const pv = [];
   for (const d of dust) { const [x, y, k] = project(d.pos, t); if (k <= 0) continue; const tw = .55 + .45 * Math.sin(t * (.6 + d.b) + d.ph);
     pv.push(x, y, (3 + d.b * 5) * k, .8, .95, .88, (.18 + .4 * d.b) * tw * Math.min(1, k * 1.2)); }
-  for (const s of stars) { const tw = .9 + .1 * Math.sin(t * 1.6 + s.ph); const vis = visible(s) ? 1 : .18; const dim = (sel || hover) && s.hl < .05 ? .55 : 1;
+  for (const s of stars) { const tw = .9 + .1 * Math.sin(t * 1.6 + s.ph); const vis = visible(s) ? 1 : .18; const fo = sel || hover, dim = fo && s.hl < .05 ? (mobile && !isNb(fo, s) ? .22 : .55) : 1;
     pv.push(s.sx, s.sy, (70 + 40 * s.hl) * s.size * s.k * tw, ...s.col, vis * dim * (1 + .3 * s.hl)); }
   xParticles(t, pv);
   const P = prog.pt; gl.useProgram(P.p); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pv), gl.DYNAMIC_DRAW);
@@ -243,21 +251,72 @@ function draw2D(t) {
 }
 
 // ---------- input ----------
-let dragging = false, moved = 0, lx = 0, ly = 0, ptype = 'mouse', downAt = 0;
-function pick(x, y) { let b = null, bd = ptype === 'mouse' ? 26 : 44; for (const s of stars) { if (!visible(s)) continue; const d = Math.hypot(s.sx - x, s.sy - y); if (d < bd) { bd = d; b = s; } } return b; }
+let dragging = false, moved = 0, lx = 0, ly = 0, ptype = 'mouse', downAt = 0, pinch = null, lastTap = 0, ltx = 0, lty = 0;
+const ptrs = new Map();
+const nbCache = new Map();
+function isNb(f, s) { let m = nbCache.get(f); if (!m) { m = new Set(); for (const l of [...links.filter(l => l.kind !== 'hilo'), ...xlinks]) { if (l.a === f) m.add(l.b); if (l.b === f) m.add(l.a); } nbCache.set(f, m); } return m.has(s); }
+function pick(x, y) { let b = null, bd = ptype === 'mouse' ? 26 : 40; for (const s of stars) { if (!visible(s)) continue; const d = Math.hypot(s.sx - x, s.sy - y) - (s === sel || isNb(sel, s) ? 6 : 0); if (d < bd) { bd = d; b = s; } } return b; }
 const tapSlop = () => ptype === 'mouse' ? 6 : 14;
+const zmax = () => mobile ? 3.2 : 1.8;
+const clampZ = z => Math.max(.7, Math.min(zmax(), z));
 function bindInput() {
-  C.addEventListener('pointercancel', () => { dragging = false; C.classList.remove('drag'); });
-  C.addEventListener('pointerdown', e => { ptype = e.pointerType || 'mouse'; downAt = performance.now(); dragging = true; moved = 0; lx = e.clientX; ly = e.clientY; C.setPointerCapture(e.pointerId); C.classList.add('drag'); });
+  C.addEventListener('pointercancel', e => { ptrs.delete(e.pointerId); dragging = false; pinch = null; C.classList.remove('drag'); });
+  C.addEventListener('pointerdown', e => { ptype = e.pointerType || 'mouse'; ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+    try { C.setPointerCapture(e.pointerId); } catch (_) {}
+    if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]) || 1, z: cam.zoomT, m: [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2] }; dragging = false; moved = 99; return; }
+    downAt = performance.now(); dragging = true; moved = 0; lx = e.clientX; ly = e.clientY; C.classList.add('drag'); });
   C.addEventListener('pointermove', e => { mouse = [e.clientX / W - .5, e.clientY / H - .5];
+    if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+    if (pinch && ptrs.size >= 2) { const [a, b] = [...ptrs.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]), m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+      cam.zoomT = cam.zoom = clampZ(pinch.z * d / pinch.d); if (!sel) { cam.pxT = cam.px += m[0] - pinch.m[0]; cam.pyT = cam.py += m[1] - pinch.m[1]; } pinch.m = m; return; }
     if (dragging) { const dx = e.clientX - lx, dy = e.clientY - ly; moved += Math.abs(dx) + Math.abs(dy); lx = e.clientX; ly = e.clientY;
       cam.yaw += dx * .005; cam.pitch += dy * .004; cam.vy = dx * .0008; cam.vp = dy * .0006; if (moved > tapSlop()) $('hint').style.opacity = 0; return; }
-    hover = pick(e.clientX, e.clientY); C.classList.toggle('hot', !!hover); });
-  C.addEventListener('pointerup', e => { dragging = false; C.classList.remove('drag'); if (moved < tapSlop() || (ptype !== 'mouse' && performance.now() - downAt < 250 && moved < 24)) { cam.vy = cam.vp = 0; const s = pick(e.clientX, e.clientY); s ? show(s) : hide(); } });
+    if (ptype === 'mouse') { hover = pick(e.clientX, e.clientY); C.classList.toggle('hot', !!hover); } });
+  C.addEventListener('pointerup', e => { ptrs.delete(e.pointerId); C.classList.remove('drag');
+    if (pinch) { if (!ptrs.size) pinch = null; dragging = false; return; }
+    const was = dragging; dragging = false; if (!was) return;
+    if (moved < tapSlop() || (ptype !== 'mouse' && performance.now() - downAt < 250 && moved < 24)) { cam.vy = cam.vp = 0; const now = performance.now(), s = pick(e.clientX, e.clientY);
+      if (s) show(s);
+      else if (ptype !== 'mouse' && now - lastTap < 320 && Math.hypot(e.clientX - ltx, e.clientY - lty) < 40) { hide(); cam.zoomT = clampZ(cam.zoomT * 1.7); cam.pxT = cam.px + (W / 2 - e.clientX) * .7; cam.pyT = cam.py + (H * .47 - e.clientY) * .7; lastTap = 0; return; }
+      else { hide(); if (mobile) resetCam(); }
+      lastTap = now; ltx = e.clientX; lty = e.clientY; } });
   C.addEventListener('pointerleave', () => { hover = null; });
-  C.addEventListener('wheel', e => { e.preventDefault(); cam.zoom = Math.max(.7, Math.min(1.8, cam.zoom * Math.exp(-e.deltaY * .001))); }, { passive: false });
-  $('close').onclick = hide; addEventListener('keydown', e => { if (e.key === 'Escape') hide(); });
+  C.addEventListener('wheel', e => { e.preventDefault(); cam.zoomT = cam.zoom = clampZ(cam.zoom * Math.exp(-e.deltaY * .001)); }, { passive: false });
+  $('close').onclick = () => { hide(); if (mobile) resetCam(); }; addEventListener('keydown', e => { if (e.key === 'Escape') { if (!$('list').hidden) closeList(); else hide(); } });
+  // bottom sheet: drag handle / swipe on peek
+  const card = $('card'), grab = $('grab'); let sy0 = null, st = 0, ty = 0;
+  const down = e => { if (!mobile) return; if (card.classList.contains('full') && card.scrollTop > 0 && e.target !== grab) return; sy0 = e.clientY; ty = 0; st = performance.now(); card.style.transition = 'none'; };
+  const move = e => { if (sy0 == null) return; ty = e.clientY - sy0; if (Math.abs(ty) > 6) { card.style.setProperty('--dy', ty + 'px'); if (e.cancelable) e.preventDefault(); } };
+  const up = () => { if (sy0 == null) return; sy0 = null; card.style.transition = ''; card.style.setProperty('--dy', '0px');
+    const full = card.classList.contains('full'), fast = performance.now() - st < 300;
+    if (Math.abs(ty) < 6) { if (!full) setFull(true); return; }
+    if (ty < -40 || (fast && ty < -15)) setFull(true); else if (ty > 60 || (fast && ty > 15)) { if (full) setFull(false); else { hide(); resetCam(); } } };
+  grab.addEventListener('pointerdown', e => { down(e); grab.setPointerCapture(e.pointerId); });
+  grab.addEventListener('pointermove', move); grab.addEventListener('pointerup', up); grab.addEventListener('pointercancel', up);
+  grab.onclick = () => {}; grab.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFull(!card.classList.contains('full')); } };
+  card.addEventListener('touchstart', e => { if (!card.classList.contains('full') && !e.target.closest('a,button,summary')) down(e.touches[0]); }, { passive: true });
+  card.addEventListener('touchmove', e => { if (sy0 != null) { move({ clientY: e.touches[0].clientY, cancelable: e.cancelable, preventDefault: () => e.preventDefault() }); } }, { passive: false });
+  card.addEventListener('touchend', () => { if (sy0 != null && Math.abs(ty) >= 6) up(); else sy0 = null; card.style.transition = ''; });
+  // info + list
+  $('infoBtn').onclick = () => { const o = document.body.classList.toggle('intro'); $('infoBtn').setAttribute('aria-expanded', o); };
+  $('listBtn').onclick = openList; $('listClose').onclick = closeList;
+  $('q').oninput = () => { const q = norm($('q').value); for (const li of $('people').children) li.hidden = !norm(li.dataset.n).includes(q); };
 }
+function setFull(f) { const c = $('card'); c.classList.toggle('full', f); $('grab').setAttribute('aria-expanded', f); if (!f) c.scrollTop = 0; }
+const norm = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+function buildList() {
+  const ini = n => n.split(/\s+/).map(w => w[0]).join('').slice(0, 2);
+  const order = stars.slice().sort((a, b) => !!b.hub - !!a.hub || !!b.team - !!a.team || (b.views || 0) - (a.views || 0));
+  $('people').innerHTML = order.map(s => { const c = s.p.companies.map(c => s.comp[c]?.name).filter(Boolean)[0] || (s.hub ? 'Hub' : '');
+    return `<li data-n="${esc(s.p.name + ' ' + c)}"><button data-id="${esc(s.p.id)}" style="--c:${s.css}">
+      <span class="lav2">${s.p.avatar ? `<img src="${esc(s.p.avatar)}" alt="" loading="lazy" width="40" height="40">` : `<i>${esc(ini(s.p.name))}</i>`}</span>
+      <span class="ln"><b>${esc(s.p.name)}</b><small>${esc([s.p.role, c].filter(Boolean).join(' · '))}</small></span>
+      <span class="lv mono">${s.views ? Number(s.views).toLocaleString('es-AR') : ''}</span></button></li>`; }).join('');
+  $('people').onclick = e => { const b = e.target.closest('button'); if (!b) return; const s = stars.find(x => x.p.id === b.dataset.id); closeList(); if (filterOn && !visible(s)) { filterOn = false; $('legend').classList.remove('filtering'); } show(s); };
+}
+let listFrom = null;
+function openList() { listFrom = document.activeElement; $('list').hidden = false; $('q').value = ''; $('q').oninput(); requestAnimationFrame(() => (mobile ? $('people').querySelector('button') : $('q'))?.focus({ preventScroll: true })); }
+function closeList() { $('list').hidden = true; listFrom?.focus?.({ preventScroll: true }); }
 
 // ---------- card ----------
 const SV = d => `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">${d}</svg>`;
@@ -289,7 +348,8 @@ function show(s) {
     <div class="eps">${p.episodes.map(e => s.ep[e]).filter(Boolean).map(e => `<a class="ep" href="${esc(e.youtube)}" target="_blank" rel="noopener">
       <div class="meta"><span>${e.number ? 'EP. ' + String(e.number).padStart(2, '0') : e.kind === 'entrevista' ? 'ENTREVISTA' : 'ESPECIAL'}</span><span>${e.views ? Number(e.views).toLocaleString('es-AR') + ' vistas · ' : ''}${esc(e.date)}</span></div>
       <div class="t">${esc(e.title)}</div><span class="go">Ver en YouTube →</span></a>`).join('')}</div>`;
-  $('card').scrollTop = 0;
+  $('card').scrollTop = 0; setFull(false); document.body.classList.add('sel');
+  if (mobile) { cam.zoomT = Math.max(cam.zoomT, 1.45); requestAnimationFrame(() => { const pr = card.querySelector('.prof'); card.style.setProperty('--peek', Math.round((pr?.offsetHeight || 80) + 64) + 'px'); }); }
   card.hidden = false; card.style.animation = 'none'; card.offsetHeight; card.style.animation = ''; blip();
 }
 const TY = { mention: 'mención', reply: 'respuesta', quote: 'cita', follow: 'sigue' };
@@ -301,7 +361,7 @@ function xSection(s) { const rel = xlinks.filter(l => l.a === s || l.b === s); i
   return `<div class="xsec"><div class="xh"><span>EN X</span><span>${rel.reduce((n, l) => n + l.count, 0)} interacciones</span></div>
     ${rows.map(r => `<div class="xr"><b style="color:${r.o.css}">●</b><span>${esc(r.o.p.name)}</span><small>${r.out ? '→ ' + r.out : ''}${r.out && r.inn ? ' · ' : ''}${r.inn ? '← ' + r.inn : ''}</small></div>`).join('')}
     <div class="xex">${ex.map(e => `<a href="${esc(e.u)}" target="_blank" rel="noopener">@${esc(e.from.p.social?.x || '')} → @${esc(e.to.p.social?.x || '')} · ${TY[e.type] || e.type} · post ${esc(e.u.split('/').pop().slice(-6))} ↗</a>`).join('')}</div></div>`; }
-function hide() { sel = null; $('card').hidden = true; }
+function hide() { sel = null; $('card').hidden = true; $('card').classList.remove('full'); document.body.classList.remove('sel'); }
 
 // ---------- ambient sound (WebAudio, no assets) ----------
 let ac, master; const sb = $('sound');

@@ -22,13 +22,16 @@
   <span class="sep" aria-hidden="true">/</span>
   <span class="crumb">network</span>
   <span class="pill"><i></i>LIVE MAP</span>
+  <span class="mtitle">The SLA Network</span>
   <nav class="actions">
+    <button id="listBtn" class="btn icon" aria-label="Buscar invitado · ver como lista" title="Buscar · ver como lista"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="lt">Buscar</span></button>
+    <button id="infoBtn" class="btn icon mob" aria-label="Sobre el mapa" aria-expanded="false" aria-controls="hero">i</button>
     <button id="sound" class="btn" aria-pressed="false"><span class="mono">♪</span> <span id="soundLabel">Sonido</span></button>
     <a class="btn ghost" href="https://github.com/giancarlobrusca/network.slatv.live" target="_blank" rel="noopener">GitHub</a>
   </nav>
 </header>
 
-<section class="hero">
+<section class="hero" id="hero">
   <p class="eyebrow mono">SLA · SIGUIENDO LOS ACONTECIMIENTOS</p>
   <h1>THE <img class="h1-logo" src="assets/sla-logo.svg" alt="SLA"><br>NETWORK</h1>
   <p class="lede">El mapa vivo del ecosistema tech de LATAM, dibujado episodio a episodio. Cada estrella es un invitado; cada línea, algo que comparten.</p>
@@ -39,10 +42,16 @@
 <p class="hint mono" id="hint">ARRASTRÁ PARA ORBITAR · TOCÁ UNA ESTRELLA</p>
 
 <aside id="card" class="card" hidden role="dialog" aria-live="polite">
+  <div id="grab" class="grab" role="button" tabindex="0" aria-label="Expandir o contraer perfil" aria-expanded="false"><i></i></div>
   <button id="close" class="x" aria-label="Cerrar">✕</button>
   <div id="cardBody"></div>
 </aside>
 
+<div id="list" class="list" hidden role="dialog" aria-modal="true" aria-labelledby="listT">
+  <div class="lhead"><h2 id="listT">Invitados y equipo</h2><button id="listClose" class="x" aria-label="Cerrar lista">✕</button></div>
+  <input id="q" type="search" placeholder="Buscar por nombre o empresa" aria-label="Buscar por nombre o empresa" autocomplete="off">
+  <ul id="people" class="people"></ul>
+</div>
 <script src="app.js"></script>
 </body>
 </html>
