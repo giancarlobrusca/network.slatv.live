@@ -1,51 +1,249 @@
-const C=document.getElementById('sky'),X=C.getContext('2d');let W,H,D=devicePixelRatio||1;
-const PAL={producto:'#9ad0ff',diseno:'#ffb3e6',dev:'#b8ffcf',hogar:'#ffd98a',null:'#d8d8ff'};
-let data,stars=[],links=[],dust=[],hover=null,sel=null,t0=performance.now();
-function resize(){W=innerWidth;H=innerHeight;C.width=W*D;C.height=H*D;X.setTransform(D,0,0,D,0,0)}
-addEventListener('resize',resize);resize();
-// deterministic hash -> position so the sky is stable across reloads
-function h(s){let x=2166136261;for(const c of s)x=Math.imul(x^c.charCodeAt(0),16777619);return (x>>>0)/4294967296}
-fetch('data/constellation.json').then(r=>r.json()).then(d=>{data=d;build();requestAnimationFrame(loop)});
-function build(){
-  const comp=Object.fromEntries(data.companies.map(c=>[c.id,c])),ep=Object.fromEntries(data.episodes.map(e=>[e.id,e]));
-  const vs=[...data.verticals.map(v=>v.id),null];
-  stars=data.people.map(p=>{const v=(p.companies.map(c=>comp[c]?.vertical).find(Boolean))??null,vi=vs.indexOf(v);
-    const a=vi/vs.length*Math.PI*2+h(p.id)*1.1,r=.18+h(p.id+'r')*.17;
-    const views=p.episodes.reduce((s,e)=>s+(ep[e]?.views||0),0);
-    return{p,v,x:.5+Math.cos(a)*r*1.25,y:.52+Math.sin(a)*r,size:2.2+p.episodes.length*1.4+(views?Math.log10(views):0),ph:h(p.id+'t')*6.28,comp,ep}});
-  const by=k=>{const m={};stars.forEach(s=>s.p[k].forEach(id=>(m[id]??=[]).push(s)));return m};
-  for(const [k,kind] of [['companies','empresa'],['episodes','episodio'],['investors','inversor']])
-    for(const g of Object.values(by(k)))for(let i=1;i<g.length;i++)links.push({a:g[i-1],b:g[i],kind});
-  for(let i=0;i<500;i++)dust.push({x:Math.random(),y:Math.random(),z:Math.random(),ph:Math.random()*6.28});
-  document.getElementById('legend').innerHTML=data.verticals.map(v=>`<span class="dot" style="background:${PAL[v.id]}"></span>${v.name}`).join('');
+// Constelación de Founders: raw WebGL renderer (no deps) with a 2D-canvas fallback.
+// Palette is sourced from SLA, MTS and Pitch Night CSS (see README).
+(() => {
+'use strict';
+const PAL = {               // per-vertical star colors
+  dev:      '#39f688',      // SLA --acid (slatv.live)
+  producto: '#ffc800',      // MTS --mts-yellow (mts.now)
+  diseno:   '#ff6b6b',      // MTS coral #ff6b6b (mts.now bundle)
+  hogar:    '#b07ae0',      // approximation: lightened Pitch Night --purple #7534ab
+  null:     '#eafff3'       // SLA --foreground
+};
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = id => document.getElementById(id);
+const C = $('sky');
+const hex = h => [1,3,5].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
+const h32 = s => { let x = 2166136261; for (const c of s) x = Math.imul(x ^ c.charCodeAt(0), 16777619); return (x >>> 0) / 4294967296; };
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+let W = 0, H = 0, DPR = 1, data, stars = [], links = [], dust = [], hover = null, sel = null, filter = null;
+const cam = { yaw: 1.25, pitch: -0.42, vy: 0, vp: 0, zoom: 1 };
+
+// ---------- data ----------
+fetch('data/constellation.json').then(r => r.json()).then(d => { data = d; build(); init(); requestAnimationFrame(loop); })
+  .catch(e => console.error('No se pudo cargar data/constellation.json', e));
+
+function build() {
+  const comp = Object.fromEntries(data.companies.map(c => [c.id, c]));
+  const ep = Object.fromEntries(data.episodes.map(e => [e.id, e]));
+  const vs = [...data.verticals.map(v => v.id), null];
+  stars = data.people.map(p => {
+    const v = (p.companies.map(c => comp[c]?.vertical).find(Boolean)) ?? null;
+    const vi = vs.indexOf(v);
+    const a = vi / vs.length * Math.PI * 2 + (h32(p.id) - .5) * 1.1;
+    const r = 0.6 + h32(p.id + 'r') * 0.5;
+    const views = p.episodes.reduce((s, e) => s + (ep[e]?.views || 0), 0);
+    return { p, v, comp, ep, col: hex(PAL[v] || PAL.null), css: PAL[v] || PAL.null,
+      pos: [Math.cos(a) * r, (h32(p.id + 'y') - .5) * 1.3, Math.sin(a) * r],
+      size: 1.15 + p.episodes.length * 0.3 + (views ? Math.log10(views) * 0.12 : 0),
+      ph: h32(p.id + 't') * 6.28, sx: 0, sy: 0, sz: 1, k: 1, hl: 0 };
+  });
+  // relax: push stars apart so names never pile up (deterministic)
+  for (let it = 0; it < 120; it++) for (const a of stars) for (const b of stars) { if (a === b) continue;
+    const d = [0,1,2].map(i => a.pos[i] - b.pos[i]), l = Math.hypot(...d) || 1e-3; if (l < .8) for (let i = 0; i < 3; i++) a.pos[i] += d[i] / l * (.8 - l) * .25; }
+  const groups = k => { const m = {}; stars.forEach(s => (s.p[k] || []).forEach(id => (m[id] ??= []).push(s))); return m; };
+  for (const [k, kind] of [['companies','empresa'], ['episodes','episodio'], ['investors','inversor']])
+    for (const g of Object.values(groups(k))) for (let i = 1; i < g.length; i++) links.push({ a: g[i - 1], b: g[i], kind });
+  // faint "thread" lines through consecutive episodes give the sky its shape (chronological spine)
+  const order = data.episodes.slice().sort((a, b) => a.date.localeCompare(b.date)).map(e => e.id);
+  const first = order.map(id => stars.find(s => s.p.episodes.includes(id))).filter(Boolean);
+  for (let i = 1; i < first.length; i++) if (!links.some(l => (l.a === first[i-1] && l.b === first[i]) || (l.b === first[i-1] && l.a === first[i])))
+    links.push({ a: first[i - 1], b: first[i], kind: 'hilo' });
+  for (let i = 0; i < 900; i++) { const u = Math.random() * 2 - 1, th = Math.random() * 6.283, rr = 2.2 + Math.random() * 3;
+    dust.push({ pos: [Math.sqrt(1 - u * u) * Math.cos(th) * rr, u * rr, Math.sqrt(1 - u * u) * Math.sin(th) * rr], ph: Math.random() * 6.28, b: Math.random() }); }
+
+  // UI: legend, stats, labels
+  const count = id => stars.filter(s => s.v === id).length;
+  const items = [...data.verticals.map(v => ({ id: v.id, name: v.name })), ...(count(null) ? [{ id: null, name: 'Sin vertical' }] : [])];
+  $('legend').innerHTML = items.map(v => `<button data-v="${v.id}" style="color:${PAL[v.id] || PAL.null}"><b></b><span style="color:rgba(234,255,243,.82)">${esc(v.name)}</span><small>${count(v.id)}</small></button>`).join('');
+  $('legend').onclick = e => { const b = e.target.closest('button'); if (!b) return; const v = b.dataset.v === 'null' ? null : b.dataset.v;
+    filterOn = !(filterOn && filter === v); filter = v; $('legend').classList.toggle('filtering', filterOn);
+    [...$('legend').children].forEach(x => x.classList.toggle('on', filterOn && x === b)); if (sel && !visible(sel)) hide(); };
+  $('stats').innerHTML = [['ESTRELLAS', stars.length], ['EPISODIOS', data.episodes.length], ['LAZOS', links.filter(l => l.kind !== 'hilo').length]]
+    .map(([k, v]) => `<div><dt>${k}</dt><dd>${String(v).padStart(2, '0')}</dd></div>`).join('');
+  const L = $('labels');
+  stars.forEach(s => { const el = document.createElement('div'); el.className = 'lbl';
+    const c = s.p.companies.map(c => s.comp[c]?.name).filter(Boolean)[0];
+    el.innerHTML = `${esc(s.p.name)}${c && c !== s.p.name ? `<span>${esc(c)}</span>` : ''}`; L.appendChild(el); s.el = el; });
 }
-let cam={x:0,y:0};
-function P(s,t){const sc=Math.min(W,H)*1.1;return[W/2+(s.x-.5)*sc+cam.x,H/2+(s.y-.52)*sc+cam.y]}
-function loop(now){const t=(now-t0)/1000;cam.x=Math.sin(t*.05)*25;cam.y=Math.cos(t*.037)*18;
-  const g=X.createRadialGradient(W/2,H*.6,0,W/2,H*.6,Math.max(W,H));g.addColorStop(0,'#0d0b26');g.addColorStop(1,'#020208');X.fillStyle=g;X.fillRect(0,0,W,H);
-  for(const d of dust){const a=.25+.35*Math.sin(t*(.5+d.z)+d.ph);X.fillStyle=`rgba(255,255,255,${a*d.z})`;X.fillRect(((d.x*W+cam.x*d.z*.5)%W+W)%W,((d.y*H+cam.y*d.z*.5)%H+H)%H,d.z*1.6,d.z*1.6)}
-  for(const l of links){const[a1,a2]=P(l.a),[b1,b2]=P(l.b),on=[l.a,l.b].includes(sel)||[l.a,l.b].includes(hover);
-    X.strokeStyle=`rgba(200,210,255,${on?.7:.18+.06*Math.sin(t)})`;X.setLineDash(l.kind==='episodio'?[2,4]:[]);X.lineWidth=on?1.3:.7;X.beginPath();X.moveTo(a1,a2);X.lineTo(b1,b2);X.stroke()}
-  X.setLineDash([]);
-  for(const s of stars){const[x,y]=P(s),tw=.75+.25*Math.sin(t*1.7+s.ph),r=s.size*tw*(s===hover||s===sel?1.5:1),c=PAL[s.v];
-    const gg=X.createRadialGradient(x,y,0,x,y,r*7);gg.addColorStop(0,c);gg.addColorStop(.15,c+'88');gg.addColorStop(1,'transparent');X.fillStyle=gg;X.beginPath();X.arc(x,y,r*7,0,7);X.fill();
-    X.fillStyle='#fff';X.beginPath();X.arc(x,y,r*.6,0,7);X.fill();
-    X.fillStyle=`rgba(232,230,255,${s===hover||s===sel?.95:.45})`;X.font='12px Georgia';X.textAlign='center';X.fillText(s.p.name,x,y+r*3+12)}
-  requestAnimationFrame(loop)}
-function pick(ex,ey){let b=null,bd=28;for(const s of stars){const[x,y]=P(s),d=Math.hypot(x-ex,y-ey);if(d<bd){bd=d;b=s}}return b}
-C.addEventListener('pointermove',e=>{hover=pick(e.clientX,e.clientY);C.style.cursor=hover?'pointer':'crosshair'});
-C.addEventListener('click',e=>{const s=pick(e.clientX,e.clientY);s?show(s):hide()});
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function show(s){sel=s;const p=s.p,cs=p.companies.map(c=>s.comp[c]?.name).filter(Boolean);
-  document.getElementById('cardBody').innerHTML=`<h2>${esc(p.name)}</h2><div class="muted">${esc([p.role,cs.join(', ')].filter(Boolean).join(' · ')||'—')}</div>
-  ${p.x?`<p><a href="${esc(p.x)}" target="_blank" rel="noopener">${esc(p.x.replace('https://',''))}</a></p>`:''}
-  ${p.episodes.map(e=>s.ep[e]).filter(Boolean).map(e=>`<p><b>${e.number?'Ep. '+e.number:'Especial'}</b> · ${e.date}<br><span class="muted">${esc(e.title)}</span><br><a href="${esc(e.youtube)}" target="_blank" rel="noopener">▶ Ver en YouTube</a></p>`).join('')}`;
-  document.getElementById('card').hidden=false;blip()}
-function hide(){sel=null;document.getElementById('card').hidden=true}
-document.getElementById('close').onclick=hide;
-// ambient sound: WebAudio drone, no assets
-let ac,master;const sb=document.getElementById('sound');
-sb.onclick=()=>{if(!ac){ac=new AudioContext();master=ac.createGain();master.gain.value=0;master.connect(ac.destination);
-  [110,164.8,220,329.6].forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain(),l=ac.createOscillator(),lg=ac.createGain();o.type='sine';o.frequency.value=f;g.gain.value=.05/(i+1);l.frequency.value=.05+i*.03;lg.gain.value=.03/(i+1);l.connect(lg).connect(g.gain);o.connect(g).connect(master);o.start();l.start()})}
-  const on=master.gain.value<.5;master.gain.setTargetAtTime(on?1:0,ac.currentTime,.8);sb.textContent='♪ Sonido: '+(on?'prendido':'apagado')};
-function blip(){if(!ac||master.gain.value<.5)return;const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880+Math.random()*440;g.gain.setValueAtTime(.08,ac.currentTime);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+1.5);o.connect(g).connect(master);o.start();o.stop(ac.currentTime+1.6)}
+let filterOn = false;
+const visible = s => !filterOn || s.v === filter;
+
+// ---------- projection ----------
+function project(p, t) {
+  const cy = Math.cos(cam.yaw), sy = Math.sin(cam.yaw), cp = Math.cos(cam.pitch), sp = Math.sin(cam.pitch);
+  let x = p[0] * cy - p[2] * sy, z = p[0] * sy + p[2] * cy, y = p[1];
+  const y2 = y * cp - z * sp; z = y * sp + z * cp; y = y2;
+  const d = 3.1 / cam.zoom, k = 1 / (d + z);
+  const f = W > 900 ? Math.min(W, H) * 1.25 : Math.min(W, H) * 1.2;
+  const cx = W > 900 ? W * 0.6 : W * 0.5, cyy = W > 900 ? H * 0.52 : H * 0.6;
+  return [cx + x * f * k, cyy + y * f * k, k * d, z];
+}
+
+// ---------- WebGL ----------
+let gl, prog = {}, buf;
+const VS_BG = `attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}`;
+const FS_BG = `precision highp float;uniform vec2 r;uniform float t;uniform vec2 m;
+float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+1.),f.x),f.y);}
+float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return v;}
+void main(){vec2 uv=gl_FragCoord.xy/r;vec2 p=(gl_FragCoord.xy-.5*r)/r.y;p+=m*.04;
+ float T=t*.035;vec2 q=vec2(fbm(p*1.6+T),fbm(p*1.6-T+4.1));float f=fbm(p*1.3+q*1.8+vec2(T*.6,-T));
+ vec3 bg=vec3(.008,.047,.031);
+ vec3 acid=vec3(.224,.965,.533),purple=vec3(.459,.204,.671),yel=vec3(1.,.784,0.),red=vec3(.91,.227,.18);
+ float band=smoothstep(.35,.95,f)*smoothstep(1.1,.1,abs(p.y+.15*sin(p.x*2.+T*3.)+.05));
+ vec3 c=bg;
+ c+=acid*pow(band,1.4)*.42;
+ c+=purple*smoothstep(.45,.9,q.x)*smoothstep(1.1,.0,length(p-vec2(.6,.38)))*.55;
+ c+=yel*smoothstep(.6,.95,q.y)*smoothstep(.9,.0,length(p-vec2(-.75,-.5)))*.16;
+ c+=red*smoothstep(.62,.95,f)*smoothstep(.8,.0,length(p-vec2(.9,-.45)))*.16;
+ c*=1.-.65*smoothstep(.35,1.25,length(p*vec2(.9,1.15)));
+ c+=(h(gl_FragCoord.xy+fract(t)*91.)-.5)*.035;
+ gl_FragColor=vec4(c,1.);}`;
+const VS_PT = `attribute vec2 a;attribute float s;attribute vec4 c;uniform vec2 r;uniform float d;varying vec4 vc;
+void main(){gl_Position=vec4(a/r*2.-1.,0.,1.);gl_Position.y*=-1.;gl_PointSize=s*d;vc=c;}`;
+const FS_PT = `precision mediump float;varying vec4 vc;void main(){vec2 p=gl_PointCoord*2.-1.;float r=length(p);
+ float core=smoothstep(.07,0.,r),halo=exp(-r*r*14.)*.9+exp(-r*5.)*.35;
+ float flare=(exp(-abs(p.x)*40.)*exp(-abs(p.y)*3.)+exp(-abs(p.y)*40.)*exp(-abs(p.x)*3.))*.35;
+ vec3 col=mix(vc.rgb,vec3(1.),core*.9);float a=(core+halo+flare*step(.5,vc.a))*vc.a;a*=smoothstep(1.,.85,r);
+ gl_FragColor=vec4(col*a,a);}`;
+const VS_LN = `attribute vec2 a;attribute vec2 u;attribute vec3 c1;attribute vec3 c2;attribute float al;uniform vec2 r;
+varying vec2 vu;varying vec3 vc;varying float va;void main(){gl_Position=vec4(a/r*2.-1.,0.,1.);gl_Position.y*=-1.;vu=u;vc=mix(c1,c2,u.x);va=al;}`;
+const FS_LN = `precision mediump float;uniform float t;varying vec2 vu;varying vec3 vc;varying float va;
+void main(){float g=exp(-vu.y*vu.y*14.)*.5+smoothstep(.22,0.,abs(vu.y));float e=fract(vu.x-t*.22);
+ float pulse=smoothstep(.0,.18,e)*smoothstep(.3,.18,e);float ends=smoothstep(0.,.06,vu.x)*smoothstep(1.,.94,vu.x);
+ float a=g*(.38+pulse*1.2)*va*ends;gl_FragColor=vec4(vc*a,a);}`;
+
+function sh(type, src) { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; }
+function mk(vs, fs) { const p = gl.createProgram(); gl.attachShader(p, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(p, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(p);
+  if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
+  const o = { p, a: {}, u: {} }; const na = gl.getProgramParameter(p, gl.ACTIVE_ATTRIBUTES), nu = gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS);
+  for (let i = 0; i < na; i++) { const n = gl.getActiveAttrib(p, i).name; o.a[n] = gl.getAttribLocation(p, n); }
+  for (let i = 0; i < nu; i++) { const n = gl.getActiveUniform(p, i).name; o.u[n] = gl.getUniformLocation(p, n); } return o; }
+
+let ctx2d = null;
+function init() {
+  try {
+    gl = C.getContext('webgl', { antialias: true, alpha: false, premultipliedAlpha: true, powerPreference: 'high-performance' });
+    if (!gl) throw new Error('no webgl');
+    prog.bg = mk(VS_BG, FS_BG); prog.pt = mk(VS_PT, FS_PT); prog.ln = mk(VS_LN, FS_LN);
+    buf = gl.createBuffer(); prog.tri = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, prog.tri);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  } catch (e) { gl = null; ctx2d = C.getContext('2d'); }
+  addEventListener('resize', resize); resize(); bindInput();
+}
+function resize() { DPR = Math.min(devicePixelRatio || 1, W < 720 ? 1.5 : 2); W = innerWidth; H = innerHeight;
+  C.width = Math.round(W * DPR); C.height = Math.round(H * DPR); if (gl) gl.viewport(0, 0, C.width, C.height);
+  else ctx2d.setTransform(DPR, 0, 0, DPR, 0, 0); }
+
+function attribs(o, layout, stride) { let off = 0; for (const [n, size] of layout) { const loc = o.a[n]; if (loc >= 0) {
+  gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, size, gl.FLOAT, false, stride * 4, off * 4); } off += size; } }
+function off(o) { for (const k in o.a) gl.disableVertexAttribArray(o.a[k]); }
+
+// ---------- frame ----------
+let t0 = performance.now(), last = t0, mouse = [0, 0];
+function loop(now) {
+  const t = reduce ? 12 : (now - t0) / 1000, dt = Math.min(.05, (now - last) / 1000); last = now;
+  if (!dragging) { cam.yaw += cam.vy; cam.pitch += cam.vp; cam.vy *= .94; cam.vp *= .94; if (!reduce) cam.yaw += dt * 0.035; }
+  cam.pitch = Math.max(-1.1, Math.min(1.1, cam.pitch));
+  const focus = sel || hover;
+  for (const s of stars) { const [x, y, k, z] = project(s.pos, t); s.sx = x; s.sy = y; s.k = k; s.z = z;
+    const target = (s === focus ? 1 : 0); s.hl += (target - s.hl) * .15; }
+  stars.slice().sort((a, b) => b.z - a.z).forEach((s, i) => s.el.style.zIndex = i);
+  // labels: greedy placement (below, above, right, left) by depth so names never overlap
+  const boxes = [];
+  for (const s of stars.slice().sort((a, b) => (b === focus) - (a === focus) || a.z - b.z)) {
+    const on = s === focus || (focus && links.some(l => l.kind !== 'hilo' && ((l.a === focus && l.b === s) || (l.b === focus && l.a === s))));
+    const w = s.el.offsetWidth || 80, h = s.el.offsetHeight || 28, g = 10 + s.size * 5 * s.k;
+    const cands = [[s.sx - w / 2, s.sy + g], [s.sx - w / 2, s.sy - g - h], [s.sx + g, s.sy - h / 2], [s.sx - g - w, s.sy - h / 2]];
+    let pos = cands[0]; for (const c of cands) { if (!boxes.some(b => c[0] < b[2] && c[0] + w > b[0] && c[1] < b[3] && c[1] + h > b[1])) { pos = c; break; } }
+    pos = [Math.max(8, Math.min(W - w - 8, pos[0])), pos[1]];
+    boxes.push([pos[0] - 4, pos[1] - 2, pos[0] + w + 4, pos[1] + h + 2]);
+    s.el.style.transform = `translate(${pos[0].toFixed(1)}px,${pos[1].toFixed(1)}px)`;
+    s.el.classList.toggle('on', !!on); s.el.classList.toggle('dim', !visible(s) || (!!focus && !on)); s.el.style.opacity = (Math.min(1, s.k * 1.1)).toFixed(2); }
+  gl ? drawGL(t) : draw2D(t);
+  requestAnimationFrame(loop);
+}
+
+function lineQuads(t) {
+  const v = []; const focus = sel || hover;
+  for (const l of links) { const a = l.a, b = l.b; if (!visible(a) && !visible(b)) continue;
+    const dx = b.sx - a.sx, dy = b.sy - a.sy, len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len;
+    const hot = focus && (a === focus || b === focus); const w = (l.kind === 'hilo' ? 3 : 7) * (hot ? 1.5 : 1) * (a.k + b.k) / 2;
+    let al = l.kind === 'hilo' ? .16 : l.kind === 'episodio' ? .7 : .85; if (hot) al = 1.4; else if (focus) al *= .35;
+    const P = (x, y, ux, uy) => v.push(x, y, ux, uy, ...a.col, ...b.col, al);
+    const A1 = [a.sx + nx * w, a.sy + ny * w], A2 = [a.sx - nx * w, a.sy - ny * w], B1 = [b.sx + nx * w, b.sy + ny * w], B2 = [b.sx - nx * w, b.sy - ny * w];
+    P(...A1, 0, 1); P(...A2, 0, -1); P(...B1, 1, 1); P(...B1, 1, 1); P(...A2, 0, -1); P(...B2, 1, -1); }
+  return new Float32Array(v);
+}
+function drawGL(t) {
+  gl.disable(gl.BLEND); const B = prog.bg; gl.useProgram(B.p); gl.bindBuffer(gl.ARRAY_BUFFER, prog.tri);
+  gl.enableVertexAttribArray(B.a.p); gl.vertexAttribPointer(B.a.p, 2, gl.FLOAT, false, 0, 0);
+  gl.uniform2f(B.u.r, C.width, C.height); gl.uniform1f(B.u.t, t); gl.uniform2f(B.u.m, cam.yaw % 6.283, cam.pitch); gl.drawArrays(gl.TRIANGLES, 0, 3); off(B);
+  gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE);
+  // lines
+  const lv = lineQuads(t); if (lv.length) { const L = prog.ln; gl.useProgram(L.p); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, lv, gl.DYNAMIC_DRAW);
+    attribs(L, [['a', 2], ['u', 2], ['c1', 3], ['c2', 3], ['al', 1]], 11); gl.uniform2f(L.u.r, W, H); gl.uniform1f(L.u.t, t); gl.drawArrays(gl.TRIANGLES, 0, lv.length / 11); off(L); }
+  // points: dust then stars
+  const pv = [];
+  for (const d of dust) { const [x, y, k] = project(d.pos, t); if (k <= 0) continue; const tw = .55 + .45 * Math.sin(t * (.6 + d.b) + d.ph);
+    pv.push(x, y, (3 + d.b * 5) * k, .8, .95, .88, (.18 + .4 * d.b) * tw * Math.min(1, k * 1.2)); }
+  for (const s of stars) { const tw = .9 + .1 * Math.sin(t * 1.6 + s.ph); const vis = visible(s) ? 1 : .18; const dim = (sel || hover) && s.hl < .05 ? .55 : 1;
+    pv.push(s.sx, s.sy, (70 + 40 * s.hl) * s.size * s.k * tw, ...s.col, vis * dim * (1 + .3 * s.hl)); }
+  const P = prog.pt; gl.useProgram(P.p); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pv), gl.DYNAMIC_DRAW);
+  attribs(P, [['a', 2], ['s', 1], ['c', 4]], 7); gl.uniform2f(P.u.r, W, H); gl.uniform1f(P.u.d, DPR); gl.drawArrays(gl.POINTS, 0, pv.length / 7); off(P);
+}
+function draw2D(t) {
+  const X = ctx2d, g = X.createRadialGradient(W * .6, H * .5, 0, W * .6, H * .5, Math.max(W, H) * .8);
+  g.addColorStop(0, '#0b2a1c'); g.addColorStop(.5, '#06140e'); g.addColorStop(1, '#020c08'); X.fillStyle = g; X.fillRect(0, 0, W, H);
+  for (const d of dust) { const [x, y, k] = project(d.pos, t); X.fillStyle = `rgba(220,255,235,${.3 * d.b * k})`; X.fillRect(x, y, 1.2, 1.2); }
+  X.globalCompositeOperation = 'lighter';
+  for (const l of links) { const gr = X.createLinearGradient(l.a.sx, l.a.sy, l.b.sx, l.b.sy); gr.addColorStop(0, l.a.css); gr.addColorStop(1, l.b.css);
+    X.strokeStyle = gr; X.globalAlpha = l.kind === 'hilo' ? .15 : .6; X.lineWidth = 1; X.beginPath(); X.moveTo(l.a.sx, l.a.sy); X.lineTo(l.b.sx, l.b.sy); X.stroke(); }
+  for (const s of stars) { const r = 10 * s.size * s.k * (1 + .4 * s.hl), gg = X.createRadialGradient(s.sx, s.sy, 0, s.sx, s.sy, r * 2.5);
+    gg.addColorStop(0, '#fff'); gg.addColorStop(.12, s.css); gg.addColorStop(1, 'transparent'); X.globalAlpha = visible(s) ? 1 : .2; X.fillStyle = gg; X.beginPath(); X.arc(s.sx, s.sy, r * 2.5, 0, 7); X.fill(); }
+  X.globalAlpha = 1; X.globalCompositeOperation = 'source-over';
+}
+
+// ---------- input ----------
+let dragging = false, moved = 0, lx = 0, ly = 0;
+function pick(x, y) { let b = null, bd = W < 720 ? 34 : 26; for (const s of stars) { if (!visible(s)) continue; const d = Math.hypot(s.sx - x, s.sy - y); if (d < bd) { bd = d; b = s; } } return b; }
+function bindInput() {
+  C.addEventListener('pointerdown', e => { dragging = true; moved = 0; lx = e.clientX; ly = e.clientY; C.setPointerCapture(e.pointerId); C.classList.add('drag'); });
+  C.addEventListener('pointermove', e => { mouse = [e.clientX / W - .5, e.clientY / H - .5];
+    if (dragging) { const dx = e.clientX - lx, dy = e.clientY - ly; moved += Math.abs(dx) + Math.abs(dy); lx = e.clientX; ly = e.clientY;
+      cam.yaw += dx * .005; cam.pitch += dy * .004; cam.vy = dx * .0008; cam.vp = dy * .0006; if (moved > 6) $('hint').style.opacity = 0; return; }
+    hover = pick(e.clientX, e.clientY); C.classList.toggle('hot', !!hover); });
+  C.addEventListener('pointerup', e => { dragging = false; C.classList.remove('drag'); if (moved < 6) { const s = pick(e.clientX, e.clientY); s ? show(s) : hide(); } });
+  C.addEventListener('pointerleave', () => { hover = null; });
+  C.addEventListener('wheel', e => { e.preventDefault(); cam.zoom = Math.max(.7, Math.min(1.8, cam.zoom * Math.exp(-e.deltaY * .001))); }, { passive: false });
+  $('close').onclick = hide; addEventListener('keydown', e => { if (e.key === 'Escape') hide(); });
+}
+
+// ---------- card ----------
+const vname = id => data.verticals.find(v => v.id === id)?.name || 'Sin vertical';
+function show(s) {
+  sel = s; const p = s.p, cs = p.companies.map(c => s.comp[c]?.name).filter(Boolean);
+  const peers = links.filter(l => l.kind !== 'hilo' && (l.a === s || l.b === s)).map(l => ({ o: l.a === s ? l.b : l.a, kind: l.kind }));
+  const card = $('card'); card.style.setProperty('--c', s.css);
+  $('cardBody').innerHTML = `<span class="tag"><i></i>${esc(vname(s.v))}</span>
+    <h2>${esc(p.name)}</h2><div class="sub">${esc([p.role, cs.join(', ')].filter(Boolean).join(' · ') || '—')}</div>
+    ${p.x ? `<a class="xl" href="${esc(p.x)}" target="_blank" rel="noopener">${esc(p.x.replace(/^https?:\/\/(www\.)?/, ''))} ↗</a>` : ''}
+    ${peers.length ? `<div class="links">CONECTA CON ${peers.map(q => `<b>${esc(q.o.p.name)}</b> <span>(${q.kind})</span>`).join(', ')}</div>` : ''}
+    <div class="eps">${p.episodes.map(e => s.ep[e]).filter(Boolean).map(e => `<a class="ep" href="${esc(e.youtube)}" target="_blank" rel="noopener">
+      <div class="meta"><span>${e.number ? 'EP. ' + String(e.number).padStart(2, '0') : 'ESPECIAL'}</span><span>${esc(e.date)}</span></div>
+      <div class="t">${esc(e.title)}</div><span class="go">Ver en YouTube →</span></a>`).join('')}</div>`;
+  card.hidden = false; card.style.animation = 'none'; card.offsetHeight; card.style.animation = ''; blip();
+}
+function hide() { sel = null; $('card').hidden = true; }
+
+// ---------- ambient sound (WebAudio, no assets) ----------
+let ac, master; const sb = $('sound');
+sb.onclick = () => { if (!ac) { ac = new AudioContext(); master = ac.createGain(); master.gain.value = 0; master.connect(ac.destination);
+    [110, 164.8, 220, 329.6].forEach((f, i) => { const o = ac.createOscillator(), g = ac.createGain(), l = ac.createOscillator(), lg = ac.createGain();
+      o.frequency.value = f; g.gain.value = .05 / (i + 1); l.frequency.value = .05 + i * .03; lg.gain.value = .03 / (i + 1); l.connect(lg).connect(g.gain); o.connect(g).connect(master); o.start(); l.start(); }); }
+  const on = master.gain.value < .5; master.gain.setTargetAtTime(on ? 1 : 0, ac.currentTime, .8); sb.setAttribute('aria-pressed', on); };
+function blip() { if (!ac || master.gain.value < .5) return; const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = 880 + Math.random() * 440;
+  g.gain.setValueAtTime(.08, ac.currentTime); g.gain.exponentialRampToValueAtTime(.0001, ac.currentTime + 1.5); o.connect(g).connect(master); o.start(); o.stop(ac.currentTime + 1.6); }
+})();

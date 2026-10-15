@@ -18,3 +18,19 @@ Editá `data/constellation.json`:
 2. Si el episodio es nuevo, agregalo en `episodes` con `id`, `number`, `date`, `title`, `youtube` y `views` (`null` si no se sabe).
 3. Agregá la persona en `people` con `id`, `name`, `role`, `companies: [ids]`, `episodes: [ids]`, `x` e `investors: [ids]`.
 Las líneas se arman solas. Lo que no se sabe va en `null`. No se inventa nada.
+
+## Diseño (rediseño v2)
+
+Renderer WebGL propio (sin dependencias): fondo con shader de aurora/nebulosa (fbm con domain warping), estrellas como point sprites con halo y destellos, líneas de constelación como quads con gradiente y pulso de energía, grano sutil. Órbita con arrastre, zoom con rueda, filtro por vertical en la leyenda. Respeta `prefers-reduced-motion`, limita el DPR en mobile y cae a canvas 2D si no hay WebGL. Tipografía: Geist y Geist Mono (OFL, en `fonts/`).
+
+### Paleta (con fuentes)
+| Uso | Hex | Fuente |
+|---|---|---|
+| Verde SLA (acento, Dev & Web) | `#39f688` | slatv.live CSS `--acid` |
+| Fondo | `#020c08` | slatv.live CSS `--background` |
+| Texto | `#eafff3` | slatv.live CSS `--foreground` |
+| Amarillo (Producto & Software) | `#ffc800` | mts.now CSS `--mts-yellow` |
+| Coral (Diseño) | `#ff6b6b` | mts.now bundle (color de acento) |
+| Rojo (acento en la nebulosa) | `#e83a2e` | mts.now CSS `--mts-red` / `--live` |
+| Violeta de la nebulosa | `#7534ab` | pitchnight.slatv.live CSS `--purple` |
+| Violeta de estrella (Hogar & Servicios) | `#b07ae0` | aproximación: `#7534ab` aclarado para que se lea sobre negro |
