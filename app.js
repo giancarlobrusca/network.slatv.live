@@ -76,7 +76,7 @@ function build() {
   const L = $('labels');
   stars.forEach(s => { const el = document.createElement('div'); el.className = 'lbl';
     const c = s.p.companies.map(c => s.comp[c]?.name).filter(Boolean)[0];
-    el.innerHTML = `${esc(s.p.name)}${c && c !== s.p.name ? `<span>${esc(c)}</span>` : ''}`; L.appendChild(el); s.el = el; });
+    el.innerHTML = `${esc(s.p.name)}${c && c !== s.p.name ? `<span>${esc(c)}</span>` : ''}${s.p.avatar ? `<img class="lav" src="${esc(s.p.avatar)}" alt="" loading="lazy">` : ''}`; L.appendChild(el); s.el = el; });
 }
 let filterOn = false;
 const visible = s => !filterOn || s.v === filter || s.hub;
@@ -253,19 +253,36 @@ function bindInput() {
 }
 
 // ---------- card ----------
+const SV = d => `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">${d}</svg>`;
+const ICONS = {
+  x: SV('<path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.78L17.75 3Zm-1.08 16.2h1.7L7.4 4.73H5.58L16.67 19.2Z"/>'),
+  linkedin: SV('<path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4V21H3V9.75Zm6.5 0h3.83v1.54h.06c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.13V21h-4v-4.98c0-1.19-.02-2.72-1.66-2.72-1.66 0-1.91 1.3-1.91 2.63V21h-4V9.75Z"/>'),
+  github: SV('<path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/>'),
+  web: SV('<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm6.93 6h-2.95a15.7 15.7 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.93 8ZM12 4.04A13.9 13.9 0 0 1 13.91 8h-3.82A13.9 13.9 0 0 1 12 4.04ZM4.26 14a8.2 8.2 0 0 1 0-4h3.38a16.5 16.5 0 0 0 0 4H4.26Zm.81 2h2.95c.32 1.25.78 2.45 1.38 3.56A8.03 8.03 0 0 1 5.07 16Zm2.95-8H5.07a8.03 8.03 0 0 1 4.33-3.56A15.7 15.7 0 0 0 8.02 8ZM12 19.96A13.9 13.9 0 0 1 10.09 16h3.82A13.9 13.9 0 0 1 12 19.96ZM14.34 14H9.66a14.7 14.7 0 0 1 0-4h4.68a14.7 14.7 0 0 1 0 4Zm.26 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56ZM16.36 14a16.5 16.5 0 0 0 0-4h3.38a8.2 8.2 0 0 1 0 4h-3.38Z"/>'),
+  instagram: SV('<path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4ZM17.3 5.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4ZM12 2c-2.7 0-3.05.01-4.1.06-1.06.05-1.79.22-2.42.46a4.9 4.9 0 0 0-1.77 1.16A4.9 4.9 0 0 0 2.52 5.45c-.24.63-.41 1.36-.46 2.42C2.01 8.95 2 9.3 2 12s.01 3.05.06 4.1c.05 1.07.22 1.8.46 2.43.25.65.59 1.21 1.16 1.77.56.57 1.12.91 1.77 1.16.63.24 1.36.41 2.42.46 1.06.05 1.4.06 4.13.06s3.05-.01 4.1-.06c1.07-.05 1.8-.22 2.43-.46a4.9 4.9 0 0 0 1.77-1.16 4.9 4.9 0 0 0 1.16-1.77c.24-.63.41-1.36.46-2.43.05-1.05.06-1.4.06-4.1s-.01-3.05-.06-4.13c-.05-1.06-.22-1.79-.46-2.42a4.9 4.9 0 0 0-1.16-1.77 4.9 4.9 0 0 0-1.77-1.16c-.63-.24-1.36-.41-2.43-.46C15.05 2.01 14.7 2 12 2Z"/>'),
+  youtube: SV('<path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/>')
+};
 const vname = id => id === 'hub' ? 'Hub · SLA TV' : data.verticals.find(v => v.id === id)?.name || 'Sin vertical';
 function show(s) {
   sel = s; const p = s.p, cs = p.companies.map(c => s.comp[c]?.name).filter(Boolean);
   const peers = links.filter(l => l.kind !== 'hilo' && (l.a === s || l.b === s)).map(l => ({ o: l.a === s ? l.b : l.a, kind: l.kind }));
   const card = $('card'); card.style.setProperty('--c', s.css);
-  $('cardBody').innerHTML = `<span class="tag"><i></i>${esc(vname(s.v))}</span>
-    <h2>${esc(p.name)}</h2><div class="sub">${esc([p.role, cs.join(', ')].filter(Boolean).join(' · ') || '—')}</div>
-    ${p.x ? `<a class="xl" href="${esc(p.x)}" target="_blank" rel="noopener">${esc(p.x.replace(/^https?:\/\/(www\.)?/, ''))} ↗</a>` : ''}
+  const L = p.links || (p.x ? { x: p.x } : {});
+  const ini = p.name.split(/\s+/).map(w => w[0]).join('').slice(0, 2);
+  $('cardBody').innerHTML = `<div class="prof">
+      <div class="av">${p.avatar ? `<img src="${esc(p.avatar)}" alt="" width="72" height="72" decoding="async">` : `<span>${esc(ini)}</span>`}</div>
+      <div class="pmeta"><span class="tag"><i></i>${esc(vname(s.v))}</span>
+        <h2>${esc(p.name)}</h2><div class="sub">${esc([p.role, cs.join(', ')].filter(Boolean).join(' · ') || '—')}</div></div></div>
+    ${p.bio ? `<p class="bio">${esc(p.bio)}</p>` : ''}
+    ${p.skills?.length ? `<div class="chips">${p.skills.map(k => `<span>${esc(k)}</span>`).join('')}</div>` : ''}
+    ${Object.keys(ICONS).some(k => L[k]) ? `<div class="soc">${Object.keys(ICONS).filter(k => L[k]).map(k => `<a href="${esc(L[k])}" target="_blank" rel="noopener" aria-label="${k}" title="${esc(L[k].replace(/^https?:\/\/(www\.)?/, ''))}">${ICONS[k]}</a>`).join('')}</div>` : ''}
     ${peers.length ? `<div class="links">CONECTA CON ${peers.map(q => `<b>${esc(q.o.p.name)}</b> <span>(${q.kind})</span>`).join(', ')}</div>` : ''}
     ${xSection(s)}
+    ${p.sources?.length ? `<details class="src"><summary>Fuentes (${p.sources.length})</summary>${p.sources.map(u => /^https?:/.test(u) ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\/(www\.)?/, ''))}</a>` : `<span>${esc(u)}</span>`).join('')}</details>` : ''}
     <div class="eps">${p.episodes.map(e => s.ep[e]).filter(Boolean).map(e => `<a class="ep" href="${esc(e.youtube)}" target="_blank" rel="noopener">
       <div class="meta"><span>${e.number ? 'EP. ' + String(e.number).padStart(2, '0') : 'ESPECIAL'}</span><span>${esc(e.date)}</span></div>
       <div class="t">${esc(e.title)}</div><span class="go">Ver en YouTube →</span></a>`).join('')}</div>`;
+  $('card').scrollTop = 0;
   card.hidden = false; card.style.animation = 'none'; card.offsetHeight; card.style.animation = ''; blip();
 }
 const TY = { mention: 'mención', reply: 'respuesta', quote: 'cita', follow: 'sigue' };

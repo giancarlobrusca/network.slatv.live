@@ -134,7 +134,21 @@
    "social": {
     "x": "euneniant",
     "xId": "67799475"
-   }
+   },
+   "avatar": "assets/avatars/eugenia-dearamburu.jpg",
+   "bio": "Trabaja en Producto en InvGate y es de la UTN. Pasó por SLA en el Ep. 18 para un deep dive sobre el rol de PM.",
+   "links": {
+    "x": "https://x.com/euneniant"
+   },
+   "skills": [
+    "Producto",
+    "Product Management",
+    "UTN"
+   ],
+   "sources": [
+    "https://x.com/euneniant",
+    "Vault: Proyectos/SLA/Programas/SLA (programa).md"
+   ]
   },
   {
    "id": "tomas-dascola",
@@ -151,7 +165,23 @@
    "social": {
     "x": "Tomasdascola",
     "xId": "226196142"
-   }
+   },
+   "avatar": "assets/avatars/tomas-dascola.jpg",
+   "bio": "Cofundador y CEO de Clickie, la app desde Córdoba para pedir plomeros, gasistas y electricistas verificados. Contó la historia de Clickie en el Ep. 18 de SLA.",
+   "links": {
+    "x": "https://x.com/Tomasdascola",
+    "web": "https://clickie.com.ar"
+   },
+   "skills": [
+    "Founder",
+    "CEO",
+    "Servicios para el hogar"
+   ],
+   "sources": [
+    "https://x.com/Tomasdascola",
+    "https://clickie.com.ar",
+    "Vault: Proyectos/SLA/Programas/SLA (programa).md"
+   ]
   },
   {
    "id": "karen-dutik",
@@ -168,7 +198,21 @@
    "social": {
     "x": "DutikKaren",
     "xId": "1317292579642314752"
-   }
+   },
+   "avatar": "assets/avatars/karen-dutik.jpg",
+   "bio": "Está cocinando Yafu en Buenos Aires. Fue invitada del Ep. 17 de SLA, y Yafu acompaña el programa todos los miércoles.",
+   "links": {
+    "x": "https://x.com/DutikKaren",
+    "linkedin": "https://www.linkedin.com/in/karen-solange-dutik/"
+   },
+   "skills": [
+    "Yafu"
+   ],
+   "sources": [
+    "https://x.com/DutikKaren",
+    "https://x.com/DutikKaren/status/2095333487100285385",
+    "Vault: Proyectos/SLA/Programas/SLA (programa).md"
+   ]
   },
   {
    "id": "friends-of-figma-ba",
@@ -185,7 +229,18 @@
    "social": {
     "x": null,
     "xId": null
-   }
+   },
+   "avatar": null,
+   "bio": "Comunidad de diseño de Buenos Aires vinculada a Figma. Llevaron la Gran Mesa de Diseño al Ep. 16 de SLA.",
+   "links": {},
+   "skills": [
+    "Diseño",
+    "Comunidad"
+   ],
+   "sources": [
+    "Vault: Proyectos/SLA/Programas/SLA (programa).md",
+    "https://x.com/slatv_/status/2102400024915181940"
+   ]
   },
   {
    "id": "jose-rago",
@@ -202,7 +257,26 @@
    "social": {
     "x": "ragojose",
     "xId": "132603414"
-   }
+   },
+   "avatar": "assets/avatars/jose-rago.jpg",
+   "bio": "Diseñador, inversor ángel y cofundador de basement.studio, con base en Mar del Plata. También es coautor de xmcp, un framework para construir servidores MCP.",
+   "links": {
+    "x": "https://x.com/ragojose",
+    "web": "https://ragojose.com",
+    "github": "https://github.com/ragojose"
+   },
+   "skills": [
+    "Diseño",
+    "Founder",
+    "Angel investor",
+    "MCP"
+   ],
+   "sources": [
+    "https://x.com/ragojose",
+    "https://ragojose.com",
+    "https://api.github.com/users/ragojose",
+    "Vault: Proyectos/SLA/Programas/SLA (programa).md"
+   ]
   },
   {
    "id": "facu-santana",
@@ -219,7 +293,24 @@
    "social": {
     "x": "falanfantana",
     "xId": "1032230805727334400"
-   }
+   },
+   "avatar": "assets/avatars/facu-santana.jpg",
+   "bio": "Cofundador de basement.studio y basement.ventures. Emprendedor digital e inversor; recibió a SLA en el vivo desde basement.",
+   "links": {
+    "x": "https://x.com/falanfantana",
+    "web": "https://www.facundosantana.xyz",
+    "linkedin": "https://www.linkedin.com/in/facundo-santana-69053459/"
+   },
+   "skills": [
+    "Founder",
+    "Inversor",
+    "Estudio digital"
+   ],
+   "sources": [
+    "https://x.com/falanfantana",
+    "https://www.facundosantana.xyz",
+    "Vault: Proyectos/SLA/Programas/SLA (programa).md"
+   ]
   },
   {
    "id": "maxi-firtman",
@@ -234,7 +325,24 @@
    "social": {
     "x": "firt",
     "xId": "17509972"
-   }
+   },
+   "avatar": "assets/avatars/maxi-firtman.jpg",
+   "bio": "Developer, autor, speaker y trainer de Buenos Aires, con muchos libros y cursos, como Vanilla Web. Es Google GDE y OpenAI Codex Ambassador.",
+   "links": {
+    "x": "https://x.com/firt",
+    "web": "https://firt.dev"
+   },
+   "skills": [
+    "Web",
+    "Mobile",
+    "PWAs",
+    "Docencia"
+   ],
+   "sources": [
+    "https://x.com/firt",
+    "https://firt.dev",
+    "Vault: Proyectos/SLA/Programas/SLA (programa).md"
+   ]
   },
   {
    "id": "goncy",
@@ -251,7 +359,25 @@
    "social": {
     "x": "goncy",
     "xId": "42536884"
-   }
+   },
+   "avatar": "assets/avatars/goncy.jpg",
+   "bio": "Gonzalo Pozzo es Forward Deployed Engineer en Vercel, partner de Twitch, GitHub Star y v0 ambassador, y creó Pency. Estuvo en el Ep. 13 de SLA.",
+   "links": {
+    "x": "https://x.com/goncy",
+    "web": "https://goncy.dev",
+    "github": "https://github.com/goncy"
+   },
+   "skills": [
+    "JavaScript",
+    "React",
+    "Frontend",
+    "Streaming"
+   ],
+   "sources": [
+    "https://x.com/goncy",
+    "https://api.github.com/users/goncy",
+    "Vault: Proyectos/SLA/Programas/SLA (programa).md"
+   ]
   }
  ],
  "hub": {
@@ -262,7 +388,24 @@
    "x": "slatv_",
    "xId": "2054902856235315200"
   },
-  "url": "https://slatv.live"
+  "url": "https://slatv.live",
+  "avatar": "assets/avatars/slatv.jpg",
+  "bio": "El tech new media de LATAM: SLA en vivo los miércoles a las 20 hs y El Noticiero los lunes a las 20 hs.",
+  "links": {
+   "x": "https://x.com/slatv_",
+   "web": "https://slatv.live",
+   "youtube": "https://www.youtube.com/@SLA-TEVE"
+  },
+  "skills": [
+   "Medios",
+   "Tech",
+   "Startups",
+   "LATAM"
+  ],
+  "sources": [
+   "https://x.com/slatv_",
+   "https://slatv.live"
+  ]
  },
  "interactions": [
   {
