@@ -172,7 +172,7 @@ function loop(now) {
     let pos = cands[0]; for (const c of cands) { if (!boxes.some(b => c[0] < b[2] && c[0] + w > b[0] && c[1] < b[3] && c[1] + h > b[1])) { pos = c; break; } }
     pos = [Math.max(8, Math.min(W - w - 8, pos[0])), pos[1]];
     boxes.push([pos[0] - 4, pos[1] - 2, pos[0] + w + 4, pos[1] + h + 2]);
-    s.el.style.transform = `translate(${pos[0].toFixed(1)}px,${pos[1].toFixed(1)}px)`;
+    s.el.style.transform = `translate(${pos[0].toFixed(1)}px,${pos[1].toFixed(1)}px)`; s.el.dataset.sx = s.sx | 0; s.el.dataset.sy = s.sy | 0;
     s.el.classList.toggle('on', !!on); s.el.classList.toggle('dim', !visible(s) || (!!focus && !on)); s.el.style.opacity = (Math.min(1, s.k * 1.1)).toFixed(2); }
   gl ? drawGL(t) : draw2D(t);
   requestAnimationFrame(loop);
@@ -190,7 +190,7 @@ function lineQuads(t) {
   if (showX) for (const l of xlinks) { const a = l.a, b = l.b; if (!visible(a) || !visible(b)) continue;
     const hot = focus && (a === focus || b === focus); const o = l.mutual ? 2.5 : 0;
     const dx = b.sx - a.sx, dy = b.sy - a.sy, len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len, w = (2 + Math.min(4, l.count * .5)) * (a.k + b.k) / 2;
-    const al = (hot ? .6 : focus ? .06 : .26); const P = (x, y, ux, uy) => v.push(x + nx * o, y + ny * o, ux, uy, ...XCOL, ...XCOL, al);
+    const al = (hot ? .6 : focus ? .06 : .34) * Math.max(1, 1.6 - (a.k + b.k) / 2); const P = (x, y, ux, uy) => v.push(x + nx * o, y + ny * o, ux, uy, ...XCOL, ...XCOL, al);
     P(a.sx + nx * w, a.sy + ny * w, 0, 1); P(a.sx - nx * w, a.sy - ny * w, 0, -1); P(b.sx + nx * w, b.sy + ny * w, 1, 1);
     P(b.sx + nx * w, b.sy + ny * w, 1, 1); P(a.sx - nx * w, a.sy - ny * w, 0, -1); P(b.sx - nx * w, b.sy - ny * w, 1, -1); }
   return new Float32Array(v);
@@ -202,8 +202,8 @@ function xParticles(t, pv) { if (!showX) return; const focus = sel || hover;
     const n = Math.min(14, 3 + l.count * 2), speed = .08 + Math.min(.22, l.count * .025);
     const dx = b.sx - a.sx, dy = b.sy - a.sy, len = Math.hypot(dx, dy) || 1, nx = -dy / len * (l.mutual ? 2.5 : 0), ny = dx / len * (l.mutual ? 2.5 : 0);
     for (let i = 0; i < n; i++) { const u = ((reduce ? 0 : t * speed) + i / n + l.ph) % 1, e = Math.sin(u * Math.PI);
-      const k = Math.max(.85, a.k + (b.k - a.k) * u);
-      pv.push(a.sx + dx * u + nx, a.sy + dy * u + ny, (9 + Math.min(8, l.count)) * k * (hot ? 1.5 : 1), ...(u > .85 ? b.col : XCOL), Math.min(1, .75 + l.count * .05) * Math.pow(e, .6) * dim); } } }
+      const k = Math.max(1, a.k + (b.k - a.k) * u);
+      pv.push(a.sx + dx * u + nx, a.sy + dy * u + ny, (9 + Math.min(8, l.count)) * k * (hot ? 1.5 : 1), ...(u > .85 ? b.col : XCOL), Math.min(1, .9 + l.count * .04) * Math.pow(e, .5) * dim); } } }
 function drawGL(t) {
   gl.disable(gl.BLEND); const B = prog.bg; gl.useProgram(B.p); gl.bindBuffer(gl.ARRAY_BUFFER, prog.tri);
   gl.enableVertexAttribArray(B.a.p); gl.vertexAttribPointer(B.a.p, 2, gl.FLOAT, false, 0, 0);
@@ -236,15 +236,17 @@ function draw2D(t) {
 }
 
 // ---------- input ----------
-let dragging = false, moved = 0, lx = 0, ly = 0;
-function pick(x, y) { let b = null, bd = W < 720 ? 34 : 26; for (const s of stars) { if (!visible(s)) continue; const d = Math.hypot(s.sx - x, s.sy - y); if (d < bd) { bd = d; b = s; } } return b; }
+let dragging = false, moved = 0, lx = 0, ly = 0, ptype = 'mouse', downAt = 0;
+function pick(x, y) { let b = null, bd = ptype === 'mouse' ? 26 : 44; for (const s of stars) { if (!visible(s)) continue; const d = Math.hypot(s.sx - x, s.sy - y); if (d < bd) { bd = d; b = s; } } return b; }
+const tapSlop = () => ptype === 'mouse' ? 6 : 14;
 function bindInput() {
-  C.addEventListener('pointerdown', e => { dragging = true; moved = 0; lx = e.clientX; ly = e.clientY; C.setPointerCapture(e.pointerId); C.classList.add('drag'); });
+  C.addEventListener('pointercancel', () => { dragging = false; C.classList.remove('drag'); });
+  C.addEventListener('pointerdown', e => { ptype = e.pointerType || 'mouse'; downAt = performance.now(); dragging = true; moved = 0; lx = e.clientX; ly = e.clientY; C.setPointerCapture(e.pointerId); C.classList.add('drag'); });
   C.addEventListener('pointermove', e => { mouse = [e.clientX / W - .5, e.clientY / H - .5];
     if (dragging) { const dx = e.clientX - lx, dy = e.clientY - ly; moved += Math.abs(dx) + Math.abs(dy); lx = e.clientX; ly = e.clientY;
-      cam.yaw += dx * .005; cam.pitch += dy * .004; cam.vy = dx * .0008; cam.vp = dy * .0006; if (moved > 6) $('hint').style.opacity = 0; return; }
+      cam.yaw += dx * .005; cam.pitch += dy * .004; cam.vy = dx * .0008; cam.vp = dy * .0006; if (moved > tapSlop()) $('hint').style.opacity = 0; return; }
     hover = pick(e.clientX, e.clientY); C.classList.toggle('hot', !!hover); });
-  C.addEventListener('pointerup', e => { dragging = false; C.classList.remove('drag'); if (moved < 6) { const s = pick(e.clientX, e.clientY); s ? show(s) : hide(); } });
+  C.addEventListener('pointerup', e => { dragging = false; C.classList.remove('drag'); if (moved < tapSlop() || (ptype !== 'mouse' && performance.now() - downAt < 250 && moved < 24)) { cam.vy = cam.vp = 0; const s = pick(e.clientX, e.clientY); s ? show(s) : hide(); } });
   C.addEventListener('pointerleave', () => { hover = null; });
   C.addEventListener('wheel', e => { e.preventDefault(); cam.zoom = Math.max(.7, Math.min(1.8, cam.zoom * Math.exp(-e.deltaY * .001))); }, { passive: false });
   $('close').onclick = hide; addEventListener('keydown', e => { if (e.key === 'Escape') hide(); });
@@ -274,7 +276,7 @@ function xSection(s) { const rel = xlinks.filter(l => l.a === s || l.b === s); i
   const ex = rel.flatMap(l => l.examples.map(e => ({ ...e, from: l.a, to: l.b }))).sort((x, y) => y.at.localeCompare(x.at)).filter((e, i, a) => a.findIndex(z => z.u === e.u) === i).slice(0, 3);
   return `<div class="xsec"><div class="xh"><span>EN X</span><span>${rel.reduce((n, l) => n + l.count, 0)} interacciones</span></div>
     ${rows.map(r => `<div class="xr"><b style="color:${r.o.css}">●</b><span>${esc(r.o.p.name)}</span><small>${r.out ? '→ ' + r.out : ''}${r.out && r.inn ? ' · ' : ''}${r.inn ? '← ' + r.inn : ''}</small></div>`).join('')}
-    <div class="xex">${ex.map(e => `<a href="${esc(e.u)}" target="_blank" rel="noopener">@${esc(e.from.p.social?.x || '')} → @${esc(e.to.p.social?.x || '')} · ${TY[e.type] || e.type} · ${esc(e.at.slice(0, 10))} ↗</a>`).join('')}</div></div>`; }
+    <div class="xex">${ex.map(e => `<a href="${esc(e.u)}" target="_blank" rel="noopener">@${esc(e.from.p.social?.x || '')} → @${esc(e.to.p.social?.x || '')} · ${TY[e.type] || e.type} · post ${esc(e.u.split('/').pop().slice(-6))} ↗</a>`).join('')}</div></div>`; }
 function hide() { sel = null; $('card').hidden = true; }
 
 // ---------- ambient sound (WebAudio, no assets) ----------
