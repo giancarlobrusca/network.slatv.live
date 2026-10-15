@@ -23,12 +23,13 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 
 let W = 0, H = 0, DPR = 1, data, stars = [], links = [], xlinks = [], showX = true, dust = [], hover = null, sel = null, filter = null;
 const cam = { yaw: 1.25, pitch: -0.42, vy: 0, vp: 0, zoom: 1, zoomT: 1, px: 0, py: 0, pxT: 0, pyT: 0 };
+const OG = new URLSearchParams(location.search).has('og'); if (OG) document.documentElement.classList.add('og');
 const MQ = matchMedia('(max-width: 768px)'); let mobile = MQ.matches; MQ.addEventListener?.('change', e => { mobile = e.matches; resetCam(); });
 function resetCam() { cam.zoomT = 1; cam.pxT = 0; cam.pyT = 0; }
 let topSet = new Set();
 
 // ---------- data ----------
-fetch('data/constellation.json').then(r => r.json()).then(d => { data = d; build(); init(); requestAnimationFrame(loop); })
+fetch('data/constellation.json').then(r => r.json()).then(d => { data = d; build(); init(); if (OG) { cam.zoom = cam.zoomT = +(new URLSearchParams(location.search).get('z') || 1.05); cam.yaw = +(new URLSearchParams(location.search).get('yaw') || 1.25); cam.pitch = -0.32; show(stars.find(s => s.hub)); } requestAnimationFrame(loop); })
   .catch(e => console.error('No se pudo cargar data/constellation.json', e));
 
 function build() {
@@ -99,7 +100,7 @@ function project(p, t) {
   const y2 = y * cp - z * sp; z = y * sp + z * cp; y = y2;
   const d = 3.1 / cam.zoom, k = 1 / (d + z);
   const f = W > 900 ? Math.min(W, H) * 1.25 : mobile ? Math.min(W, H * .62) * 1.12 : Math.min(W, H) * 1.2;
-  const cx = (W > 900 ? W * 0.6 : W * 0.5) + cam.px, cyy = (W > 900 ? H * 0.52 : mobile ? H * 0.47 : H * 0.6) + cam.py;
+  const cx = (OG ? W * 0.55 : W > 900 ? W * 0.6 : W * 0.5) + cam.px, cyy = (W > 900 ? H * 0.52 : mobile ? H * 0.47 : H * 0.6) + cam.py;
   return [cx + x * f * k, cyy + y * f * k, k * d, z];
 }
 
@@ -167,8 +168,8 @@ function off(o) { for (const k in o.a) gl.disableVertexAttribArray(o.a[k]); }
 // ---------- frame ----------
 let t0 = performance.now(), last = t0, mouse = [0, 0];
 function loop(now) {
-  const t = reduce ? 12 : (now - t0) / 1000, dt = Math.min(.05, (now - last) / 1000); last = now;
-  if (!dragging) { cam.yaw += cam.vy; cam.pitch += cam.vp; cam.vy *= .94; cam.vp *= .94; if (!reduce && !(mobile && sel)) cam.yaw += dt * 0.035; }
+  const t = OG ? 14.2 : reduce ? 12 : (now - t0) / 1000, dt = Math.min(.05, (now - last) / 1000); last = now;
+  if (!dragging) { cam.yaw += cam.vy; cam.pitch += cam.vp; cam.vy *= .94; cam.vp *= .94; if (!reduce && !OG && !(mobile && sel)) cam.yaw += dt * 0.035; }
   if (mobile && sel && !pinch) { const ty = H * ($('card').classList.contains('full') ? .14 : .3); cam.pxT = cam.px + (W / 2 - sel.sx); cam.pyT = cam.py + (ty - sel.sy); }
   const ease = reduce ? 1 : .12; cam.zoom += (cam.zoomT - cam.zoom) * ease; cam.px += (cam.pxT - cam.px) * ease; cam.py += (cam.pyT - cam.py) * ease;
   cam.pitch = Math.max(-1.1, Math.min(1.1, cam.pitch));
@@ -180,6 +181,7 @@ function loop(now) {
   const boxes = [];
   for (const s of stars.slice().sort((a, b) => (b === focus) - (a === focus) || !!b.hub - !!a.hub || b.size * b.k - a.size * a.k)) {
     const on = s === focus || (focus && [...links.filter(l => l.kind !== 'hilo'), ...(showX ? xlinks : [])].some(l => (l.a === focus && l.b === s) || (l.b === focus && l.a === s)));
+    if (OG && !s.team) { s.el.classList.add('hide'); continue; }
     if (mobile && !on && !(topSet.has(s) && !focus) && !(cam.zoom > 1.7 && s.k > .9 && !focus)) { s.el.classList.add('hide'); s.el.dataset.sx = s.sx | 0; s.el.dataset.sy = s.sy | 0; continue; }
     const w = s.el.offsetWidth || 80, h = s.el.offsetHeight || 28, g = 10 + s.size * 5 * s.k;
     const cands = [[s.sx - w / 2, s.sy + g], [s.sx - w / 2, s.sy - g - h], [s.sx + g, s.sy - h / 2], [s.sx - g - w, s.sy - h / 2]];

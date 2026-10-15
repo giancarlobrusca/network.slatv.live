@@ -183,3 +183,24 @@ h1 .h1-logo{height:.78em;width:auto;vertical-align:baseline;margin-left:.08em;fi
 }
 .btn.mob{display:none}
 @media (max-width:768px){.btn.mob{display:inline-flex}}
+/* ---------- ?og=1 : Open Graph composition (1200x630) ---------- */
+html.og .actions,html.og .hint,html.og .legend,html.og #card .x,html.og .grab,html.og .card .xsec,html.og .card .src,html.og .card .links,html.og .card .eps,html.og .stats,html.og .lede{display:none!important}
+html.og .hero{top:150px;left:56px;max-width:440px}
+html.og .eyebrow{font-size:14px;margin-bottom:20px}
+html.og h1{font-size:88px}
+html.og .lede{display:block!important;font-size:19px;max-width:30ch;margin-top:22px}
+html.og .card{top:auto;bottom:auto;top:50%;transform:translateY(-50%);right:56px;width:360px;animation:none;max-height:none;overflow:visible;padding:26px}
+html.og .bar{background:none;border-bottom-color:transparent;padding:0 56px;height:84px}
+html.og .brand img{height:22px}html.og .crumb{font-size:17px}html.og .pill{font-size:12px;padding:6px 10px}
+html.og #labels .lbl{font-size:13px}
+html.og .lede{display:none!important}
+html.og .hero{top:170px}
+html.og .hero::before{content:"";position:absolute;inset:-160px -120px -200px -200px;z-index:-1;background:radial-gradient(closest-side,rgba(2,12,8,.92),rgba(2,12,8,.6) 55%,transparent)}
+html.og .grid{opacity:.3}
+html.og .lbl .lav{display:none}
+html.og .tagline{display:block}
+.tagline{display:none;margin:26px 0 0;font:500 20px/1.35 Geist,sans-serif;color:rgba(234,255,243,.72);letter-spacing:-.01em;max-width:22ch}
+html.og .bar{backdrop-filter:none;-webkit-backdrop-filter:none}
+html.og .lbl span{display:none}
+html.og .lbl{font-size:12px!important;color:rgba(234,255,243,.85)}
+html.og #labels{display:none}
