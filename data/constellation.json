@@ -7,8 +7,10 @@
    "fetchedAt": "2026-10-15T02:58:00Z",
    "method": "X API full-archive search (from:A @B, -is:retweet), see scripts/fetch-x.py",
    "coverage": "Up to 25 most recent matching posts per account (next page came back empty); retweets excluded. No posts were returned for @goncy or @firt.",
-   "follows": "not determined: no followers/following endpoint available"
-  }
+   "follows": "not determined: no followers/following endpoint available",
+   "moreGuests": "2026-10-14: interacciones de los 13 invitados nuevos con handle verificado, vía búsqueda full-archive del namespace x gratuito; solo la primera página (≤25 posts) por consulta, así que los conteos son mínimos. Posts crudos en scripts/raw/x-posts-more-guests.json."
+  },
+  "views": "Vistas de YouTube tomadas con yt-dlp el 2026-10-14; definen el brillo/tamaño de cada estrella (suma de vistas de sus videos, escala log)."
  },
  "verticals": [
   {
@@ -26,6 +28,14 @@
   {
    "id": "hogar",
    "name": "Hogar & Servicios"
+  },
+  {
+   "id": "fintech",
+   "name": "Fintech"
+  },
+  {
+   "id": "negocios",
+   "name": "Negocios & B2B"
   }
  ],
  "companies": [
@@ -65,6 +75,120 @@
    "name": "Vercel",
    "vertical": "dev",
    "url": null
+  },
+  {
+   "id": "certenza",
+   "name": "Certenza",
+   "vertical": "negocios",
+   "url": "https://certenza.com"
+  },
+  {
+   "id": "empretienda",
+   "name": "Empretienda",
+   "vertical": "negocios",
+   "url": null
+  },
+  {
+   "id": "pulgy",
+   "name": "Pulgy App",
+   "vertical": "producto",
+   "url": "https://pulgy.app"
+  },
+  {
+   "id": "berry",
+   "name": "Berry",
+   "vertical": "fintech",
+   "url": null
+  },
+  {
+   "id": "roomix",
+   "name": "Roomix",
+   "vertical": "producto",
+   "url": null
+  },
+  {
+   "id": "fardo",
+   "name": "Fardo",
+   "vertical": "negocios",
+   "url": null
+  },
+  {
+   "id": "extra",
+   "name": "EXTRA",
+   "vertical": "producto",
+   "url": null
+  },
+  {
+   "id": "xmcp",
+   "name": "XMCP",
+   "vertical": "dev",
+   "url": null
+  },
+  {
+   "id": "on-club",
+   "name": "O(n) Club",
+   "vertical": "dev",
+   "url": null
+  },
+  {
+   "id": "el-cerokm",
+   "name": "El CeroKM",
+   "vertical": "negocios",
+   "url": "https://elcerokm.com"
+  },
+  {
+   "id": "sensify",
+   "name": "SensifyCloud",
+   "vertical": "negocios",
+   "url": null
+  },
+  {
+   "id": "gasti",
+   "name": "Gasti",
+   "vertical": "fintech",
+   "url": null
+  },
+  {
+   "id": "paisanos",
+   "name": "Paisanos",
+   "vertical": "diseno",
+   "url": "https://paisanos.io"
+  },
+  {
+   "id": "la-diseneria",
+   "name": "La Diseñería",
+   "vertical": "diseno",
+   "url": null
+  },
+  {
+   "id": "cecefi",
+   "name": "cece.fi",
+   "vertical": "fintech",
+   "url": "https://cece.fi"
+  },
+  {
+   "id": "de-recruiters",
+   "name": "de/Recruiters",
+   "vertical": "negocios",
+   "url": null
+  },
+  {
+   "id": "takenos",
+   "name": "Takenos",
+   "vertical": "fintech",
+   "url": null
+  },
+  {
+   "id": "lemon",
+   "name": "Lemon",
+   "vertical": "fintech",
+   "url": null
+  },
+  {
+   "id": "uxbs",
+   "name": "UXBS",
+   "vertical": "diseno",
+   "url": "https://uxbs.studio"
   }
  ],
  "episodes": [
@@ -74,7 +198,8 @@
    "date": "2026-10-07",
    "title": "Clickie, CounterStrike, Outputs para Agents, Poteto y GrokBot, Product con Eugenia de InvGate",
    "youtube": "https://www.youtube.com/watch?v=jobfnkQyhDA",
-   "views": null
+   "views": 1970,
+   "viewsAt": "2026-10-14"
   },
   {
    "id": "ep17",
@@ -82,7 +207,8 @@
    "date": "2026-09-30",
    "title": "Super Inteligencia, Foros, Videcodear juegos para web, Dot/Bot/6.1/5.5, Karen de Yafu",
    "youtube": "https://www.youtube.com/watch?v=7E_Xfl8pBuc",
-   "views": null
+   "views": 2017,
+   "viewsAt": "2026-10-14"
   },
   {
    "id": "ep16",
@@ -90,7 +216,8 @@
    "date": "2026-09-23",
    "title": "El diseño más vivo que nunca, JEV, Top 9, Horowitz Andreessen Academy, Friends of Figma",
    "youtube": "https://www.youtube.com/watch?v=j_Qb9qy7l1A",
-   "views": null
+   "views": 3386,
+   "viewsAt": "2026-10-14"
   },
   {
    "id": "ep15",
@@ -98,8 +225,9 @@
    "date": "2026-09-16",
    "title": "SLA x Basement: crear un estudio de diseño global desde Argentina",
    "youtube": "https://www.youtube.com/watch?v=d9DLHBJbHZQ",
-   "views": null,
-   "note": "sin número en el título; sería el 15 (a confirmar)"
+   "views": 3903,
+   "note": "sin número en el título; sería el 15 (a confirmar)",
+   "viewsAt": "2026-10-14"
   },
   {
    "id": "ep14",
@@ -107,7 +235,8 @@
    "date": "2026-09-09",
    "title": "Maxi Firtman, los nabos, Ponzis, Elizabeth Holmes, ¿Nos bata la ia?, MormonTV, Mark Lou",
    "youtube": "https://www.youtube.com/watch?v=fg0VjFN-unE",
-   "views": null
+   "views": 5257,
+   "viewsAt": "2026-10-14"
   },
   {
    "id": "ep13",
@@ -115,7 +244,294 @@
    "date": "2026-09-02",
    "title": "Goncy Forward Deployed Engineer en VERCEL, Omarchy y Linux, H3 Max, Fable 5.1, Tim Cook",
    "youtube": "https://www.youtube.com/watch?v=7kiHCad7IdM",
-   "views": null
+   "views": 7788,
+   "viewsAt": "2026-10-14"
+  },
+  {
+   "id": "yt-gDgIUzFlW3A",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-07-27",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Anabella Guimarey, founder de El CeroKM: \"Los autos se van a comprar online\"",
+   "youtube": "https://www.youtube.com/watch?v=gDgIUzFlW3A",
+   "views": 175,
+   "viewsAt": "2026-10-14",
+   "description": "Nos visitó Anabella Guimarey, de elcerokm.com, para conversar sobre la venta online de autos nuevos: competencia entre concesionarios, marcas chinas, patentamiento, expansión regional y transparencia de precios y stock. Además, contó cómo operan como una empresa tecnológica, qué automatizan con agentes y cómo preparó un pitch para hablar ante miles de personas.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-9illIJqJV6k",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-07-16",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Maga Defelippe, founder de Pulgy App: nichos, creadores de contenido y la mentalidad de dev",
+   "youtube": "https://www.youtube.com/watch?v=9illIJqJV6k",
+   "views": 108,
+   "viewsAt": "2026-10-14",
+   "description": "Recibimos a Maga (@magalidefelippe), founder engineer de Pulgy App, una plataforma para que creadores y profesionales vendan productos digitales y sesiones. Hablamos sobre nichos, contenido curado, building public, cómo matar la “mentalidad de dev”, feedback real de usuarios, confianza, decisiones de producto, work-life balance, hustle culture y el desafío de construir mientras se trabaja full time.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-6LNxvp2ztp4",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-10-09",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "La app argentina que consiguió la inversión de Guillermo Rauch: Clickie | Tomás Dascola en SLA",
+   "youtube": "https://www.youtube.com/watch?v=6LNxvp2ztp4",
+   "views": 362,
+   "viewsAt": "2026-10-14",
+   "description": "En este recorte, Tomás, co-founder de Clicky, nos cuenta la locura detrás de su viaje improvisado a San Francisco que terminó con una inversión de Guillermo Rauch (Vercel) tras probar la app en producción. Además de repasar la anécdota de cómo se hicieron virales por accidente en Paren La Mano, profundiza en la visión detrás del producto: por qué decidieron no ser un simple \"Uber de oficios\" para convertirse en la infraestructura definitiva que resuelve los problemas del hogar en Argentina.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-zV85dUexxkc",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-09-18",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Los argentinos que diseñaron para Elon Musk, Vercel y MrBeast: José Rago y Facu Santana de Basement",
+   "youtube": "https://www.youtube.com/watch?v=zV85dUexxkc",
+   "views": 2406,
+   "viewsAt": "2026-10-14",
+   "description": "Facundo Santana y José Rago, co-founders de Basement, nos abren las puertas de sus oficinas para hablar de los orígenes de uno de los mejores estudios de diseño global. Charlamos sobre qué tienen en cuenta para elegir clientes, cómo funciona su laboratorio, la vara de calidad, el trabajo con Vercel, MrBeast y X, hacia dónde va el diseño y mucho más.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-6ajnGpbIRTc",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-09-26",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Mesa de Diseño: ¿La IA va a reemplazar a los diseñadores? ft. Friends of Figma",
+   "youtube": "https://www.youtube.com/watch?v=6ajnGpbIRTc",
+   "views": 1299,
+   "viewsAt": "2026-10-14",
+   "description": "¿Qué significa ser diseñador hoy cuando la Inteligencia Artificial puede generar interfaces en segundos? Armamos una mesa de diseño imperdible junto a la comunidad de Friends of Figma para debatir sobre el futuro del UX/UI, los nuevos procesos de trabajo y el rol del criterio creativo.\n\nEn este recorte del Episodio 16, nos acompañan referentes de la industria: Ana Varela (Graphic & Product Designer), Cris Lemoine (Product Designer), Diego Villarroel (Design Systems) y Agustín Ale (Product & Game Designer).\n\nHablamos sobre cómo sobrevivir a la automatización, dónde buscar inspiración analógica ",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-e_p5uO0URWU",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-07-16",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Jules Newland y Juan Duzac de EXTRA App: cómo crear un marketplace",
+   "youtube": "https://www.youtube.com/watch?v=e_p5uO0URWU",
+   "views": 89,
+   "viewsAt": "2026-10-14",
+   "description": "Recibimos a Jules y Juan, founders de Extra, un marketplace de reventa de ropa construido desde Argentina con más de 50.000 usuarios.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-QaZP2QyLPOk",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-08-22",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Alan Gosiker, founder de de/Recruiters: hiring en tech, Forward Deployed Engineer y como armar tu CV",
+   "youtube": "https://www.youtube.com/watch?v=QaZP2QyLPOk",
+   "views": 1252,
+   "viewsAt": "2026-10-14",
+   "description": "Nos visita Alan Gosiker para hablar de hiring en tech: los cambios para perfiles junior, entrevistas y challenges con IA, cómo mostrar experiencia real en CV, LinkedIn y GitHub, y qué buscan startups y empresas grandes. Además, abordamos el rol de forward deployed engineer, títulos y bootcamps, transformación digital y habilidades blandas.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-KxRYngRZnxo",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-07-16",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Nacho Gorriti, founder de Roomix IA: Cómo levantar una ronda y revolucionar el mercado inmobiliario",
+   "youtube": "https://www.youtube.com/watch?v=KxRYngRZnxo",
+   "views": 277,
+   "viewsAt": "2026-10-14",
+   "description": "Recibimos a Nacho Gorriti, founder de Roomix, para hablar de cómo están repensando la búsqueda de propiedades con inteligencia artificial. Charlamos sobre el problema de los portales inmobiliarios, el modelo de pagar para aparecer, la relación con inmobiliarias, cómo levantar una ronda, founders e inversores, búsqueda semántica, datos desordenados, próximos pasos de Roomix, app mobile, Deep Match y cómo construir producto en una industria tradicional.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-5PCuXBZckpg",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-07-16",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Valen Bearzotti y Koller: XMCP, MCPs y development",
+   "youtube": "https://www.youtube.com/watch?v=5PCuXBZckpg",
+   "views": 240,
+   "viewsAt": "2026-10-14",
+   "description": "Recibimos a Valentina Bearzotti, head of development de Basement y Koller, el founder de O(n) Club para charlar sobre XMCP, código y negocios.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-MzDNx2TB32M",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-07-16",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Santi Echazú, co-founder de Paisanos: cómo tener ideas creativas",
+   "youtube": "https://www.youtube.com/watch?v=MzDNx2TB32M",
+   "views": 180,
+   "viewsAt": "2026-10-14",
+   "description": "En Aquilea 57 recibimos a Santi Echazú, co founder y Director Creativo en Paisanos, que nos contó como es ser director creativo hoy, nos compartió insights sobre el proceso creativo, la curiosidad, el diseño de productos y el arte de incomodar para encontrar grandes ideas.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-3W96bAsp91c",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-09-11",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Entrevista a Maxi Firtman: programar hace 30 años, desarmar Ponzis y \"Block por nabo\"",
+   "youtube": "https://www.youtube.com/watch?v=3W96bAsp91c",
+   "views": 10452,
+   "viewsAt": "2026-10-14",
+   "description": "Nos visita Maximiliano Firtman, programador, periodista y profesor. Repasamos sus inicios entre BBS, HTML y desarrollo para celulares, su experiencia en capacitación tecnológica, sus cruces y bloqueos en X, investigaciones sobre esquemas Ponzi y estafas, y el impacto de los agentes, el vibe coding y la IA en la programación.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-4pHf0fiyc2c",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-07-16",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Ari Onega, founder de Emprendetienda y Certenza: compliance, Due Dilligence y vender tu empresa",
+   "youtube": "https://www.youtube.com/watch?v=4pHf0fiyc2c",
+   "views": 592,
+   "viewsAt": "2026-10-14",
+   "description": "Recibimos a Ari Onega, co-founder de Certenza (y ex Empretienda), para hablar sobre Compliancemaxxing en Latinoamérica. Charlamos sobre cómo están bajando las barreras del cumplimiento normativo y la ciberseguridad para que las empresas de Latam puedan exportar y jugar en las grandes ligas. Nos cuenta los detalles detrás de la venta de Empretienda a Ualá, cómo sobrevivir a un Due Diligence, la importancia de los mentores y advisors, el nicho de las certificaciones SOC 2 e ISO 27001 en industrias tradicionales como la minería o energía, y el lanzamiento oficial de su nueva plataforma web. Maste",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-tXzdVoaDt-M",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-10-05",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Armó una startup de comida con $40.000 y sin saber cocinar | Karen Dutik de YAFU en SLA",
+   "youtube": "https://www.youtube.com/watch?v=tXzdVoaDt-M",
+   "views": 1302,
+   "viewsAt": "2026-10-14",
+   "description": "Nos visitó Karen, de Yafu, y nos contó cómo pasó de cocinar viandas en su departamento a organizar un equipo y desarrollar software propio. Hablamos de escalar sin perder calidad, resolver almuerzos para empresas, acercarse a la comunidad tech y financiar el emprendimiento sin levantar capital.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-KpuVr_jsQy8",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-07-16",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Male Martin, founder de Fardo: cómo posicionar tu marca en motores de IA (GEO, SEO y marketing)",
+   "youtube": "https://www.youtube.com/watch?v=KpuVr_jsQy8",
+   "views": 81,
+   "viewsAt": "2026-10-14",
+   "description": "Charlamos con Malena Martin, CEO & Founder de Fardo, que nos contó sobre el auge del AEO y GEO (la optimización y posicionamiento de marcas en motores de inteligencia artificial) y cómo competir por ser la respuesta que los LLMs le dan a los usuarios.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-gW3f3nW3tSs",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-10-13",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "¿La Inteligencia Artificial va a matar a los Product Managers? Eugenia de Aramburu, PM de InvGate",
+   "youtube": "https://www.youtube.com/watch?v=gW3f3nW3tSs",
+   "views": 423,
+   "viewsAt": "2026-10-14",
+   "description": "Recibimos a Eugenia Aramburu, Product Manager en InvGate, para desmitificar el rol de producto en la industria tech actual. Hablamos de la evolución del rol hacia el \"Product Engineer\", la diferencia real entre Product, Project y Scrum Master, y cómo gestionar la presión de los C-Levels usando datos y la regla de los \"5 Por Qué\". También debatimos sobre los desafíos del trabajo remoto y respondemos la gran pregunta: ¿Va a desaparecer la posición de PM con el avance de la inteligencia artificial?",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-ydxnJeLvh0E",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-08-14",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Sofi Ferro & Nahue Alberti de Paisanos: Producto, cultura y tecnología (featuring Gaucho)",
+   "youtube": "https://www.youtube.com/watch?v=ydxnJeLvh0E",
+   "views": 269,
+   "viewsAt": "2026-10-14",
+   "description": "Charlamos con ⁠Sofía Ferro (Product Engineer)⁠ y ⁠Nahuel Alberti⁠ (CTO) de ⁠Paisanos en sus oficinas⁠. Sofi nos contó su recorrido desde Letras hacia tecnología y cómo surgió el proyecto de Gaucho, un robot restaurado que responde por voz. Además, hablamos de la Hackaton de Hardware que se viene el 5 de septiembre y Marta, una planta con conexión digital.\n\nNahue nos contó sobre la cultura interna de Paisanos, sus ideas sobre la comunidad, el foco, la presencialidad y el criterio para crear productos. También de su obsesión por los perfumes y cómo es ser el jefe de Tecnología en una de las agen",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-Y-LSsfY5-2A",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-09-04",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Entrevista a Goncy, Forward Deployed Engineer en VERCEL y streamer",
+   "youtube": "https://www.youtube.com/watch?v=Y-LSsfY5-2A",
+   "views": 32794,
+   "viewsAt": "2026-10-14",
+   "description": "Nos visita Gonzalo Pozzo, conocido como Goncy, Forward Deployed Engineer en Vercel. Hablamos de su recorrido profesional, el trabajo con clientes, el origen de Pensi durante la pandemia, su experiencia enseñando y streameando, aprendizaje y oportunidades en desarrollo con IA, entrevistas técnicas, contribuciones open source, Next.js, Claude Code, Cursor y la cultura de trabajo en Vercel.\n\nCapítulos:\n\n0:00 Presentación de Goncy y su rol en Vercel (FDE)\n12:05 Proyectos que impulsaron su carrera (Pency / App queratoconos)\n20:49 Streams, docencia y aprendizaje autodidacta\n32:10 Especialización y n",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-Xeujr9IRGYQ",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-07-16",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Luca Compagnucci, co-founder de Berry: stablecoins e inversiones para todo el mundo",
+   "youtube": "https://www.youtube.com/watch?v=Xeujr9IRGYQ",
+   "views": 79,
+   "viewsAt": "2026-10-14",
+   "description": "Recibimos a Luca Compagnucci, CEO & Founder de Berry, que nos presentó en exclusiva el rebranding de Berry, una plataforma que utiliza stablecoins como riel tecnológico para abrir las puertas a inversiones en la bolsa de EE.UU. de manera simple y segura.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-0bqTUdH0apk",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-08-17",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Diseño, Comunidad, Educación y Startups con Juli Groshaus - SLA en Barcelona",
+   "youtube": "https://www.youtube.com/watch?v=0bqTUdH0apk",
+   "views": 648,
+   "viewsAt": "2026-10-14",
+   "description": "SLA viaja por el mundo y hoy desde Barcelona hablamos con Juli Groshaus, co-founder de La Diseñería, líder en dos cátedras de diseño en IED Barcelona (Istituto Europeo di Design) , y ahora esta creando su propia startup, cece.fi, para que freelancers puedan hacer su vida operativa y financiera más fácil. \n\n. En el vlog por Park Guell, hablamos de cómo construir comunidad con La Diseñería le ayudó a abrir nuevas puertas en Barcelona y conocer y aprender de gente que admira. \n. Tambien nos cuenta como es enseñar diseño hoy en una universidad, la importancia de aprender los procesos para saber có",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-vGC6OQpa4M8",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-08-02",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Eugenio Harraca, CEO y co-founder de SensifyCloud: heladeras, data y sensores",
+   "youtube": "https://www.youtube.com/watch?v=vGC6OQpa4M8",
+   "views": 365,
+   "viewsAt": "2026-10-14",
+   "description": "Nos visita Eugenio Harraca, cofundador y CEO de Sensify, para contar cómo conectan heladeras comerciales y procesan datos en tiempo real para marcas de consumo masivo. Hablamos del foco en retail, alertas ante fallas y movimientos no autorizados, mantenimiento remoto, visión por computadora, ventas B2B, expansión internacional, hardware integrado, datos propios y cultura de equipo.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-buYYrSU956k",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-08-11",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Nicolás Kenny y Nicola Romero Gerik, founders de GASTI: El futuro de tus finanzas",
+   "youtube": "https://www.youtube.com/watch?v=buYYrSU956k",
+   "views": 287,
+   "viewsAt": "2026-10-14",
+   "description": "Nos visitaron Nicola Romero y Nicolás Kenny, creadores de Gasti, para contar cómo evolucionó de un tracker de gastos por WhatsApp a una herramienta para centralizar finanzas personales. Hablamos de open banking, los límites y costos de WhatsApp, el uso de IA, la distribución y las métricas, además del anuncio en vivo de su app mobile y una demo de transferencias por audio con confirmación mediante Face ID.",
+   "playlist": "Entrevistas en SLA"
+  },
+  {
+   "id": "yt-tRWaTrWGHO0",
+   "number": null,
+   "kind": "entrevista",
+   "date": "2026-08-27",
+   "dateNote": "fecha de publicación en YouTube",
+   "title": "Tobi Frieder de Takenos: growth, stablecoins, teoría del juego y economía del comportamiento",
+   "youtube": "https://www.youtube.com/watch?v=tRWaTrWGHO0",
+   "views": 923,
+   "viewsAt": "2026-10-14",
+   "description": "Nos visitó Tobias Frieder, de Takenos, para conversar sobre growth, expansión en Latinoamérica y productos financieros basados en stablecoins. Hablamos de adaptar la propuesta a cada mercado, atribución, encontrar canales de adquisición, revisar los datos antes de sacar conclusiones y diseñar mensajes según cómo toman decisiones las personas. Cómo ve el marketing, la comunicación y el crecimiento alguien con años de experiencia en la industria fintech. También nos explicó de qué se tratan la teoría del juego y las ciencias del comportamiento, tópicos que estudió en su máster en Ámsterdam.",
+   "playlist": "Entrevistas en SLA"
   }
  ],
  "people": [
@@ -127,7 +543,8 @@
     "invgate"
    ],
    "episodes": [
-    "ep18"
+    "ep18",
+    "yt-gW3f3nW3tSs"
    ],
    "x": "https://x.com/euneniant",
    "investors": [],
@@ -158,7 +575,8 @@
     "clickie"
    ],
    "episodes": [
-    "ep18"
+    "ep18",
+    "yt-6LNxvp2ztp4"
    ],
    "x": "https://x.com/Tomasdascola",
    "investors": [],
@@ -191,7 +609,8 @@
     "yafu"
    ],
    "episodes": [
-    "ep17"
+    "ep17",
+    "yt-tXzdVoaDt-M"
    ],
    "x": "https://x.com/DutikKaren",
    "investors": [],
@@ -222,7 +641,8 @@
     "fof-ba"
    ],
    "episodes": [
-    "ep16"
+    "ep16",
+    "yt-6ajnGpbIRTc"
    ],
    "x": null,
    "investors": [],
@@ -250,7 +670,8 @@
     "basement"
    ],
    "episodes": [
-    "ep15"
+    "ep15",
+    "yt-zV85dUexxkc"
    ],
    "x": "https://x.com/ragojose",
    "investors": [],
@@ -286,7 +707,8 @@
     "basement"
    ],
    "episodes": [
-    "ep15"
+    "ep15",
+    "yt-zV85dUexxkc"
    ],
    "x": "https://x.com/falanfantana",
    "investors": [],
@@ -318,7 +740,8 @@
    "role": null,
    "companies": [],
    "episodes": [
-    "ep14"
+    "ep14",
+    "yt-3W96bAsp91c"
    ],
    "x": "https://x.com/firt",
    "investors": [],
@@ -352,7 +775,8 @@
     "vercel"
    ],
    "episodes": [
-    "ep13"
+    "ep13",
+    "yt-Y-LSsfY5-2A"
    ],
    "x": "https://x.com/goncy",
    "investors": [],
@@ -377,6 +801,699 @@
     "https://x.com/goncy",
     "https://api.github.com/users/goncy",
     "Vault: Proyectos/SLA/Programas/SLA (programa).md"
+   ]
+  },
+  {
+   "id": "ari-onega",
+   "name": "Ari Onega",
+   "role": "Co-founder",
+   "companies": [
+    "certenza",
+    "empretienda"
+   ],
+   "episodes": [
+    "yt-4pHf0fiyc2c"
+   ],
+   "x": "https://x.com/AriOnega",
+   "investors": [],
+   "social": {
+    "x": "AriOnega",
+    "xId": "1383851945782169601"
+   },
+   "avatar": "assets/avatars/ari-onega.jpg",
+   "bio": "Emprendedora tech: fundó, dirigió y vendió Empretienda (a Ualá) y ahora construye Certenza, enfocada en compliance y ciberseguridad (SOC 2, ISO 27001) para empresas de LATAM.",
+   "links": {
+    "x": "https://x.com/AriOnega",
+    "web": "https://certenza.com"
+   },
+   "skills": [
+    "Compliance",
+    "Ciberseguridad",
+    "Founder",
+    "Exit"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=4pHf0fiyc2c",
+    "https://x.com/AriOnega"
+   ]
+  },
+  {
+   "id": "maga-defelippe",
+   "name": "Maga Defelippe",
+   "role": "Founder engineer",
+   "companies": [
+    "pulgy"
+   ],
+   "episodes": [
+    "yt-9illIJqJV6k"
+   ],
+   "x": "https://x.com/magalidefelippe",
+   "investors": [],
+   "social": {
+    "x": "magalidefelippe",
+    "xId": "1978474483540172800"
+   },
+   "avatar": "assets/avatars/maga-defelippe.jpg",
+   "bio": "Programadora con 8 años de código y founder engineer de Pulgy App, una plataforma para que creadores y profesionales vendan productos digitales y sesiones.",
+   "links": {
+    "x": "https://x.com/magalidefelippe",
+    "web": "https://pulgy.app"
+   },
+   "skills": [
+    "Desarrollo",
+    "Producto",
+    "Creadores"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=9illIJqJV6k",
+    "https://x.com/magalidefelippe"
+   ]
+  },
+  {
+   "id": "luca-compagnucci",
+   "name": "Luca Compagnucci",
+   "role": "CEO & Founder",
+   "companies": [
+    "berry"
+   ],
+   "episodes": [
+    "yt-Xeujr9IRGYQ"
+   ],
+   "x": null,
+   "investors": [],
+   "social": {
+    "x": null,
+    "xId": null
+   },
+   "avatar": null,
+   "bio": "CEO y founder de Berry, una plataforma que usa stablecoins para acceder a inversiones en la bolsa de EE.UU. Presentó en SLA el rebranding de Berry.",
+   "links": {},
+   "skills": [
+    "Fintech",
+    "Stablecoins",
+    "Inversiones"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=Xeujr9IRGYQ"
+   ]
+  },
+  {
+   "id": "nacho-gorriti",
+   "name": "Nacho Gorriti",
+   "role": "Founder",
+   "companies": [
+    "roomix"
+   ],
+   "episodes": [
+    "yt-KxRYngRZnxo"
+   ],
+   "x": null,
+   "investors": [],
+   "social": {
+    "x": null,
+    "xId": null
+   },
+   "avatar": null,
+   "bio": "Founder de Roomix, que repiensa la búsqueda de propiedades con inteligencia artificial. Contó en SLA cómo levantar una ronda y construir producto en una industria tradicional.",
+   "links": {},
+   "skills": [
+    "Proptech",
+    "IA",
+    "Fundraising"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=KxRYngRZnxo"
+   ]
+  },
+  {
+   "id": "malena-martin",
+   "name": "Malena Martin",
+   "role": "CEO & Founder",
+   "companies": [
+    "fardo"
+   ],
+   "episodes": [
+    "yt-KpuVr_jsQy8"
+   ],
+   "x": null,
+   "investors": [],
+   "social": {
+    "x": null,
+    "xId": null
+   },
+   "avatar": null,
+   "bio": "CEO y founder de Fardo. Habló en SLA de AEO y GEO: cómo posicionar marcas en las respuestas de los motores de IA.",
+   "links": {},
+   "skills": [
+    "GEO",
+    "SEO",
+    "Marketing"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=KpuVr_jsQy8"
+   ]
+  },
+  {
+   "id": "jules-newland",
+   "name": "Jules Newland",
+   "role": "Founder",
+   "companies": [
+    "extra"
+   ],
+   "episodes": [
+    "yt-e_p5uO0URWU"
+   ],
+   "x": "https://x.com/julesnewland",
+   "investors": [],
+   "social": {
+    "x": "julesnewland",
+    "xId": "1123347237722050560"
+   },
+   "avatar": "assets/avatars/jules-newland.jpg",
+   "bio": "Arma EXTRA, una app y marketplace para comprar y revender ropa de segunda mano construida desde Argentina, con más de 50.000 usuarios.",
+   "links": {
+    "x": "https://x.com/julesnewland"
+   },
+   "skills": [
+    "Marketplace",
+    "Founder"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=e_p5uO0URWU",
+    "https://x.com/julesnewland"
+   ]
+  },
+  {
+   "id": "juan-duzac",
+   "name": "Juan Duzac",
+   "role": "CTO",
+   "companies": [
+    "extra"
+   ],
+   "episodes": [
+    "yt-e_p5uO0URWU"
+   ],
+   "x": "https://x.com/juanduzac",
+   "investors": [],
+   "social": {
+    "x": "juanduzac",
+    "xId": "1705003096324063232"
+   },
+   "avatar": "assets/avatars/juan-duzac.jpg",
+   "bio": "CTO de EXTRA, el marketplace de reventa de ropa construido desde Argentina.",
+   "links": {
+    "x": "https://x.com/juanduzac"
+   },
+   "skills": [
+    "CTO",
+    "Marketplace"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=e_p5uO0URWU",
+    "https://x.com/juanduzac"
+   ]
+  },
+  {
+   "id": "valentina-bearzotti",
+   "name": "Valentina Bearzotti",
+   "role": "Head of development",
+   "companies": [
+    "basement",
+    "xmcp"
+   ],
+   "episodes": [
+    "yt-5PCuXBZckpg"
+   ],
+   "x": null,
+   "investors": [],
+   "social": {
+    "x": null,
+    "xId": null
+   },
+   "avatar": null,
+   "bio": "Head of development de basement. Pasó por SLA para hablar de XMCP, MCPs, código y negocios.",
+   "links": {},
+   "skills": [
+    "Desarrollo",
+    "MCP"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=5PCuXBZckpg"
+   ]
+  },
+  {
+   "id": "koller",
+   "name": "Koller",
+   "role": "Founder",
+   "companies": [
+    "on-club",
+    "xmcp"
+   ],
+   "episodes": [
+    "yt-5PCuXBZckpg"
+   ],
+   "x": null,
+   "investors": [],
+   "social": {
+    "x": null,
+    "xId": null
+   },
+   "avatar": null,
+   "bio": "Founder de O(n) Club. Charló en SLA sobre XMCP, código y negocios.",
+   "links": {},
+   "skills": [
+    "Desarrollo",
+    "MCP"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=5PCuXBZckpg"
+   ]
+  },
+  {
+   "id": "anabella-guimarey",
+   "name": "Anabella Guimarey",
+   "role": "Founder",
+   "companies": [
+    "el-cerokm"
+   ],
+   "episodes": [
+    "yt-gDgIUzFlW3A"
+   ],
+   "x": null,
+   "investors": [],
+   "social": {
+    "x": null,
+    "xId": null
+   },
+   "avatar": null,
+   "bio": "Founder de El CeroKM (elcerokm.com), donde se venden autos nuevos online. En SLA habló de transparencia de precios y stock, expansión regional y automatización con agentes.",
+   "links": {},
+   "skills": [
+    "Autos",
+    "E-commerce",
+    "Founder"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=gDgIUzFlW3A"
+   ]
+  },
+  {
+   "id": "eugenio-harraca",
+   "name": "Eugenio Harraca",
+   "role": "CEO & co-founder",
+   "companies": [
+    "sensify"
+   ],
+   "episodes": [
+    "yt-vGC6OQpa4M8"
+   ],
+   "x": null,
+   "investors": [],
+   "social": {
+    "x": null,
+    "xId": null
+   },
+   "avatar": null,
+   "bio": "Cofundador y CEO de Sensify, que conecta heladeras comerciales y procesa sus datos en tiempo real para marcas de consumo masivo.",
+   "links": {},
+   "skills": [
+    "IoT",
+    "Data",
+    "Retail",
+    "B2B"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=vGC6OQpa4M8"
+   ]
+  },
+  {
+   "id": "nicolas-kenny",
+   "name": "Nicolás Kenny",
+   "role": "Co-founder",
+   "companies": [
+    "gasti",
+    "on-club"
+   ],
+   "episodes": [
+    "yt-buYYrSU956k"
+   ],
+   "x": "https://x.com/nicokennydev",
+   "investors": [],
+   "social": {
+    "x": "nicokennydev",
+    "xId": "1565026425337430017"
+   },
+   "avatar": "assets/avatars/nicolas-kenny.jpg",
+   "bio": "Cofundador de Gasti, que pasó de un tracker de gastos por WhatsApp a una herramienta para centralizar finanzas personales. También es cofundador de O(n) Club.",
+   "links": {
+    "x": "https://x.com/nicokennydev",
+    "web": "https://linktr.ee/nicokenny"
+   },
+   "skills": [
+    "Fintech",
+    "Founder",
+    "Open banking"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=buYYrSU956k",
+    "https://x.com/nicokennydev"
+   ]
+  },
+  {
+   "id": "nicola-romero-gerik",
+   "name": "Nicola Romero Gerik",
+   "role": "Founder",
+   "companies": [
+    "gasti"
+   ],
+   "episodes": [
+    "yt-buYYrSU956k"
+   ],
+   "x": "https://x.com/nicoharone",
+   "investors": [],
+   "social": {
+    "x": "nicoharone",
+    "xId": "74629531"
+   },
+   "avatar": "assets/avatars/nicola-romero-gerik.jpg",
+   "bio": "Founder de Gasti; antes pasó por Lemon, Buenbit y Buda.com. En SLA mostró en vivo la app mobile de Gasti con transferencias por audio.",
+   "links": {
+    "x": "https://x.com/nicoharone",
+    "web": "https://n8n-expert.com/"
+   },
+   "skills": [
+    "Fintech",
+    "Founder",
+    "IA"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=buYYrSU956k",
+    "https://x.com/nicoharone"
+   ]
+  },
+  {
+   "id": "santi-echazu",
+   "name": "Santi Echazú",
+   "role": "Co-founder y Director Creativo",
+   "companies": [
+    "paisanos"
+   ],
+   "episodes": [
+    "yt-MzDNx2TB32M"
+   ],
+   "x": null,
+   "investors": [],
+   "social": {
+    "x": null,
+    "xId": null
+   },
+   "avatar": null,
+   "bio": "Cofundador y Director Creativo de Paisanos. En SLA compartió su mirada sobre el proceso creativo, la curiosidad y el diseño de productos.",
+   "links": {},
+   "skills": [
+    "Dirección creativa",
+    "Diseño"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=MzDNx2TB32M"
+   ]
+  },
+  {
+   "id": "sofia-ferro",
+   "name": "Sofía Ferro",
+   "role": "Product Engineer",
+   "companies": [
+    "paisanos"
+   ],
+   "episodes": [
+    "yt-ydxnJeLvh0E"
+   ],
+   "x": "https://x.com/svfonx",
+   "investors": [],
+   "social": {
+    "x": "svfonx",
+    "xId": "2008183846462992385"
+   },
+   "avatar": "assets/avatars/sofia-ferro.jpg",
+   "bio": "Product engineer y creative technologist en Paisanos. Pasó de Letras a tecnología y lidera Gaucho, un robot restaurado que responde por voz.",
+   "links": {
+    "x": "https://x.com/svfonx"
+   },
+   "skills": [
+    "Product Engineering",
+    "Hardware",
+    "Creative tech"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=ydxnJeLvh0E",
+    "https://x.com/svfonx"
+   ]
+  },
+  {
+   "id": "nahuel-alberti",
+   "name": "Nahuel Alberti",
+   "role": "CTO",
+   "companies": [
+    "paisanos"
+   ],
+   "episodes": [
+    "yt-ydxnJeLvh0E"
+   ],
+   "x": "https://x.com/nays1_",
+   "investors": [],
+   "social": {
+    "x": "nays1_",
+    "xId": "1439687110030761993"
+   },
+   "avatar": "assets/avatars/nahuel-alberti.jpg",
+   "bio": "CTO de Paisanos. Habló en SLA de la cultura interna, la comunidad, el foco y el criterio para crear productos.",
+   "links": {
+    "x": "https://x.com/nays1_",
+    "web": "https://nalberti.com/"
+   },
+   "skills": [
+    "CTO",
+    "Cultura",
+    "Producto"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=ydxnJeLvh0E",
+    "https://x.com/nays1_"
+   ]
+  },
+  {
+   "id": "juli-groshaus",
+   "name": "Juli Groshaus",
+   "role": "Co-founder",
+   "companies": [
+    "la-diseneria",
+    "cecefi"
+   ],
+   "episodes": [
+    "yt-0bqTUdH0apk"
+   ],
+   "x": "https://x.com/juligroshaus",
+   "investors": [],
+   "social": {
+    "x": "juligroshaus",
+    "xId": "1024076520388796417"
+   },
+   "avatar": "assets/avatars/juli-groshaus.jpg",
+   "bio": "Cofundadora de La Diseñería, docente de business design en IED Barcelona y fundadora de cece.fi, una startup para simplificar la vida operativa y financiera de freelancers.",
+   "links": {
+    "x": "https://x.com/juligroshaus",
+    "web": "https://cece.fi"
+   },
+   "skills": [
+    "Diseño",
+    "Comunidad",
+    "Docencia",
+    "Founder"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=0bqTUdH0apk",
+    "https://x.com/juligroshaus"
+   ]
+  },
+  {
+   "id": "alan-gosiker",
+   "name": "Alan Gosiker",
+   "role": "Founder",
+   "companies": [
+    "de-recruiters"
+   ],
+   "episodes": [
+    "yt-QaZP2QyLPOk"
+   ],
+   "x": null,
+   "investors": [],
+   "social": {
+    "x": null,
+    "xId": null
+   },
+   "avatar": null,
+   "bio": "Founder de de/Recruiters. En SLA habló de hiring en tech, el rol de Forward Deployed Engineer y cómo armar un buen CV.",
+   "links": {},
+   "skills": [
+    "Hiring",
+    "Recruiting",
+    "Carrera IT"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=QaZP2QyLPOk"
+   ]
+  },
+  {
+   "id": "tobias-frieder",
+   "name": "Tobías Frieder",
+   "role": "Expansión & Growth",
+   "companies": [
+    "takenos"
+   ],
+   "episodes": [
+    "yt-tRWaTrWGHO0"
+   ],
+   "x": "https://x.com/TobiFrieder",
+   "investors": [],
+   "social": {
+    "x": "TobiFrieder",
+    "xId": "33034172"
+   },
+   "avatar": "assets/avatars/tobias-frieder.jpg",
+   "bio": "Trabaja en stablecoins y growth en LATAM, a cargo de la expansión de Takenos; antes pasó por Offramp, Buenbit y Kraken y fundó dos empresas.",
+   "links": {
+    "x": "https://x.com/TobiFrieder"
+   },
+   "skills": [
+    "Growth",
+    "Stablecoins",
+    "Fintech"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=tRWaTrWGHO0",
+    "https://x.com/TobiFrieder"
+   ]
+  },
+  {
+   "id": "ana-varela",
+   "name": "Ana Varela",
+   "role": "Graphic & Product Designer",
+   "companies": [
+    "lemon",
+    "fof-ba"
+   ],
+   "episodes": [
+    "yt-6ajnGpbIRTc"
+   ],
+   "x": "https://x.com/_rawpower",
+   "investors": [],
+   "social": {
+    "x": "_rawpower",
+    "xId": "52985421"
+   },
+   "avatar": "assets/avatars/ana-varela.jpg",
+   "bio": "Diseñadora en Lemon y parte de la mesa de diseño de Friends of Figma en SLA.",
+   "links": {
+    "x": "https://x.com/_rawpower",
+    "web": "http://anavare.la"
+   },
+   "skills": [
+    "Diseño de producto",
+    "Diseño gráfico"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=6ajnGpbIRTc",
+    "https://x.com/_rawpower"
+   ]
+  },
+  {
+   "id": "cris-lemoine",
+   "name": "Cris Lemoine",
+   "role": "Product Designer",
+   "companies": [
+    "uxbs",
+    "fof-ba"
+   ],
+   "episodes": [
+    "yt-6ajnGpbIRTc"
+   ],
+   "x": "https://x.com/uxbs_cris",
+   "investors": [],
+   "social": {
+    "x": "uxbs_cris",
+    "xId": "1196567886917226496"
+   },
+   "avatar": "assets/avatars/cris-lemoine.jpg",
+   "bio": "Product designer que construye productos, experimenta con IA y cuenta lo que aprende en UXBS. Participó de la mesa de diseño de Friends of Figma en SLA.",
+   "links": {
+    "x": "https://x.com/uxbs_cris",
+    "web": "https://uxbs.studio/"
+   },
+   "skills": [
+    "Diseño de producto",
+    "IA"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=6ajnGpbIRTc",
+    "https://x.com/uxbs_cris"
+   ]
+  },
+  {
+   "id": "diego-villarroel",
+   "name": "Diego Villarroel",
+   "role": "Design Systems",
+   "companies": [
+    "fof-ba"
+   ],
+   "episodes": [
+    "yt-6ajnGpbIRTc"
+   ],
+   "x": null,
+   "investors": [],
+   "social": {
+    "x": null,
+    "xId": null
+   },
+   "avatar": null,
+   "bio": "Especialista en design systems; participó de la mesa de diseño de Friends of Figma en SLA.",
+   "links": {},
+   "skills": [
+    "Design systems"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=6ajnGpbIRTc"
+   ]
+  },
+  {
+   "id": "agustin-ale",
+   "name": "Agustín Ale",
+   "role": "Product & Game Designer",
+   "companies": [
+    "fof-ba"
+   ],
+   "episodes": [
+    "yt-6ajnGpbIRTc"
+   ],
+   "x": "https://x.com/agustinale__",
+   "investors": [],
+   "social": {
+    "x": "agustinale__",
+    "xId": "1649423169382494208"
+   },
+   "avatar": "assets/avatars/agustin-ale.jpg",
+   "bio": "Product designer y líder de Friends of Figma Buenos Aires; también diseña juegos, como un simulador de carrera en IT.",
+   "links": {
+    "x": "https://x.com/agustinale__",
+    "web": "https://agustinale.com/"
+   },
+   "skills": [
+    "Diseño de producto",
+    "Game design",
+    "Comunidad"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=6ajnGpbIRTc",
+    "https://x.com/agustinale__"
    ]
   }
  ],
@@ -625,6 +1742,912 @@
     "https://x.com/Tomasdascola/status/2107836341689995337"
    ],
    "lastAt": "2026-10-07T14:12:00.000Z"
+  },
+  {
+   "source": "agustin-ale",
+   "target": "ana-varela",
+   "type": "mention",
+   "count": 2,
+   "examples": [
+    "https://x.com/agustinale__/status/2107180964627792263",
+    "https://x.com/agustinale__/status/2107180702483775693"
+   ],
+   "lastAt": "2026-10-05T18:47:46.000Z"
+  },
+  {
+   "source": "agustin-ale",
+   "target": "ana-varela",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/agustinale__/status/2108222998847098941"
+   ],
+   "lastAt": "2026-10-08T15:48:26.000Z"
+  },
+  {
+   "source": "agustin-ale",
+   "target": "cris-lemoine",
+   "type": "mention",
+   "count": 3,
+   "examples": [
+    "https://x.com/agustinale__/status/2108222998847098941",
+    "https://x.com/agustinale__/status/2107180964627792263",
+    "https://x.com/agustinale__/status/2107180702483775693"
+   ],
+   "lastAt": "2026-10-08T15:48:26.000Z"
+  },
+  {
+   "source": "agustin-ale",
+   "target": "cris-lemoine",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/agustinale__/status/2108002652139176081",
+    "https://x.com/agustinale__/status/2105804954799915349"
+   ],
+   "lastAt": "2026-10-08T01:12:51.000Z"
+  },
+  {
+   "source": "agustin-ale",
+   "target": "slatv",
+   "type": "mention",
+   "count": 3,
+   "examples": [
+    "https://x.com/agustinale__/status/2108222998847098941",
+    "https://x.com/agustinale__/status/2107180964627792263",
+    "https://x.com/agustinale__/status/2107180702483775693"
+   ],
+   "lastAt": "2026-10-08T15:48:26.000Z"
+  },
+  {
+   "source": "agustin-ale",
+   "target": "tomas-dascola",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/agustinale__/status/2107196096556507249"
+   ],
+   "lastAt": "2026-10-05T19:47:53.000Z"
+  },
+  {
+   "source": "ana-varela",
+   "target": "agustin-ale",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/_rawpower/status/2107188227526570439"
+   ],
+   "lastAt": "2026-10-05T19:16:37.000Z"
+  },
+  {
+   "source": "ana-varela",
+   "target": "cris-lemoine",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/_rawpower/status/2107188227526570439"
+   ],
+   "lastAt": "2026-10-05T19:16:37.000Z"
+  },
+  {
+   "source": "ana-varela",
+   "target": "cris-lemoine",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/_rawpower/status/2102562250275864972"
+   ],
+   "lastAt": "2026-09-23T00:54:38.000Z"
+  },
+  {
+   "source": "ana-varela",
+   "target": "nicola-romero-gerik",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/_rawpower/status/2100746392763351419"
+   ],
+   "lastAt": "2026-09-18T00:39:04.000Z"
+  },
+  {
+   "source": "ana-varela",
+   "target": "slatv",
+   "type": "mention",
+   "count": 3,
+   "examples": [
+    "https://x.com/_rawpower/status/2107188227526570439",
+    "https://x.com/_rawpower/status/2105460738202734996",
+    "https://x.com/_rawpower/status/2103289162279350692"
+   ],
+   "lastAt": "2026-10-05T19:16:37.000Z"
+  },
+  {
+   "source": "ari-onega",
+   "target": "karen-dutik",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/AriOnega/status/2105691816314208279",
+    "https://x.com/AriOnega/status/2102579524244517369"
+   ],
+   "lastAt": "2026-10-01T16:10:25.000Z"
+  },
+  {
+   "source": "ari-onega",
+   "target": "nahuel-alberti",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/AriOnega/status/2107646305103126558"
+   ],
+   "lastAt": "2026-10-07T01:36:51.000Z"
+  },
+  {
+   "source": "ari-onega",
+   "target": "nicolas-kenny",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/AriOnega/status/2102469991597773035"
+   ],
+   "lastAt": "2026-09-22T18:48:02.000Z"
+  },
+  {
+   "source": "ari-onega",
+   "target": "nicolas-kenny",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/AriOnega/status/2101706042417521025"
+   ],
+   "lastAt": "2026-09-20T16:12:22.000Z"
+  },
+  {
+   "source": "ari-onega",
+   "target": "slatv",
+   "type": "mention",
+   "count": 2,
+   "examples": [
+    "https://x.com/AriOnega/status/2110376278998278222",
+    "https://x.com/AriOnega/status/2110068864830836960"
+   ],
+   "lastAt": "2026-10-14T14:24:48.000Z"
+  },
+  {
+   "source": "ari-onega",
+   "target": "slatv",
+   "type": "quote",
+   "count": 1,
+   "examples": [
+    "https://x.com/AriOnega/status/2110170703202848800"
+   ],
+   "lastAt": "2026-10-14T00:47:55.000Z"
+  },
+  {
+   "source": "ari-onega",
+   "target": "tomas-dascola",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/AriOnega/status/2100978051383238914"
+   ],
+   "lastAt": "2026-09-18T15:59:36.000Z"
+  },
+  {
+   "source": "ari-onega",
+   "target": "tomas-dascola",
+   "type": "reply",
+   "count": 3,
+   "examples": [
+    "https://x.com/AriOnega/status/2109489826265481525",
+    "https://x.com/AriOnega/status/2107197488746643691",
+    "https://x.com/AriOnega/status/2102469833019601305"
+   ],
+   "lastAt": "2026-10-12T03:42:21.000Z"
+  },
+  {
+   "source": "cris-lemoine",
+   "target": "agustin-ale",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/uxbs_cris/status/2108004196322594925",
+    "https://x.com/uxbs_cris/status/2108002529435058566"
+   ],
+   "lastAt": "2026-10-08T01:18:59.000Z"
+  },
+  {
+   "source": "cris-lemoine",
+   "target": "ana-varela",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/uxbs_cris/status/2102508791006707716"
+   ],
+   "lastAt": "2026-09-22T21:22:13.000Z"
+  },
+  {
+   "source": "cris-lemoine",
+   "target": "nicola-romero-gerik",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/uxbs_cris/status/2100734085672943670"
+   ],
+   "lastAt": "2026-09-17T23:50:10.000Z"
+  },
+  {
+   "source": "cris-lemoine",
+   "target": "slatv",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/uxbs_cris/status/2103105407711392072"
+   ],
+   "lastAt": "2026-09-24T12:52:57.000Z"
+  },
+  {
+   "source": "goncy",
+   "target": "maga-defelippe",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/goncy/status/2110409779801694625"
+   ],
+   "lastAt": "2026-10-14T16:37:55.000Z"
+  },
+  {
+   "source": "goncy",
+   "target": "nahuel-alberti",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/goncy/status/2105626080807616741"
+   ],
+   "lastAt": "2026-10-01T11:49:12.000Z"
+  },
+  {
+   "source": "goncy",
+   "target": "sofia-ferro",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/goncy/status/2106007571467268213"
+   ],
+   "lastAt": "2026-10-02T13:05:07.000Z"
+  },
+  {
+   "source": "jose-rago",
+   "target": "nahuel-alberti",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/ragojose/status/2106458993418010788"
+   ],
+   "lastAt": "2026-10-03T18:58:54.000Z"
+  },
+  {
+   "source": "juan-duzac",
+   "target": "nicolas-kenny",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/juanduzac/status/2105771960642797947"
+   ],
+   "lastAt": "2026-10-01T21:28:53.000Z"
+  },
+  {
+   "source": "jules-newland",
+   "target": "juli-groshaus",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/julesnewland/status/2104954828203917315"
+   ],
+   "lastAt": "2026-09-29T15:21:53.000Z"
+  },
+  {
+   "source": "jules-newland",
+   "target": "tomas-dascola",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/julesnewland/status/2107270311532204203"
+   ],
+   "lastAt": "2026-10-06T00:42:48.000Z"
+  },
+  {
+   "source": "juli-groshaus",
+   "target": "jules-newland",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/juligroshaus/status/2104961587010486650"
+   ],
+   "lastAt": "2026-09-29T15:48:45.000Z"
+  },
+  {
+   "source": "juli-groshaus",
+   "target": "maga-defelippe",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/juligroshaus/status/2107546225025368416",
+    "https://x.com/juligroshaus/status/2103546701441327553"
+   ],
+   "lastAt": "2026-10-06T18:59:11.000Z"
+  },
+  {
+   "source": "juli-groshaus",
+   "target": "nicolas-kenny",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/juligroshaus/status/2110056891338366983"
+   ],
+   "lastAt": "2026-10-13T17:15:40.000Z"
+  },
+  {
+   "source": "karen-dutik",
+   "target": "ana-varela",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/DutikKaren/status/2105495862939914743"
+   ],
+   "lastAt": "2026-10-01T03:11:46.000Z"
+  },
+  {
+   "source": "karen-dutik",
+   "target": "ari-onega",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/DutikKaren/status/2109399394843763014",
+    "https://x.com/DutikKaren/status/2105680475750854747"
+   ],
+   "lastAt": "2026-10-11T21:43:01.000Z"
+  },
+  {
+   "source": "karen-dutik",
+   "target": "nahuel-alberti",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/DutikKaren/status/2102524584520208722"
+   ],
+   "lastAt": "2026-09-22T22:24:58.000Z"
+  },
+  {
+   "source": "karen-dutik",
+   "target": "nicolas-kenny",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/DutikKaren/status/2106841325467582478"
+   ],
+   "lastAt": "2026-10-04T20:18:09.000Z"
+  },
+  {
+   "source": "karen-dutik",
+   "target": "nicolas-kenny",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/DutikKaren/status/2107253974759800882",
+    "https://x.com/DutikKaren/status/2105799647499358358"
+   ],
+   "lastAt": "2026-10-05T23:37:53.000Z"
+  },
+  {
+   "source": "karen-dutik",
+   "target": "sofia-ferro",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/DutikKaren/status/2102524584520208722"
+   ],
+   "lastAt": "2026-09-22T22:24:58.000Z"
+  },
+  {
+   "source": "maga-defelippe",
+   "target": "eugenia-dearamburu",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/magalidefelippe/status/2105752634342645806"
+   ],
+   "lastAt": "2026-10-01T20:12:05.000Z"
+  },
+  {
+   "source": "maga-defelippe",
+   "target": "goncy",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/magalidefelippe/status/2110401636614975533"
+   ],
+   "lastAt": "2026-10-14T16:05:34.000Z"
+  },
+  {
+   "source": "maga-defelippe",
+   "target": "juli-groshaus",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/magalidefelippe/status/2107546010121646207",
+    "https://x.com/magalidefelippe/status/2103540113686843766"
+   ],
+   "lastAt": "2026-10-06T18:58:19.000Z"
+  },
+  {
+   "source": "maga-defelippe",
+   "target": "nicolas-kenny",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/magalidefelippe/status/2099881616193589677"
+   ],
+   "lastAt": "2026-09-15T15:22:45.000Z"
+  },
+  {
+   "source": "maga-defelippe",
+   "target": "slatv",
+   "type": "mention",
+   "count": 6,
+   "examples": [
+    "https://x.com/magalidefelippe/status/2110543903623659997",
+    "https://x.com/magalidefelippe/status/2109128115352174883",
+    "https://x.com/magalidefelippe/status/2108733613340524892"
+   ],
+   "lastAt": "2026-10-15T01:30:53.000Z"
+  },
+  {
+   "source": "maga-defelippe",
+   "target": "slatv",
+   "type": "reply",
+   "count": 4,
+   "examples": [
+    "https://x.com/magalidefelippe/status/2110540650601148777",
+    "https://x.com/magalidefelippe/status/2110090201293021327",
+    "https://x.com/magalidefelippe/status/2105752634342645806"
+   ],
+   "lastAt": "2026-10-15T01:17:57.000Z"
+  },
+  {
+   "source": "nahuel-alberti",
+   "target": "goncy",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/nays1_/status/2103989936512790921"
+   ],
+   "lastAt": "2026-09-26T23:27:45.000Z"
+  },
+  {
+   "source": "nahuel-alberti",
+   "target": "goncy",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/nays1_/status/2106000820479340942",
+    "https://x.com/nays1_/status/2105637899496513696"
+   ],
+   "lastAt": "2026-10-02T12:38:17.000Z"
+  },
+  {
+   "source": "nahuel-alberti",
+   "target": "jose-rago",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/nays1_/status/2106906117775204555",
+    "https://x.com/nays1_/status/2106451197305495941"
+   ],
+   "lastAt": "2026-10-05T00:35:37.000Z"
+  },
+  {
+   "source": "nahuel-alberti",
+   "target": "nicolas-kenny",
+   "type": "mention",
+   "count": 4,
+   "examples": [
+    "https://x.com/nays1_/status/2110124110156279833",
+    "https://x.com/nays1_/status/2109840228303159455",
+    "https://x.com/nays1_/status/2105415628253188480"
+   ],
+   "lastAt": "2026-10-13T21:42:46.000Z"
+  },
+  {
+   "source": "nahuel-alberti",
+   "target": "nicolas-kenny",
+   "type": "reply",
+   "count": 3,
+   "examples": [
+    "https://x.com/nays1_/status/2110408068161024390",
+    "https://x.com/nays1_/status/2108258692483436874",
+    "https://x.com/nays1_/status/2107293597527667066"
+   ],
+   "lastAt": "2026-10-14T16:31:07.000Z"
+  },
+  {
+   "source": "nahuel-alberti",
+   "target": "slatv",
+   "type": "mention",
+   "count": 4,
+   "examples": [
+    "https://x.com/nays1_/status/2108719058145448134",
+    "https://x.com/nays1_/status/2103653295893954933",
+    "https://x.com/nays1_/status/2103632121273147893"
+   ],
+   "lastAt": "2026-10-10T00:39:36.000Z"
+  },
+  {
+   "source": "nahuel-alberti",
+   "target": "slatv",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/nays1_/status/2110124110156279833"
+   ],
+   "lastAt": "2026-10-13T21:42:46.000Z"
+  },
+  {
+   "source": "nahuel-alberti",
+   "target": "sofia-ferro",
+   "type": "mention",
+   "count": 4,
+   "examples": [
+    "https://x.com/nays1_/status/2110515657251115366",
+    "https://x.com/nays1_/status/2104938878956351557",
+    "https://x.com/nays1_/status/2104308291828592734"
+   ],
+   "lastAt": "2026-10-14T23:38:38.000Z"
+  },
+  {
+   "source": "nahuel-alberti",
+   "target": "sofia-ferro",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/nays1_/status/2105792960889557016",
+    "https://x.com/nays1_/status/2103126831893205052"
+   ],
+   "lastAt": "2026-10-01T22:52:20.000Z"
+  },
+  {
+   "source": "nahuel-alberti",
+   "target": "tobias-frieder",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/nays1_/status/2106402473233482065"
+   ],
+   "lastAt": "2026-10-03T15:14:19.000Z"
+  },
+  {
+   "source": "nicola-romero-gerik",
+   "target": "cris-lemoine",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoharone/status/2102478329542754405"
+   ],
+   "lastAt": "2026-09-22T19:21:10.000Z"
+  },
+  {
+   "source": "nicola-romero-gerik",
+   "target": "cris-lemoine",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoharone/status/2102477784652345495"
+   ],
+   "lastAt": "2026-09-22T19:19:00.000Z"
+  },
+  {
+   "source": "nicola-romero-gerik",
+   "target": "maga-defelippe",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoharone/status/2103498607953371301"
+   ],
+   "lastAt": "2026-09-25T14:55:23.000Z"
+  },
+  {
+   "source": "nicola-romero-gerik",
+   "target": "nahuel-alberti",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoharone/status/2099871588753588450"
+   ],
+   "lastAt": "2026-09-15T14:42:55.000Z"
+  },
+  {
+   "source": "nicola-romero-gerik",
+   "target": "nahuel-alberti",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoharone/status/2099836146456940677"
+   ],
+   "lastAt": "2026-09-15T12:22:05.000Z"
+  },
+  {
+   "source": "nicola-romero-gerik",
+   "target": "nicolas-kenny",
+   "type": "mention",
+   "count": 3,
+   "examples": [
+    "https://x.com/nicoharone/status/2109815089662734670",
+    "https://x.com/nicoharone/status/2107224394087190674",
+    "https://x.com/nicoharone/status/2107223093101904092"
+   ],
+   "lastAt": "2026-10-13T01:14:50.000Z"
+  },
+  {
+   "source": "nicola-romero-gerik",
+   "target": "nicolas-kenny",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoharone/status/2110379598512845125"
+   ],
+   "lastAt": "2026-10-14T14:37:59.000Z"
+  },
+  {
+   "source": "nicolas-kenny",
+   "target": "goncy",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicokennydev/status/2102417017055961256"
+   ],
+   "lastAt": "2026-09-22T15:17:32.000Z"
+  },
+  {
+   "source": "nicolas-kenny",
+   "target": "maga-defelippe",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicokennydev/status/2099884568140538134"
+   ],
+   "lastAt": "2026-09-15T15:34:29.000Z"
+  },
+  {
+   "source": "nicolas-kenny",
+   "target": "nahuel-alberti",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicokennydev/status/2104297946212917335"
+   ],
+   "lastAt": "2026-09-27T19:51:40.000Z"
+  },
+  {
+   "source": "nicolas-kenny",
+   "target": "nicola-romero-gerik",
+   "type": "mention",
+   "count": 4,
+   "examples": [
+    "https://x.com/nicokennydev/status/2109333331758419970",
+    "https://x.com/nicokennydev/status/2109304874655498252",
+    "https://x.com/nicokennydev/status/2108007403031834920"
+   ],
+   "lastAt": "2026-10-11T17:20:30.000Z"
+  },
+  {
+   "source": "nicolas-kenny",
+   "target": "nicola-romero-gerik",
+   "type": "reply",
+   "count": 4,
+   "examples": [
+    "https://x.com/nicokennydev/status/2110383114652729785",
+    "https://x.com/nicokennydev/status/2109745236960305301",
+    "https://x.com/nicokennydev/status/2109297116505923694"
+   ],
+   "lastAt": "2026-10-14T14:51:58.000Z"
+  },
+  {
+   "source": "nicolas-kenny",
+   "target": "slatv",
+   "type": "mention",
+   "count": 3,
+   "examples": [
+    "https://x.com/nicokennydev/status/2107914834423767066",
+    "https://x.com/nicokennydev/status/2107236571493670937",
+    "https://x.com/nicokennydev/status/2099863878880350226"
+   ],
+   "lastAt": "2026-10-07T19:23:54.000Z"
+  },
+  {
+   "source": "nicolas-kenny",
+   "target": "slatv",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicokennydev/status/2099865979459191224"
+   ],
+   "lastAt": "2026-09-15T14:20:37.000Z"
+  },
+  {
+   "source": "slatv",
+   "target": "ana-varela",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/slatv_/status/2103123538370773301"
+   ],
+   "lastAt": "2026-09-24T14:05:00.000Z"
+  },
+  {
+   "source": "slatv",
+   "target": "cris-lemoine",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/slatv_/status/2103123538370773301"
+   ],
+   "lastAt": "2026-09-24T14:05:00.000Z"
+  },
+  {
+   "source": "slatv",
+   "target": "cris-lemoine",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/slatv_/status/2103109013453807994"
+   ],
+   "lastAt": "2026-09-24T13:07:17.000Z"
+  },
+  {
+   "source": "slatv",
+   "target": "maga-defelippe",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/slatv_/status/2105763708614086710",
+    "https://x.com/slatv_/status/2103497072569643497"
+   ],
+   "lastAt": "2026-10-01T20:56:05.000Z"
+  },
+  {
+   "source": "slatv",
+   "target": "nahuel-alberti",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/slatv_/status/2103626467892511195"
+   ],
+   "lastAt": "2026-09-25T23:23:28.000Z"
+  },
+  {
+   "source": "slatv",
+   "target": "nicolas-kenny",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/slatv_/status/2107246468465619295"
+   ],
+   "lastAt": "2026-10-05T23:08:03.000Z"
+  },
+  {
+   "source": "sofia-ferro",
+   "target": "goncy",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/svfonx/status/2106009793328791969"
+   ],
+   "lastAt": "2026-10-02T13:13:57.000Z"
+  },
+  {
+   "source": "sofia-ferro",
+   "target": "karen-dutik",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/svfonx/status/2105325192960680211"
+   ],
+   "lastAt": "2026-09-30T15:53:35.000Z"
+  },
+  {
+   "source": "sofia-ferro",
+   "target": "nahuel-alberti",
+   "type": "mention",
+   "count": 3,
+   "examples": [
+    "https://x.com/svfonx/status/2107634941022421273",
+    "https://x.com/svfonx/status/2102493333113217065",
+    "https://x.com/svfonx/status/2101719792549847302"
+   ],
+   "lastAt": "2026-10-07T00:51:42.000Z"
+  },
+  {
+   "source": "sofia-ferro",
+   "target": "nahuel-alberti",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/svfonx/status/2104940634637226462"
+   ],
+   "lastAt": "2026-09-29T14:25:29.000Z"
+  },
+  {
+   "source": "sofia-ferro",
+   "target": "nicolas-kenny",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/svfonx/status/2103545041415295270"
+   ],
+   "lastAt": "2026-09-25T17:59:54.000Z"
+  },
+  {
+   "source": "sofia-ferro",
+   "target": "nicolas-kenny",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/svfonx/status/2110410149781545093",
+    "https://x.com/svfonx/status/2101719792549847302"
+   ],
+   "lastAt": "2026-10-14T16:39:23.000Z"
+  },
+  {
+   "source": "tobias-frieder",
+   "target": "nahuel-alberti",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/TobiFrieder/status/2106404115744235976"
+   ],
+   "lastAt": "2026-10-03T15:20:50.000Z"
+  },
+  {
+   "source": "tobias-frieder",
+   "target": "nicola-romero-gerik",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/TobiFrieder/status/2107458311104950714"
+   ],
+   "lastAt": "2026-10-06T13:09:50.000Z"
+  },
+  {
+   "source": "tomas-dascola",
+   "target": "agustin-ale",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/Tomasdascola/status/2107197649858314365"
+   ],
+   "lastAt": "2026-10-05T19:54:04.000Z"
+  },
+  {
+   "source": "tomas-dascola",
+   "target": "ari-onega",
+   "type": "reply",
+   "count": 4,
+   "examples": [
+    "https://x.com/Tomasdascola/status/2109480286886961306",
+    "https://x.com/Tomasdascola/status/2107198768852398131",
+    "https://x.com/Tomasdascola/status/2106933625300328522"
+   ],
+   "lastAt": "2026-10-12T03:04:27.000Z"
+  },
+  {
+   "source": "tomas-dascola",
+   "target": "jules-newland",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/Tomasdascola/status/2107223028908392856"
+   ],
+   "lastAt": "2026-10-05T21:34:55.000Z"
   }
  ]
 }

@@ -7,6 +7,8 @@ const PAL = {               // per-vertical star colors
   producto: '#ffc800',      // MTS --mts-yellow (mts.now)
   diseno:   '#ff6b6b',      // MTS coral #ff6b6b (mts.now bundle)
   hogar:    '#b07ae0',      // approximation: lightened Pitch Night --purple #7534ab
+  fintech:  '#a7bb6e',      // Pitch Night --lcd (pitchnight.slatv.live)
+  negocios: '#ff6719',      // MTS orange #FF6719 (mts.now bundle)
   null:     '#eafff3',      // SLA --foreground
   hub:      '#39f688'       // SLA hub star
 };
@@ -33,11 +35,11 @@ function build() {
     const v = (p.companies.map(c => comp[c]?.vertical).find(Boolean)) ?? null;
     const vi = vs.indexOf(v);
     const a = vi / vs.length * Math.PI * 2 + (h32(p.id) - .5) * 1.1;
-    const r = 0.6 + h32(p.id + 'r') * 0.5;
+    const r = (0.6 + h32(p.id + 'r') * 0.5) * Math.min(1.45, Math.sqrt(data.people.length / 9));
     const views = p.episodes.reduce((s, e) => s + (ep[e]?.views || 0), 0);
     return { p, v, comp, ep, col: hex(PAL[v] || PAL.null), css: PAL[v] || PAL.null,
-      pos: [Math.cos(a) * r, (h32(p.id + 'y') - .5) * 1.3, Math.sin(a) * r],
-      size: 1.15 + p.episodes.length * 0.3 + (views ? Math.log10(views) * 0.12 : 0),
+      pos: [Math.cos(a) * r, (h32(p.id + 'y') - .5) * 1.3 * Math.min(1.4, Math.sqrt(data.people.length / 9)), Math.sin(a) * r],
+      size: 0.75 + p.episodes.length * 0.08 + (views ? Math.log10(views) * 0.27 : 0.35), views,
       ph: h32(p.id + 't') * 6.28, sx: 0, sy: 0, sz: 1, k: 1, hl: 0 };
   });
   if (data.hub) stars.push({ p: { ...data.hub, companies: [], episodes: [], investors: [] }, hub: true, v: 'hub', comp, ep, col: hex(PAL.hub), css: PAL.hub,
@@ -165,11 +167,12 @@ function loop(now) {
   stars.slice().sort((a, b) => b.z - a.z).forEach((s, i) => s.el.style.zIndex = i);
   // labels: greedy placement (below, above, right, left) by depth so names never overlap
   const boxes = [];
-  for (const s of stars.slice().sort((a, b) => (b === focus) - (a === focus) || a.z - b.z)) {
+  for (const s of stars.slice().sort((a, b) => (b === focus) - (a === focus) || !!b.hub - !!a.hub || b.size * b.k - a.size * a.k)) {
     const on = s === focus || (focus && [...links.filter(l => l.kind !== 'hilo'), ...(showX ? xlinks : [])].some(l => (l.a === focus && l.b === s) || (l.b === focus && l.a === s)));
     const w = s.el.offsetWidth || 80, h = s.el.offsetHeight || 28, g = 10 + s.size * 5 * s.k;
     const cands = [[s.sx - w / 2, s.sy + g], [s.sx - w / 2, s.sy - g - h], [s.sx + g, s.sy - h / 2], [s.sx - g - w, s.sy - h / 2]];
-    let pos = cands[0]; for (const c of cands) { if (!boxes.some(b => c[0] < b[2] && c[0] + w > b[0] && c[1] < b[3] && c[1] + h > b[1])) { pos = c; break; } }
+    let pos = null; for (const c of cands) { if (!boxes.some(b => c[0] < b[2] && c[0] + w > b[0] && c[1] < b[3] && c[1] + h > b[1])) { pos = c; break; } }
+    const hidden = !pos && !on; s.el.classList.toggle('hide', hidden); pos ??= cands[0]; if (hidden) { s.el.style.transform = `translate(${pos[0].toFixed(1)}px,${pos[1].toFixed(1)}px)`; s.el.dataset.sx = s.sx | 0; s.el.dataset.sy = s.sy | 0; continue; }
     pos = [Math.max(8, Math.min(W - w - 8, pos[0])), pos[1]];
     boxes.push([pos[0] - 4, pos[1] - 2, pos[0] + w + 4, pos[1] + h + 2]);
     s.el.style.transform = `translate(${pos[0].toFixed(1)}px,${pos[1].toFixed(1)}px)`; s.el.dataset.sx = s.sx | 0; s.el.dataset.sy = s.sy | 0;
@@ -280,7 +283,7 @@ function show(s) {
     ${xSection(s)}
     ${p.sources?.length ? `<details class="src"><summary>Fuentes (${p.sources.length})</summary>${p.sources.map(u => /^https?:/.test(u) ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\/(www\.)?/, ''))}</a>` : `<span>${esc(u)}</span>`).join('')}</details>` : ''}
     <div class="eps">${p.episodes.map(e => s.ep[e]).filter(Boolean).map(e => `<a class="ep" href="${esc(e.youtube)}" target="_blank" rel="noopener">
-      <div class="meta"><span>${e.number ? 'EP. ' + String(e.number).padStart(2, '0') : 'ESPECIAL'}</span><span>${esc(e.date)}</span></div>
+      <div class="meta"><span>${e.number ? 'EP. ' + String(e.number).padStart(2, '0') : e.kind === 'entrevista' ? 'ENTREVISTA' : 'ESPECIAL'}</span><span>${e.views ? Number(e.views).toLocaleString('es-AR') + ' vistas · ' : ''}${esc(e.date)}</span></div>
       <div class="t">${esc(e.title)}</div><span class="go">Ver en YouTube →</span></a>`).join('')}</div>`;
   $('card').scrollTop = 0;
   card.hidden = false; card.style.animation = 'none'; card.offsetHeight; card.style.animation = ''; blip();

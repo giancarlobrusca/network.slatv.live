@@ -123,3 +123,4 @@ h1 .h1-logo{height:.78em;width:auto;vertical-align:baseline;margin-left:.08em;fi
 .lbl .lav{display:block;width:0;height:0;margin:0 auto;border-radius:50%;opacity:0;transition:all .3s;object-fit:cover}
 .lbl.on .lav{width:26px;height:26px;margin-top:6px;opacity:1;box-shadow:0 0 0 1px rgba(234,255,243,.25)}
 @media (max-width:720px){.card{max-height:68vh;-webkit-overflow-scrolling:touch}.av{width:60px;height:60px}.pmeta h2{font-size:20px}}
+.lbl.hide{opacity:0!important}
