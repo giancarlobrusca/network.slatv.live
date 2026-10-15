@@ -8,7 +8,8 @@
    "method": "X API full-archive search (from:A @B, -is:retweet), see scripts/fetch-x.py",
    "coverage": "Up to 25 most recent matching posts per account (next page came back empty); retweets excluded. No posts were returned for @goncy or @firt.",
    "follows": "not determined: no followers/following endpoint available",
-   "moreGuests": "2026-10-14: interacciones de los 13 invitados nuevos con handle verificado, vía búsqueda full-archive del namespace x gratuito; solo la primera página (≤25 posts) por consulta, así que los conteos son mínimos. Posts crudos en scripts/raw/x-posts-more-guests.json."
+   "moreGuests": "2026-10-14: interacciones de los 13 invitados nuevos con handle verificado, vía búsqueda full-archive del namespace x gratuito; solo la primera página (≤25 posts) por consulta, así que los conteos son mínimos. Posts crudos en scripts/raw/x-posts-more-guests.json.",
+   "team": "2026-10-14: interacciones equipo<->invitados (namespace x gratuito, primera página ≤25 posts por consulta; conteos mínimos). Lista de seguidos de @slatv_ no disponible por API; equipo armado con vault + bios + posts de @slatv_."
   },
   "views": "Vistas de YouTube tomadas con yt-dlp el 2026-10-14; definen el brillo/tamaño de cada estrella (suma de vistas de sus videos, escala log)."
  },
@@ -36,6 +37,10 @@
   {
    "id": "negocios",
    "name": "Negocios & B2B"
+  },
+  {
+   "id": "team",
+   "name": "SLATV Team"
   }
  ],
  "companies": [
@@ -189,6 +194,12 @@
    "name": "UXBS",
    "vertical": "diseno",
    "url": "https://uxbs.studio"
+  },
+  {
+   "id": "slatv",
+   "name": "SLA TV",
+   "vertical": "team",
+   "url": "https://slatv.live"
   }
  ],
  "episodes": [
@@ -834,8 +845,10 @@
    ],
    "sources": [
     "https://www.youtube.com/watch?v=4pHf0fiyc2c",
-    "https://x.com/AriOnega"
-   ]
+    "https://x.com/AriOnega",
+    "Vault: Proyectos/SLA/Programas/Pitch Night.md"
+   ],
+   "slaRole": "Conducción · Pitch Night"
   },
   {
    "id": "maga-defelippe",
@@ -1156,8 +1169,10 @@
    ],
    "sources": [
     "https://www.youtube.com/watch?v=buYYrSU956k",
-    "https://x.com/nicokennydev"
-   ]
+    "https://x.com/nicokennydev",
+    "Vault: Proyectos/SLA/Programas/Programa educativo.md"
+   ],
+   "slaRole": "Conducción · Programa educativo"
   },
   {
    "id": "nicola-romero-gerik",
@@ -1246,8 +1261,10 @@
    ],
    "sources": [
     "https://www.youtube.com/watch?v=ydxnJeLvh0E",
-    "https://x.com/svfonx"
-   ]
+    "https://x.com/svfonx",
+    "Vault: Proyectos/SLA/Programas/Programa educativo.md"
+   ],
+   "slaRole": "Conducción · Programa educativo"
   },
   {
    "id": "nahuel-alberti",
@@ -1494,6 +1511,237 @@
    "sources": [
     "https://www.youtube.com/watch?v=6ajnGpbIRTc",
     "https://x.com/agustinale__"
+   ]
+  },
+  {
+   "id": "shuga",
+   "name": "Shuga",
+   "role": "CEO",
+   "companies": [
+    "slatv"
+   ],
+   "episodes": [],
+   "x": "https://x.com/shuga_vibes",
+   "investors": [],
+   "team": true,
+   "slaRole": "CEO",
+   "confidence": "alta",
+   "social": {
+    "x": "shuga_vibes",
+    "xId": "41696727"
+   },
+   "avatar": "assets/avatars/shuga.jpg",
+   "bio": "CEO y cofundador de SLA, \"creando el Tech New Media de LATAM\". También trabaja en Producto en Remote.",
+   "links": {
+    "x": "https://x.com/shuga_vibes",
+    "web": "https://shuga.blog/"
+   },
+   "skills": [
+    "Medios",
+    "Producto",
+    "Founder"
+   ],
+   "sources": [
+    "Vault: Proyectos/SLA/SLA.md",
+    "https://x.com/shuga_vibes"
+   ]
+  },
+  {
+   "id": "giancarlo-brusca",
+   "name": "Giancarlo Brusca",
+   "role": "COO",
+   "companies": [
+    "slatv"
+   ],
+   "episodes": [],
+   "x": "https://x.com/giancarlobrusca",
+   "investors": [],
+   "team": true,
+   "slaRole": "COO",
+   "confidence": "alta",
+   "social": {
+    "x": "giancarlobrusca",
+    "xId": "136865705"
+   },
+   "avatar": "assets/avatars/giancarlo-brusca.jpg",
+   "bio": "COO y cofundador de SLA. En X se presenta, simplemente, como \"creando @slatv_\".",
+   "links": {
+    "x": "https://x.com/giancarlobrusca",
+    "github": "https://github.com/giancarlobrusca"
+   },
+   "skills": [
+    "Operaciones",
+    "Founder",
+    "Medios"
+   ],
+   "sources": [
+    "Vault: Proyectos/SLA/SLA.md",
+    "https://github.com/giancarlobrusca/network.slatv.live",
+    "https://x.com/giancarlobrusca"
+   ]
+  },
+  {
+   "id": "nicoproducto",
+   "name": "NicoProducto",
+   "role": "CPO y host",
+   "companies": [
+    "slatv"
+   ],
+   "episodes": [],
+   "x": "https://x.com/nicoproducto",
+   "investors": [],
+   "team": true,
+   "slaRole": "CPO y host",
+   "confidence": "alta",
+   "social": {
+    "x": "nicoproducto",
+    "xId": "291496724"
+   },
+   "avatar": "assets/avatars/nicoproducto.jpg",
+   "bio": "CPO y cofundador de SLA, host del programa y product builder (x6). Su producto principal es Product Prepa; está armando el media kit de SLA.",
+   "links": {
+    "x": "https://x.com/nicoproducto",
+    "web": "https://nicoproducto.work"
+   },
+   "skills": [
+    "Producto",
+    "Conducción",
+    "Founder"
+   ],
+   "sources": [
+    "Vault: Proyectos/SLA/SLA.md",
+    "Vault: Proyectos/SLA/Programas/SLA (programa).md",
+    "https://productprepa.com",
+    "https://x.com/nicoproducto"
+   ]
+  },
+  {
+   "id": "el-tucu",
+   "name": "El Tucu",
+   "role": "CTO",
+   "companies": [
+    "slatv"
+   ],
+   "episodes": [],
+   "x": null,
+   "investors": [],
+   "team": true,
+   "slaRole": "CTO",
+   "confidence": "alta (rol); sin X verificado",
+   "social": {
+    "x": null,
+    "xId": null
+   },
+   "avatar": null,
+   "bio": "CTO y cofundador de SLA.",
+   "links": {},
+   "skills": [
+    "Tecnología",
+    "Founder"
+   ],
+   "sources": [
+    "Vault: Proyectos/SLA/SLA.md"
+   ]
+  },
+  {
+   "id": "gaston-gasti",
+   "name": "Gastón (Gasti)",
+   "role": "Filmmaker",
+   "companies": [
+    "slatv"
+   ],
+   "episodes": [],
+   "x": "https://x.com/gastypm",
+   "investors": [],
+   "team": true,
+   "slaRole": "Filmmaker",
+   "confidence": "alta",
+   "social": {
+    "x": "gastypm",
+    "xId": "2918490399"
+   },
+   "avatar": "assets/avatars/gaston-gasti.jpg",
+   "bio": "Filmmaker y tech prosumer: hace las fotos y videos de SLA, edita el trailer de Pitch Night y los Cribs. Construye Picki.",
+   "links": {
+    "x": "https://x.com/gastypm",
+    "web": "http://gastypm.com"
+   },
+   "skills": [
+    "Filmmaking",
+    "Foto",
+    "Edición"
+   ],
+   "sources": [
+    "Vault: Proyectos/SLA/SLA.md",
+    "https://x.com/slatv_/status/2102942850585350320",
+    "https://x.com/gastypm"
+   ]
+  },
+  {
+   "id": "belen-gonzalez",
+   "name": "Belén González",
+   "role": "Conducción · El Noticiero",
+   "companies": [
+    "slatv"
+   ],
+   "episodes": [],
+   "x": "https://x.com/belgonzalezm",
+   "investors": [],
+   "team": true,
+   "slaRole": "Conducción · El Noticiero",
+   "confidence": "alta",
+   "social": {
+    "x": "belgonzalezm",
+    "xId": "311542354"
+   },
+   "avatar": "assets/avatars/belen-gonzalez.jpg",
+   "bio": "Conduce El Noticiero de SLA los lunes y es CMO de Paisanos.",
+   "links": {
+    "x": "https://x.com/belgonzalezm",
+    "web": "https://www.paisanos.io"
+   },
+   "skills": [
+    "Conducción",
+    "Marketing"
+   ],
+   "sources": [
+    "Vault: Proyectos/SLA/Programas/El Noticiero.md",
+    "https://x.com/slatv_/status/2103522417352003974",
+    "https://x.com/belgonzalezm"
+   ]
+  },
+  {
+   "id": "martina-mendoza",
+   "name": "Martina \"Marta\" Mendoza",
+   "role": "Conducción · El Noticiero",
+   "companies": [
+    "slatv"
+   ],
+   "episodes": [],
+   "x": "https://x.com/unfarol",
+   "investors": [],
+   "team": true,
+   "slaRole": "Conducción · El Noticiero",
+   "confidence": "media-alta: perfil se llama \"merlo\", identificado por @slatv_ (\"marta y bel\") y por co-conducir con @belgonzalezm",
+   "social": {
+    "x": "unfarol",
+    "xId": "1147861768468934656"
+   },
+   "avatar": "assets/avatars/martina-mendoza.jpg",
+   "bio": "Conduce El Noticiero de SLA (le dicen Marta). Trabaja en expansión en Takenos; antes pasó por Roxom.",
+   "links": {
+    "x": "https://x.com/unfarol"
+   },
+   "skills": [
+    "Conducción",
+    "Expansión",
+    "Fintech"
+   ],
+   "sources": [
+    "Vault: Proyectos/SLA/Programas/El Noticiero.md",
+    "https://x.com/slatv_/status/2103522417352003974",
+    "https://x.com/slatv_/status/2103559694581367064",
+    "https://x.com/unfarol"
    ]
   }
  ],
@@ -2648,6 +2896,949 @@
     "https://x.com/Tomasdascola/status/2107223028908392856"
    ],
    "lastAt": "2026-10-05T21:34:55.000Z"
+  },
+  {
+   "source": "agustin-ale",
+   "target": "nicoproducto",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/agustinale__/status/2106390779862327721"
+   ],
+   "lastAt": "2026-10-03T14:27:51.000Z"
+  },
+  {
+   "source": "agustin-ale",
+   "target": "shuga",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/agustinale__/status/2106147835166986727"
+   ],
+   "lastAt": "2026-10-02T22:22:28.000Z"
+  },
+  {
+   "source": "ana-varela",
+   "target": "shuga",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/_rawpower/status/2107505602671116433"
+   ],
+   "lastAt": "2026-10-06T16:17:45.000Z"
+  },
+  {
+   "source": "ari-onega",
+   "target": "nicoproducto",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/AriOnega/status/2106928999771537619"
+   ],
+   "lastAt": "2026-10-05T02:06:33.000Z"
+  },
+  {
+   "source": "belen-gonzalez",
+   "target": "giancarlo-brusca",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/belgonzalezm/status/2109430369942737175"
+   ],
+   "lastAt": "2026-10-11T23:46:06.000Z"
+  },
+  {
+   "source": "belen-gonzalez",
+   "target": "martina-mendoza",
+   "type": "mention",
+   "count": 4,
+   "examples": [
+    "https://x.com/belgonzalezm/status/2109803295175033218",
+    "https://x.com/belgonzalezm/status/2109689136894669185",
+    "https://x.com/belgonzalezm/status/2108686776546230759"
+   ],
+   "lastAt": "2026-10-13T00:27:58.000Z"
+  },
+  {
+   "source": "belen-gonzalez",
+   "target": "nahuel-alberti",
+   "type": "mention",
+   "count": 3,
+   "examples": [
+    "https://x.com/belgonzalezm/status/2109244857420018162",
+    "https://x.com/belgonzalezm/status/2107228564076511566",
+    "https://x.com/belgonzalezm/status/2107226430233088239"
+   ],
+   "lastAt": "2026-10-11T11:28:56.000Z"
+  },
+  {
+   "source": "belen-gonzalez",
+   "target": "nicolas-kenny",
+   "type": "reply",
+   "count": 3,
+   "examples": [
+    "https://x.com/belgonzalezm/status/2110133523042754725",
+    "https://x.com/belgonzalezm/status/2108231665701306422",
+    "https://x.com/belgonzalezm/status/2107247657462980691"
+   ],
+   "lastAt": "2026-10-13T22:20:10.000Z"
+  },
+  {
+   "source": "belen-gonzalez",
+   "target": "shuga",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/belgonzalezm/status/2108518942943949156",
+    "https://x.com/belgonzalezm/status/2108227876596125954"
+   ],
+   "lastAt": "2026-10-09T11:24:25.000Z"
+  },
+  {
+   "source": "belen-gonzalez",
+   "target": "sofia-ferro",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/belgonzalezm/status/2108354106847076404"
+   ],
+   "lastAt": "2026-10-09T00:29:25.000Z"
+  },
+  {
+   "source": "belen-gonzalez",
+   "target": "sofia-ferro",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/belgonzalezm/status/2108354886274351222"
+   ],
+   "lastAt": "2026-10-09T00:32:30.000Z"
+  },
+  {
+   "source": "cris-lemoine",
+   "target": "shuga",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/uxbs_cris/status/2106134817276600338"
+   ],
+   "lastAt": "2026-10-02T21:30:45.000Z"
+  },
+  {
+   "source": "gaston-gasti",
+   "target": "giancarlo-brusca",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/gastypm/status/2102766135209046023"
+   ],
+   "lastAt": "2026-09-23T14:24:48.000Z"
+  },
+  {
+   "source": "gaston-gasti",
+   "target": "nahuel-alberti",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/gastypm/status/2103630277633597490"
+   ],
+   "lastAt": "2026-09-25T23:38:36.000Z"
+  },
+  {
+   "source": "gaston-gasti",
+   "target": "shuga",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/gastypm/status/2103630277633597490"
+   ],
+   "lastAt": "2026-09-25T23:38:36.000Z"
+  },
+  {
+   "source": "gaston-gasti",
+   "target": "shuga",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/gastypm/status/2109354829017694681",
+    "https://x.com/gastypm/status/2102381544123867372"
+   ],
+   "lastAt": "2026-10-11T18:45:55.000Z"
+  },
+  {
+   "source": "giancarlo-brusca",
+   "target": "ari-onega",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/giancarlobrusca/status/2110072518132306412",
+    "https://x.com/giancarlobrusca/status/2109435358186516756"
+   ],
+   "lastAt": "2026-10-13T18:17:46.000Z"
+  },
+  {
+   "source": "giancarlo-brusca",
+   "target": "belen-gonzalez",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/giancarlobrusca/status/2109434947672879223"
+   ],
+   "lastAt": "2026-10-12T00:04:17.000Z"
+  },
+  {
+   "source": "giancarlo-brusca",
+   "target": "gaston-gasti",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/giancarlobrusca/status/2109359378163769729"
+   ],
+   "lastAt": "2026-10-11T19:04:00.000Z"
+  },
+  {
+   "source": "giancarlo-brusca",
+   "target": "gaston-gasti",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/giancarlobrusca/status/2109459556933988836"
+   ],
+   "lastAt": "2026-10-12T01:42:04.000Z"
+  },
+  {
+   "source": "giancarlo-brusca",
+   "target": "maga-defelippe",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/giancarlobrusca/status/2110569574785552394"
+   ],
+   "lastAt": "2026-10-15T03:12:53.000Z"
+  },
+  {
+   "source": "giancarlo-brusca",
+   "target": "maga-defelippe",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/giancarlobrusca/status/2110541690180157673",
+    "https://x.com/giancarlobrusca/status/2108734253454549489"
+   ],
+   "lastAt": "2026-10-15T01:22:05.000Z"
+  },
+  {
+   "source": "giancarlo-brusca",
+   "target": "martina-mendoza",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/giancarlobrusca/status/2109828775383101914",
+    "https://x.com/giancarlobrusca/status/2109826204383789217"
+   ],
+   "lastAt": "2026-10-13T02:09:13.000Z"
+  },
+  {
+   "source": "giancarlo-brusca",
+   "target": "nahuel-alberti",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/giancarlobrusca/status/2108719186658644409"
+   ],
+   "lastAt": "2026-10-10T00:40:06.000Z"
+  },
+  {
+   "source": "giancarlo-brusca",
+   "target": "nicolas-kenny",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/giancarlobrusca/status/2110092730332496030"
+   ],
+   "lastAt": "2026-10-13T19:38:05.000Z"
+  },
+  {
+   "source": "giancarlo-brusca",
+   "target": "nicoproducto",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/giancarlobrusca/status/2110569574785552394"
+   ],
+   "lastAt": "2026-10-15T03:12:53.000Z"
+  },
+  {
+   "source": "giancarlo-brusca",
+   "target": "nicoproducto",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/giancarlobrusca/status/2109765153889964191"
+   ],
+   "lastAt": "2026-10-12T21:56:24.000Z"
+  },
+  {
+   "source": "giancarlo-brusca",
+   "target": "shuga",
+   "type": "mention",
+   "count": 6,
+   "examples": [
+    "https://x.com/giancarlobrusca/status/2110072579172032960",
+    "https://x.com/giancarlobrusca/status/2109359378163769729",
+    "https://x.com/giancarlobrusca/status/2108736187217387776"
+   ],
+   "lastAt": "2026-10-13T18:18:00.000Z"
+  },
+  {
+   "source": "giancarlo-brusca",
+   "target": "shuga",
+   "type": "reply",
+   "count": 3,
+   "examples": [
+    "https://x.com/giancarlobrusca/status/2110176590323687472",
+    "https://x.com/giancarlobrusca/status/2109849518221209863",
+    "https://x.com/giancarlobrusca/status/2108254071799140842"
+   ],
+   "lastAt": "2026-10-14T01:11:18.000Z"
+  },
+  {
+   "source": "giancarlo-brusca",
+   "target": "sofia-ferro",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/giancarlobrusca/status/2108715644590153810"
+   ],
+   "lastAt": "2026-10-10T00:26:02.000Z"
+  },
+  {
+   "source": "jose-rago",
+   "target": "nicoproducto",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/ragojose/status/2107215239033069897"
+   ],
+   "lastAt": "2026-10-05T21:03:57.000Z"
+  },
+  {
+   "source": "jose-rago",
+   "target": "shuga",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/ragojose/status/2109765378960470516",
+    "https://x.com/ragojose/status/2106906754676404572"
+   ],
+   "lastAt": "2026-10-12T21:57:18.000Z"
+  },
+  {
+   "source": "jules-newland",
+   "target": "nicoproducto",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/julesnewland/status/2108190013569593830"
+   ],
+   "lastAt": "2026-10-08T13:37:22.000Z"
+  },
+  {
+   "source": "juli-groshaus",
+   "target": "shuga",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/juligroshaus/status/2107919101574189240"
+   ],
+   "lastAt": "2026-10-07T19:40:51.000Z"
+  },
+  {
+   "source": "karen-dutik",
+   "target": "nicoproducto",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/DutikKaren/status/2108041687847059755",
+    "https://x.com/DutikKaren/status/2106841325467582478"
+   ],
+   "lastAt": "2026-10-08T03:47:58.000Z"
+  },
+  {
+   "source": "maga-defelippe",
+   "target": "gaston-gasti",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/magalidefelippe/status/2109128115352174883"
+   ],
+   "lastAt": "2026-10-11T03:45:03.000Z"
+  },
+  {
+   "source": "maga-defelippe",
+   "target": "giancarlo-brusca",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/magalidefelippe/status/2108733613340524892"
+   ],
+   "lastAt": "2026-10-10T01:37:26.000Z"
+  },
+  {
+   "source": "maga-defelippe",
+   "target": "giancarlo-brusca",
+   "type": "reply",
+   "count": 3,
+   "examples": [
+    "https://x.com/magalidefelippe/status/2110543903623659997",
+    "https://x.com/magalidefelippe/status/2107865445684707822",
+    "https://x.com/magalidefelippe/status/2107863227711566154"
+   ],
+   "lastAt": "2026-10-15T01:30:53.000Z"
+  },
+  {
+   "source": "maga-defelippe",
+   "target": "nicoproducto",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/magalidefelippe/status/2110547364008370336",
+    "https://x.com/magalidefelippe/status/2109128115352174883"
+   ],
+   "lastAt": "2026-10-15T01:44:38.000Z"
+  },
+  {
+   "source": "maga-defelippe",
+   "target": "shuga",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/magalidefelippe/status/2108733613340524892"
+   ],
+   "lastAt": "2026-10-10T01:37:26.000Z"
+  },
+  {
+   "source": "maga-defelippe",
+   "target": "shuga",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/magalidefelippe/status/2107569259190927429"
+   ],
+   "lastAt": "2026-10-06T20:30:42.000Z"
+  },
+  {
+   "source": "martina-mendoza",
+   "target": "belen-gonzalez",
+   "type": "mention",
+   "count": 6,
+   "examples": [
+    "https://x.com/unfarol/status/2109827639569777097",
+    "https://x.com/unfarol/status/2109810868494160142",
+    "https://x.com/unfarol/status/2109672976819917149"
+   ],
+   "lastAt": "2026-10-13T02:04:42.000Z"
+  },
+  {
+   "source": "martina-mendoza",
+   "target": "belen-gonzalez",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/unfarol/status/2102437512887107584"
+   ],
+   "lastAt": "2026-09-22T16:38:59.000Z"
+  },
+  {
+   "source": "martina-mendoza",
+   "target": "eugenia-dearamburu",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/unfarol/status/2105751212054524185"
+   ],
+   "lastAt": "2026-10-01T20:06:26.000Z"
+  },
+  {
+   "source": "martina-mendoza",
+   "target": "giancarlo-brusca",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/unfarol/status/2110048998153142680"
+   ],
+   "lastAt": "2026-10-13T16:44:18.000Z"
+  },
+  {
+   "source": "martina-mendoza",
+   "target": "giancarlo-brusca",
+   "type": "reply",
+   "count": 5,
+   "examples": [
+    "https://x.com/unfarol/status/2110171759185895437",
+    "https://x.com/unfarol/status/2109829318322905421",
+    "https://x.com/unfarol/status/2109826511582716126"
+   ],
+   "lastAt": "2026-10-14T00:52:07.000Z"
+  },
+  {
+   "source": "martina-mendoza",
+   "target": "maga-defelippe",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/unfarol/status/2102892344722800836"
+   ],
+   "lastAt": "2026-09-23T22:46:19.000Z"
+  },
+  {
+   "source": "martina-mendoza",
+   "target": "nicoproducto",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/unfarol/status/2107424100880662621"
+   ],
+   "lastAt": "2026-10-06T10:53:54.000Z"
+  },
+  {
+   "source": "martina-mendoza",
+   "target": "nicoproducto",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/unfarol/status/2110417245382066493",
+    "https://x.com/unfarol/status/2107419891028611493"
+   ],
+   "lastAt": "2026-10-14T17:07:35.000Z"
+  },
+  {
+   "source": "martina-mendoza",
+   "target": "tobias-frieder",
+   "type": "mention",
+   "count": 2,
+   "examples": [
+    "https://x.com/unfarol/status/2103296840498397438",
+    "https://x.com/unfarol/status/2103291763238863041"
+   ],
+   "lastAt": "2026-09-25T01:33:38.000Z"
+  },
+  {
+   "source": "martina-mendoza",
+   "target": "tobias-frieder",
+   "type": "reply",
+   "count": 4,
+   "examples": [
+    "https://x.com/unfarol/status/2110087613583675472",
+    "https://x.com/unfarol/status/2110080756147974180",
+    "https://x.com/unfarol/status/2106072847101866074"
+   ],
+   "lastAt": "2026-10-13T19:17:45.000Z"
+  },
+  {
+   "source": "nahuel-alberti",
+   "target": "giancarlo-brusca",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/nays1_/status/2108719058145448134"
+   ],
+   "lastAt": "2026-10-10T00:39:36.000Z"
+  },
+  {
+   "source": "nahuel-alberti",
+   "target": "shuga",
+   "type": "mention",
+   "count": 2,
+   "examples": [
+    "https://x.com/nays1_/status/2108719058145448134",
+    "https://x.com/nays1_/status/2107131526659916131"
+   ],
+   "lastAt": "2026-10-10T00:39:36.000Z"
+  },
+  {
+   "source": "nahuel-alberti",
+   "target": "shuga",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/nays1_/status/2108253599096873242",
+    "https://x.com/nays1_/status/2108250712618815931"
+   ],
+   "lastAt": "2026-10-08T17:50:02.000Z"
+  },
+  {
+   "source": "nicolas-kenny",
+   "target": "belen-gonzalez",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicokennydev/status/2106089094145061173"
+   ],
+   "lastAt": "2026-10-02T18:29:03.000Z"
+  },
+  {
+   "source": "nicolas-kenny",
+   "target": "martina-mendoza",
+   "type": "mention",
+   "count": 2,
+   "examples": [
+    "https://x.com/nicokennydev/status/2107294498762191081",
+    "https://x.com/nicokennydev/status/2107287648322625623"
+   ],
+   "lastAt": "2026-10-06T02:18:54.000Z"
+  },
+  {
+   "source": "nicolas-kenny",
+   "target": "shuga",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicokennydev/status/2107302527670550690"
+   ],
+   "lastAt": "2026-10-06T02:50:49.000Z"
+  },
+  {
+   "source": "nicolas-kenny",
+   "target": "shuga",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/nicokennydev/status/2109814739622674542",
+    "https://x.com/nicokennydev/status/2107592371093357025"
+   ],
+   "lastAt": "2026-10-13T01:13:27.000Z"
+  },
+  {
+   "source": "nicoproducto",
+   "target": "ari-onega",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoproducto/status/2106926069387276663"
+   ],
+   "lastAt": "2026-10-05T01:54:54.000Z"
+  },
+  {
+   "source": "nicoproducto",
+   "target": "gaston-gasti",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoproducto/status/2108988365047492635"
+   ],
+   "lastAt": "2026-10-10T18:29:43.000Z"
+  },
+  {
+   "source": "nicoproducto",
+   "target": "giancarlo-brusca",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/nicoproducto/status/2109765450720583721",
+    "https://x.com/nicoproducto/status/2107515926165819658"
+   ],
+   "lastAt": "2026-10-12T21:57:35.000Z"
+  },
+  {
+   "source": "nicoproducto",
+   "target": "jules-newland",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoproducto/status/2108178934718238811"
+   ],
+   "lastAt": "2026-10-08T12:53:20.000Z"
+  },
+  {
+   "source": "nicoproducto",
+   "target": "karen-dutik",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoproducto/status/2107816570235883602"
+   ],
+   "lastAt": "2026-10-07T12:53:26.000Z"
+  },
+  {
+   "source": "nicoproducto",
+   "target": "maga-defelippe",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoproducto/status/2109826444834591063"
+   ],
+   "lastAt": "2026-10-13T01:59:57.000Z"
+  },
+  {
+   "source": "nicoproducto",
+   "target": "martina-mendoza",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoproducto/status/2107295680016375972"
+   ],
+   "lastAt": "2026-10-06T02:23:36.000Z"
+  },
+  {
+   "source": "nicoproducto",
+   "target": "nahuel-alberti",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoproducto/status/2106916169273720878"
+   ],
+   "lastAt": "2026-10-05T01:15:34.000Z"
+  },
+  {
+   "source": "nicoproducto",
+   "target": "nicolas-kenny",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/nicoproducto/status/2110107536086933667",
+    "https://x.com/nicoproducto/status/2107265686145778126"
+   ],
+   "lastAt": "2026-10-13T20:36:55.000Z"
+  },
+  {
+   "source": "nicoproducto",
+   "target": "shuga",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoproducto/status/2108590206257627618"
+   ],
+   "lastAt": "2026-10-09T16:07:35.000Z"
+  },
+  {
+   "source": "nicoproducto",
+   "target": "shuga",
+   "type": "reply",
+   "count": 5,
+   "examples": [
+    "https://x.com/nicoproducto/status/2110492707982319857",
+    "https://x.com/nicoproducto/status/2109718494480589011",
+    "https://x.com/nicoproducto/status/2108294445124964745"
+   ],
+   "lastAt": "2026-10-14T22:07:27.000Z"
+  },
+  {
+   "source": "nicoproducto",
+   "target": "sofia-ferro",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/nicoproducto/status/2108373998698422285"
+   ],
+   "lastAt": "2026-10-09T01:48:27.000Z"
+  },
+  {
+   "source": "shuga",
+   "target": "belen-gonzalez",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/shuga_vibes/status/2108227941121589622"
+   ],
+   "lastAt": "2026-10-08T16:08:04.000Z"
+  },
+  {
+   "source": "shuga",
+   "target": "giancarlo-brusca",
+   "type": "reply",
+   "count": 4,
+   "examples": [
+    "https://x.com/shuga_vibes/status/2109849803819753774",
+    "https://x.com/shuga_vibes/status/2109848111237718167",
+    "https://x.com/shuga_vibes/status/2106133772819136704"
+   ],
+   "lastAt": "2026-10-13T03:32:47.000Z"
+  },
+  {
+   "source": "shuga",
+   "target": "jose-rago",
+   "type": "reply",
+   "count": 3,
+   "examples": [
+    "https://x.com/shuga_vibes/status/2106907441577500782",
+    "https://x.com/shuga_vibes/status/2106906351427621091",
+    "https://x.com/shuga_vibes/status/2106115963733381315"
+   ],
+   "lastAt": "2026-10-05T00:40:53.000Z"
+  },
+  {
+   "source": "shuga",
+   "target": "juli-groshaus",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/shuga_vibes/status/2110057060234838073"
+   ],
+   "lastAt": "2026-10-13T17:16:20.000Z"
+  },
+  {
+   "source": "shuga",
+   "target": "karen-dutik",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/shuga_vibes/status/2106085827017400796"
+   ],
+   "lastAt": "2026-10-02T18:16:05.000Z"
+  },
+  {
+   "source": "shuga",
+   "target": "maga-defelippe",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/shuga_vibes/status/2107571754889806162"
+   ],
+   "lastAt": "2026-10-06T20:40:37.000Z"
+  },
+  {
+   "source": "shuga",
+   "target": "nahuel-alberti",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/shuga_vibes/status/2108252690018906153"
+   ],
+   "lastAt": "2026-10-08T17:46:25.000Z"
+  },
+  {
+   "source": "shuga",
+   "target": "nicola-romero-gerik",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/shuga_vibes/status/2107467830899941377"
+   ],
+   "lastAt": "2026-10-06T13:47:40.000Z"
+  },
+  {
+   "source": "shuga",
+   "target": "nicolas-kenny",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/shuga_vibes/status/2110057060234838073"
+   ],
+   "lastAt": "2026-10-13T17:16:20.000Z"
+  },
+  {
+   "source": "shuga",
+   "target": "nicolas-kenny",
+   "type": "reply",
+   "count": 5,
+   "examples": [
+    "https://x.com/shuga_vibes/status/2110094012745208272",
+    "https://x.com/shuga_vibes/status/2109808920319709224",
+    "https://x.com/shuga_vibes/status/2107918967155134479"
+   ],
+   "lastAt": "2026-10-13T19:43:10.000Z"
+  },
+  {
+   "source": "shuga",
+   "target": "nicoproducto",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/shuga_vibes/status/2108312709426991374"
+   ],
+   "lastAt": "2026-10-08T21:44:55.000Z"
+  },
+  {
+   "source": "shuga",
+   "target": "sofia-ferro",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/shuga_vibes/status/2106000763155624275"
+   ],
+   "lastAt": "2026-10-02T12:38:04.000Z"
+  },
+  {
+   "source": "shuga",
+   "target": "tomas-dascola",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/shuga_vibes/status/2107970261479731613"
+   ],
+   "lastAt": "2026-10-07T23:04:09.000Z"
+  },
+  {
+   "source": "shuga",
+   "target": "tomas-dascola",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/shuga_vibes/status/2110175950377787888"
+   ],
+   "lastAt": "2026-10-14T01:08:46.000Z"
+  },
+  {
+   "source": "sofia-ferro",
+   "target": "giancarlo-brusca",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/svfonx/status/2108715441765929146"
+   ],
+   "lastAt": "2026-10-10T00:25:14.000Z"
+  },
+  {
+   "source": "tomas-dascola",
+   "target": "belen-gonzalez",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/Tomasdascola/status/2107511351203824073"
+   ],
+   "lastAt": "2026-10-06T16:40:36.000Z"
+  },
+  {
+   "source": "tomas-dascola",
+   "target": "giancarlo-brusca",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/Tomasdascola/status/2107843710411030546"
+   ],
+   "lastAt": "2026-10-07T14:41:17.000Z"
+  },
+  {
+   "source": "tomas-dascola",
+   "target": "martina-mendoza",
+   "type": "reply",
+   "count": 1,
+   "examples": [
+    "https://x.com/Tomasdascola/status/2108974160714125773"
+   ],
+   "lastAt": "2026-10-10T17:33:17.000Z"
+  },
+  {
+   "source": "tomas-dascola",
+   "target": "shuga",
+   "type": "mention",
+   "count": 1,
+   "examples": [
+    "https://x.com/Tomasdascola/status/2107843710411030546"
+   ],
+   "lastAt": "2026-10-07T14:41:17.000Z"
+  },
+  {
+   "source": "tomas-dascola",
+   "target": "shuga",
+   "type": "reply",
+   "count": 2,
+   "examples": [
+    "https://x.com/Tomasdascola/status/2110094779715584343",
+    "https://x.com/Tomasdascola/status/2107978347921789061"
+   ],
+   "lastAt": "2026-10-13T19:46:13.000Z"
   }
  ]
 }

@@ -9,6 +9,7 @@ const PAL = {               // per-vertical star colors
   hogar:    '#b07ae0',      // approximation: lightened Pitch Night --purple #7534ab
   fintech:  '#a7bb6e',      // Pitch Night --lcd (pitchnight.slatv.live)
   negocios: '#ff6719',      // MTS orange #FF6719 (mts.now bundle)
+  team:     '#c8ffdf',      // SLA --acid mixed toward --foreground (green-white)
   null:     '#eafff3',      // SLA --foreground
   hub:      '#39f688'       // SLA hub star
 };
@@ -36,6 +37,8 @@ function build() {
     const vi = vs.indexOf(v);
     const a = vi / vs.length * Math.PI * 2 + (h32(p.id) - .5) * 1.1;
     const r = (0.6 + h32(p.id + 'r') * 0.5) * Math.min(1.45, Math.sqrt(data.people.length / 9));
+    if (p.team) { const ti = data.people.filter(q => q.team).indexOf(p), tn = data.people.filter(q => q.team).length, ta = ti / tn * Math.PI * 2;
+      return { p, v, comp, ep, team: true, col: hex(PAL.team), css: PAL.team, pos: [Math.cos(ta) * .55, Math.sin(ta * 2) * .08, Math.sin(ta) * .55], size: 1.35, views: 0, ph: h32(p.id + 't') * 6.28, sx: 0, sy: 0, sz: 1, k: 1, hl: 0 }; }
     const views = p.episodes.reduce((s, e) => s + (ep[e]?.views || 0), 0);
     return { p, v, comp, ep, col: hex(PAL[v] || PAL.null), css: PAL[v] || PAL.null,
       pos: [Math.cos(a) * r, (h32(p.id + 'y') - .5) * 1.3 * Math.min(1.4, Math.sqrt(data.people.length / 9)), Math.sin(a) * r],
@@ -45,11 +48,12 @@ function build() {
   if (data.hub) stars.push({ p: { ...data.hub, companies: [], episodes: [], investors: [] }, hub: true, v: 'hub', comp, ep, col: hex(PAL.hub), css: PAL.hub,
     pos: [0, 0, 0], size: 2.1, ph: 0, sx: 0, sy: 0, sz: 1, k: 1, hl: 0 });
   // relax: push stars apart so names never pile up (deterministic)
-  for (let it = 0; it < 120; it++) for (const a of stars) for (const b of stars) { if (a === b || a.hub) continue;
-    const d = [0,1,2].map(i => a.pos[i] - b.pos[i]), l = Math.hypot(...d) || 1e-3; if (l < .8) for (let i = 0; i < 3; i++) a.pos[i] += d[i] / l * (.8 - l) * .25; }
+  for (let it = 0; it < 120; it++) for (const a of stars) for (const b of stars) { if (a === b || a.hub || a.team) continue; const lim = b.team || b.hub ? 1.1 : .8;
+    const d = [0,1,2].map(i => a.pos[i] - b.pos[i]), l = Math.hypot(...d) || 1e-3; if (l < lim) for (let i = 0; i < 3; i++) a.pos[i] += d[i] / l * (lim - l) * .25; }
+  const hubS = stars.find(s => s.hub); if (hubS) stars.filter(s => s.team).forEach(s => links.push({ a: hubS, b: s, kind: 'equipo' }));
   const groups = k => { const m = {}; stars.forEach(s => (s.p[k] || []).forEach(id => (m[id] ??= []).push(s))); return m; };
   for (const [k, kind] of [['companies','empresa'], ['episodes','episodio'], ['investors','inversor']])
-    for (const g of Object.values(groups(k))) for (let i = 1; i < g.length; i++) links.push({ a: g[i - 1], b: g[i], kind });
+    for (const g of Object.values(groups(k)).map(g => g.filter(s => !s.team))) for (let i = 1; i < g.length; i++) links.push({ a: g[i - 1], b: g[i], kind });
   // X interactions -> directed streams, aggregated per (source,target)
   const byId = Object.fromEntries(stars.map(s => [s.p.id, s])), xa = {};
   for (const r of data.interactions || []) { const a = byId[r.source], b = byId[r.target]; if (!a || !b) continue;
@@ -268,14 +272,14 @@ const ICONS = {
 const vname = id => id === 'hub' ? 'Hub · SLA TV' : data.verticals.find(v => v.id === id)?.name || 'Sin vertical';
 function show(s) {
   sel = s; const p = s.p, cs = p.companies.map(c => s.comp[c]?.name).filter(Boolean);
-  const peers = links.filter(l => l.kind !== 'hilo' && (l.a === s || l.b === s)).map(l => ({ o: l.a === s ? l.b : l.a, kind: l.kind }));
+  const peers = [...new Map(links.filter(l => l.kind !== 'hilo' && (l.a === s || l.b === s)).map(l => { const o = l.a === s ? l.b : l.a; return [o.p.id, { o, kind: l.kind }]; })).values()];
   const card = $('card'); card.style.setProperty('--c', s.css);
   const L = p.links || (p.x ? { x: p.x } : {});
   const ini = p.name.split(/\s+/).map(w => w[0]).join('').slice(0, 2);
   $('cardBody').innerHTML = `<div class="prof">
       <div class="av">${p.avatar ? `<img src="${esc(p.avatar)}" alt="" width="72" height="72" decoding="async">` : `<span>${esc(ini)}</span>`}</div>
       <div class="pmeta"><span class="tag"><i></i>${esc(vname(s.v))}</span>
-        <h2>${esc(p.name)}</h2><div class="sub">${esc([p.role, cs.join(', ')].filter(Boolean).join(' · ') || '—')}</div></div></div>
+        <h2>${esc(p.name)}</h2><div class="sub">${esc([p.role, cs.join(', ')].filter(Boolean).join(' · ') || '—')}</div>${p.slaRole && !p.team ? `<div class="sub" style="color:var(--acid);font-size:12px;margin-top:2px">SLA · ${esc(p.slaRole)}</div>` : ""}</div></div>
     ${p.bio ? `<p class="bio">${esc(p.bio)}</p>` : ''}
     ${p.skills?.length ? `<div class="chips">${p.skills.map(k => `<span>${esc(k)}</span>`).join('')}</div>` : ''}
     ${Object.keys(ICONS).some(k => L[k]) ? `<div class="soc">${Object.keys(ICONS).filter(k => L[k]).map(k => `<a href="${esc(L[k])}" target="_blank" rel="noopener" aria-label="${k}" title="${esc(L[k].replace(/^https?:\/\/(www\.)?/, ''))}">${ICONS[k]}</a>`).join('')}</div>` : ''}
