@@ -1,0 +1,35 @@
+{
+  "meta": {"title": "Constelación de Founders — SLA", "source": "Vault: Proyectos/SLA/Programas/SLA (programa).md", "updated": "2026-10-14"},
+  "verticals": [
+    {"id": "producto", "name": "Producto & Software"},
+    {"id": "diseno", "name": "Diseño"},
+    {"id": "dev", "name": "Dev & Web"},
+    {"id": "hogar", "name": "Hogar & Servicios"}
+  ],
+  "companies": [
+    {"id": "invgate", "name": "InvGate", "vertical": "producto", "url": null},
+    {"id": "clickie", "name": "Clickie", "vertical": "hogar", "url": null, "note": "infraestructura del hogar (resumen ep. 18 en X)"},
+    {"id": "yafu", "name": "Yafu", "vertical": null, "url": null},
+    {"id": "fof-ba", "name": "Friends of Figma Buenos Aires", "vertical": "diseno", "url": null},
+    {"id": "basement", "name": "basement", "vertical": "diseno", "url": null},
+    {"id": "vercel", "name": "Vercel", "vertical": "dev", "url": null}
+  ],
+  "episodes": [
+    {"id": "ep18", "number": 18, "date": "2026-10-07", "title": "Clickie, CounterStrike, Outputs para Agents, Poteto y GrokBot, Product con Eugenia de InvGate", "youtube": "https://www.youtube.com/watch?v=jobfnkQyhDA", "views": null},
+    {"id": "ep17", "number": 17, "date": "2026-09-30", "title": "Super Inteligencia, Foros, Videcodear juegos para web, Dot/Bot/6.1/5.5, Karen de Yafu", "youtube": "https://www.youtube.com/watch?v=7E_Xfl8pBuc", "views": null},
+    {"id": "ep16", "number": 16, "date": "2026-09-23", "title": "El diseño más vivo que nunca, JEV, Top 9, Horowitz Andreessen Academy, Friends of Figma", "youtube": "https://www.youtube.com/watch?v=j_Qb9qy7l1A", "views": null},
+    {"id": "ep15", "number": null, "date": "2026-09-16", "title": "SLA x Basement: crear un estudio de diseño global desde Argentina", "youtube": "https://www.youtube.com/watch?v=d9DLHBJbHZQ", "views": null, "note": "sin número en el título; sería el 15 (a confirmar)"},
+    {"id": "ep14", "number": 14, "date": "2026-09-09", "title": "Maxi Firtman, los nabos, Ponzis, Elizabeth Holmes, ¿Nos bata la ia?, MormonTV, Mark Lou", "youtube": "https://www.youtube.com/watch?v=fg0VjFN-unE", "views": null},
+    {"id": "ep13", "number": 13, "date": "2026-09-02", "title": "Goncy Forward Deployed Engineer en VERCEL, Omarchy y Linux, H3 Max, Fable 5.1, Tim Cook", "youtube": "https://www.youtube.com/watch?v=7kiHCad7IdM", "views": null}
+  ],
+  "people": [
+    {"id": "eugenia-dearamburu", "name": "Eugenia Dearamburu", "role": "Product", "companies": ["invgate"], "episodes": ["ep18"], "x": "https://x.com/euneniant", "investors": []},
+    {"id": "tomas-dascola", "name": "Tomás Dascola", "role": null, "companies": ["clickie"], "episodes": ["ep18"], "x": "https://x.com/Tomasdascola", "investors": []},
+    {"id": "karen-dutik", "name": "Karen Dutik", "role": null, "companies": ["yafu"], "episodes": ["ep17"], "x": null, "investors": []},
+    {"id": "friends-of-figma-ba", "name": "Friends of Figma Buenos Aires", "role": "comunidad", "companies": ["fof-ba"], "episodes": ["ep16"], "x": null, "investors": []},
+    {"id": "jose-rago", "name": "José Rago", "role": null, "companies": ["basement"], "episodes": ["ep15"], "x": null, "investors": []},
+    {"id": "facu-santana", "name": "Facu Santana", "role": null, "companies": ["basement"], "episodes": ["ep15"], "x": null, "investors": []},
+    {"id": "maxi-firtman", "name": "Maxi Firtman", "role": null, "companies": [], "episodes": ["ep14"], "x": null, "investors": []},
+    {"id": "goncy", "name": "Goncy (Gonzalo Pozzo)", "role": "Forward Deployed Engineer", "companies": ["vercel"], "episodes": ["ep13"], "x": null, "investors": []}
+  ]
+}
