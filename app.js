@@ -1,4 +1,4 @@
-// Constelación de Founders: raw WebGL renderer (no deps) with a 2D-canvas fallback.
+// THE SLA NETWORK: raw WebGL renderer (no deps) with a 2D-canvas fallback.
 // Palette is sourced from SLA, MTS and Pitch Night CSS (see README).
 (() => {
 'use strict';
